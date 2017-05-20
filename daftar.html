@@ -6,7 +6,6 @@
             <!-- Scrollable page content-->
             <div class="page-content">
              <form action="/action_page.php">
-             
             <center>
             <img src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
             </center>
@@ -17,7 +16,7 @@
             <table style="margin-top:-30px;">
                 <tr>
                     <td><p>Nama</p></td>
-                    <td><input type="text"></td>
+                    <td><input id="username" type="text" required></td>
                 </tr>
                 <!--<tr>
                     <td><p>Alamat</p></td>
@@ -25,15 +24,15 @@
                 </tr>-->
                 <tr>
                     <td><p>Kota</p></td>
-                    <td><input type="text"></td>
+                    <td><input id="kota" type="text" required></td>
                 </tr>
                 <tr>
                     <td><p>No HP</p></td>
-                    <td><input type="text"></td>
+                    <td><input id="hp" type="text" required></td>
                 </tr>
                 <tr>
                     <td><p>Password</p></td>
-                    <td><input type="password"></td>
+                    <td><input id="password" type="password" required></td>
                 </tr>
                 <tr>
                     <td><p>Foto Profile</p></td>
@@ -48,13 +47,14 @@
                 </tr>
                  <tr>
                     <td rowspan="2"></td>
-                    <td><input type="radio" name="gender" value="female"> Perempuan</td>
+                    <td><input  type="radio" name="gender" value="female"> Perempuan</td>
                 </tr>
                 
             </table>
+			
             </center>
             <p><a href="login.html" style="position:absolute; bottom:15px; float:left; margin-top:15px; margin-left:10px;">Sudah punya Akun? Masuk!</a></p>
-            <p><a href="pilihKelas.html" class="button" style="position:absolute; bottom:0px; right:0px; width:100px; margin:10px; float:right;">Selanjutnya</a></p>
+            <p><a href="pilihKelas.html" class="button" onclick="setCookie();" style="position:absolute; bottom:0px; right:0px; width:100px; margin:10px; float:right;">Selanjutnya</a></p>
               </div>
               </form>
               <div class="content-block-title">Side panels</div>
@@ -69,3 +69,4 @@
         </div>
       </div>
     </div>
+	

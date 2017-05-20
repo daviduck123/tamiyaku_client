@@ -17,9 +17,182 @@
     <script type="text/javascript" src="lib/framework7.js"></script>
     <script type="text/javascript" src="lib/react.js"></script>
     <script>
+	function setCookie(){
+	
+	//pengecekan inputan user
+		var username = document.getElementById("username").value;
+		var kota = document.getElementById("kota").value;
+		var hp = document.getElementById("hp").value;
+		var password = document.getElementById("password").value;
+		var fileinput = document.getElementById("fileInput").value;
+		var gender;
+		var radios = document.getElementsByName('gender') ;
+		
+		for (var i = 0, length = radios.length; i < length; i++) 
+		{
+			if (radios[i].checked) 
+			{
+				// do whatever you want with the checked radio
+				//document.cookie = "gender="+radios[i].value+";";
+				// only one radio can be logically checked, don't check the rest
+				gender =radios[i].value;
+				break;
+			}
+		}
+		
+		if(username=="")
+		{
+			alert("Silahkan isi nama anda");
+		}
+		else
+		{
+			if(kota=="")
+			{
+				alert("Silahkan isi kota anda");
+			}
+			else
+			{
+				if(hp=="")
+				{
+					alert("Silahkan isi nomor HP anda");
+				}
+				else
+				{
+					if (isNaN(parseFloat(hp)) && isFinite(hp)) 
+					{
+						text = "Nomor HP harus angka";
+					} 
+					else 
+					{
+						if(password=="")
+						{
+							alert("Password harus diisi");
+						}
+						else
+						{
+							if(password.length < 8)
+							{
+								alert("Password mininal 8 karakter");
+							}
+							else
+							{
+								if(fileinput=="")
+								{
+									alert("Silahkan pilih foto anda");
+								}
+								else
+								{
+									if(gender=="undefined" || gender=="")
+									{
+										alert("Silahkan pilih gender anda");
+									}
+									else
+									{
+										document.cookie = "username="+username+";";
+										document.cookie = "kota="+kota+";";
+										document.cookie = "hp="+hp+";";
+										document.cookie = "password="+password+";";		
+										document.cookie = "fileInput="+fileinput+";";
+										document.cookie = "gender="+gender+";";
+										//window.location.href = window.location+'pilihKelas.html';
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+		/*
+										document.cookie = "username="+document.getElementById("username").value+";";
+										document.cookie = "kota="+document.getElementById("kota").value+";";
+										document.cookie = "hp="+document.getElementById("hp").value+";";
+										document.cookie = "password="+document.getElementById("password").value+";";		
+										document.cookie = "fileInput="+document.getElementById("fileInput").value+";";
+										document.cookie = "gender="+radios[i].value+";";
+										*/
+		
+		
+	}
+	
+	function isLetter(s)
+	{
+	  return s.match("^[a-zA-Z\(\)]+$");    
+	}
+	function setCookie2(){
+		var kelas = document.getElementsByName('kelas');
+		var txt = "";
+		var i;
+		for (i = 0; i < kelas.length; i++) {
+			if (kelas[i].checked) 
+			{
+				if(i==0)
+				{
+					document.cookie = "kelas1="+kelas[i].value+";";
+				}
+				else if(i==1)
+				{
+					document.cookie = "kelas2="+kelas[i].value+";";
+				}
+				else if(i==2)
+				{
+					document.cookie = "kelas3="+kelas[i].value+";";
+				}
+			}
+		}
+	}
+	
    function chooseFile() {
-      document.getElementById("fileInput").click();
+   document.getElementById("fileInput").click();
    }
+   
+   function bacaCookie() {
+   setCookie2()
+	var x = document.cookie;
+	alert(x);
+   }
+   
+   function registerPost(){
+   var username = getcookie(username);
+   var kota = getcookie(kota);
+   var hp = getcookie(hp);
+   var password = getcookie(password);
+   var fileInput = getcookie(fileInput);
+   var gender = getcookie(gender);
+   var kelas1 = getcookie(kelas1);
+   var kelas2 = getcookie(kelas2);
+   var kelas3 = getcookie(kelas3);
+		$.post("#",
+		{
+			username: username,
+			kota: kota,
+			hp: hp,
+			password: password,
+			fileInput: fileInput,
+			gender: gender,
+			kelas1: kelas1,
+			kelas2: kelas2,
+			kelas3: kelas3
+		},
+		function(data, status){
+			alert("Data: " + data + "\nStatus: " + status);
+		});
+	}
+	
+   
+   function getcookie(cookiename){
+		var cookiestring  = document.cookie;
+		var cookiearray = cookiestring.split(';');
+		for(var i =0 ; i < cookiearray.length ; ++i)
+		{ 
+			if(cookiearray[i].trim().match('^'+cookiename+'='))
+			{ 
+				return cookiearray[i].replace(`${cookiename}=`,'').trim();
+			}
+		} return null;
+	}
 </script>
 <style type="text/css">
                         .q{
