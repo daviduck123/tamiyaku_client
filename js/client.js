@@ -1,6 +1,9 @@
 var urlnya="http://localhost/tamiyaku-server";
 //var urlnya="http://server.neoalitcahya.com";
 
+var globalCookie = [];
+
+
 function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
 }
@@ -27,6 +30,8 @@ function setCookie(){
 		var fileinput = document.getElementById("fileInput").value;
 		var gender;
 		var radios = document.getElementsByName('gender') ;
+
+		console.log($("#fileInput"));
 		
 		for (var i = 0, length = radios.length; i < length; i++) 
 		{
@@ -92,11 +97,23 @@ function setCookie(){
 									}
 									else
 									{
+										var blob=$("#fileInput")[0].files[0];
+									    var formData = new FormData();
+									    formData.append("nama", username);
+									    formData.append("kota", kota);
+									    formData.append("no_hp", hp);
+									    formData.append("password", password);
+									    formData.append("jenis_kelamin", gender);
+									    formData.append("file", blob);
+
+									    //pake variable ini tok ckup
+									    globalCookie["formData"] = formData;
+
 										document.cookie = "username="+username+";";
 										document.cookie = "kota="+kota+";";
 										document.cookie = "hp="+hp+";";
 										document.cookie = "password="+password+";";		
-										document.cookie = "fileInput="+fileinput+";";
+										document.cookie = "fileInput="+formData+";";
 										document.cookie = "gender="+gender+";";
 										mainView.router.loadPage('pilihKelas.html');
 									}
@@ -161,6 +178,7 @@ function setCookie(){
 		var kelas2 = getcookie("kelas2");
 		//alert(kelas2);
 		var kelas3 = getcookie("kelas3");
+
 		var tempKelas=kelas1+kelas2+kelas3;
 		if(tempKelas==0)
 		{
@@ -181,18 +199,41 @@ function setCookie(){
 			{
 				kelas.push(3);
 			}
-			
-			var xhr = new XMLHttpRequest();
+
+			//di ambil variable e, pas d tambahin tok
+			var formData = globalCookie["formData"];
+			formData.append("id_kelas",kelas);
+
+			//ajax e aku mek iso jalan seng iki kwkwkwkw
+			$.ajax({
+			    url: 'http://localhost/tamiyaku-server/api/user/registerNewUser',
+			    data: formData,
+			    type: 'POST',
+			    contentType: false,
+			    processData: false
+			}).done(function(z){
+				mainView.router.loadPage('login.html');
+				myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
+				
+				eraseCookie("username");
+				eraseCookie("kota");
+				eraseCookie("hp");
+				eraseCookie("password");
+				eraseCookie("fileInput");
+				eraseCookie("gender");
+				eraseCookie("kelas1");
+				eraseCookie("kelas2");
+				eraseCookie("kelas3");
+			}).error(function(x){
+				myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
+			});
+
+			/*var xhr = new XMLHttpRequest();
 			xhr.open("POST", urlnya+"/api/user/registerNewUser/", true);
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.send(JSON.stringify({
-				nama:username,
-				kota:kota,
-				no_hp:hp,
-				id_kelas:kelas,
-				password:password,
-				jenis_kelamin:gender,
-			}));
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send(formData);
+
+			
 			
 			
 			xhr.onreadystatechange = function() 
@@ -222,7 +263,7 @@ function setCookie(){
 				eraseCookie("kelas1");
 				eraseCookie("kelas2");
 				eraseCookie("kelas3");
-			};
+			};*/
 		}
 	}
 	
