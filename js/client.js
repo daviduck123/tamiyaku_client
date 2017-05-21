@@ -1,3 +1,6 @@
+var urlnya="http://localhost/tamiyaku-server";
+//var urlnya="http://server.neoalitcahya.com";
+
 function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
 }
@@ -43,49 +46,49 @@ function setCookie(){
 		
 		if(username=="")
 		{
-			alert("Silahkan isi nama anda");
+			myApp.alert('Silahkan isi nama anda', 'Perhatian!');
 		}
 		else
 		{
 			if(kota=="")
 			{
-				alert("Silahkan isi kota anda");
+				myApp.alert('Silahkan isi kota anda', 'Perhatian!');
 			}
 			else
 			{
 				if(hp=="")
 				{
-					alert("Silahkan isi nomor HP anda");
+					myApp.alert('Silahkan isi nomor HP anda', 'Perhatian!');
 				}
 				else
 				{
 					if (isNaN(parseFloat(hp)) && !isFinite(hp)) 
 					{
-						alert("Nomor HP harus angka");
+						myApp.alert('Nomor HP harus angka', 'Perhatian!');
 					} 
 					else 
 					{
 						if(password=="")
 						{
-							alert("Password harus diisi");
+							myApp.alert('Password harus diisi', 'Perhatian!');
 						}
 						else
 						{
 							if(password.length < 8)
 							{
-								alert("Password mininal 8 karakter");
+								myApp.alert('Password mininal 8 karakter', 'Perhatian!');
 							}
 							else
 							{
 								if(fileinput=="")
 								{
-									alert("Silahkan pilih foto anda");
+									myApp.alert('Silahkan pilih foto anda', 'Perhatian!');
 								}
 								else
 								{
 									if(gender=="")
 									{
-										alert("Silahkan pilih gender anda");
+										myApp.alert('Silahkan pilih gender anda', 'Perhatian!');
 									}
 									else
 									{
@@ -161,7 +164,7 @@ function setCookie(){
 		var tempKelas=kelas1+kelas2+kelas3;
 		if(tempKelas==0)
 		{
-			alert("Anda harus memilih minimal 1 kelas");
+			myApp.alert('Anda harus memilih minimal 1 kelas', 'Perhatian!');
 		}
 		else
 		{
@@ -180,7 +183,7 @@ function setCookie(){
 			}
 			
 			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "http://localhost/tamiyaku-server/api/user/registerNewUser/", true);
+			xhr.open("POST", urlnya+"/api/user/registerNewUser/", true);
 			xhr.setRequestHeader('Content-Type', 'application/json');
 			xhr.send(JSON.stringify({
 				nama:username,
@@ -203,11 +206,11 @@ function setCookie(){
 					if(jsonObj.status==true)
 					{
 						mainView.router.loadPage('login.html');
-						alert("Data anda berhasil dibuat, silahkan login");
+						myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
 					}
 					else
 					{
-						alert("Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi");
+						myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
 					}
 				  }
 				eraseCookie("username");
@@ -230,30 +233,30 @@ function setCookie(){
 		
 		if(no_hp=="")
 		{
-			alert("Silahkan isi nomor HP anda");
+			myApp.alert('Silahkan isi nomor HP anda', 'Perhatian!');
 		}
 		else
 		{
 			if (isNaN(parseFloat(no_hp)) && !isFinite(no_hp)) 
 			{
-				alert("Nomor HP harus angka");
+				myApp.alert('Nomor HP harus angka', 'Perhatian!');
 			}
 			else
 			{
 				if(password=="")
 				{
-					alert("Silahkan isi password anda");
+					myApp.alert('Silahkan isi password anda', 'Perhatian!');
 				}
 				else
 				{
 					if(password.length < 8)
 					{
-						alert("Password minimal berisi 8 karakter");
+						myApp.alert('Password minimal berisi 8 karakter', 'Perhatian!');
 					}
 					else
 					{
 						var xhr = new XMLHttpRequest();
-						xhr.open("POST", "http://localhost/tamiyaku-server/api/login/index/", true);
+						xhr.open("POST", urlnya+"/api/login/index/", true);
 						xhr.setRequestHeader('Content-Type', 'application/json');
 						xhr.send(JSON.stringify({
 							no_hp:no_hp,
@@ -281,11 +284,11 @@ function setCookie(){
 									document.cookie = expires;
 									//var x = document.cookie;
 									//alert(x);
-									alert("Selamat datang kembali user id="+getcookie("active_user_id")+", cookies berakhir pada="+getcookie("expires"));
+									myApp.alert('Hi user_id='+getcookie("active_user_id")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 								}
 								else
 								{
-									alert("Maaf data yang anda masukkan tidak cocok dengan data kami");
+									myApp.alert('Maaf data yang anda masukkan tidak cocok dengan data kami', 'Tidak ditemukan!');
 								}
 							  }
 						};
@@ -308,7 +311,7 @@ function setCookie(){
 			if(d.getTime()<dexpires.getTime())
 			{
 				mainView.router.loadPage('home.html');
-				alert("Selamat datang kembali user id="+getcookie("active_user_id")+", cookies berakhir pada="+getcookie("expires"));
+				myApp.alert('Hi user_id='+getcookie("active_user_id")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			}
 			else
 			{
@@ -323,6 +326,13 @@ function setCookie(){
 			eraseCookie("active_user_id");
 			eraseCookie("expires");
 		}
+	}
+	
+	function logout() {
+		myApp.closePanel();
+		mainView.router.loadPage('login.html');
+		eraseCookie("active_user_id");
+		eraseCookie("expires");
 	}
    
    
