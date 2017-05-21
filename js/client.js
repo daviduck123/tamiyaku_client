@@ -2,6 +2,19 @@ function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
 }
 
+function getcookie(cookiename){
+		var cookiestring  = document.cookie;
+		var cookiearray = cookiestring.split(';');
+		for(var i =0 ; i < cookiearray.length ; ++i)
+		{ 
+			if(cookiearray[i].trim().match(cookiename+'='))
+			{ 
+				var temparray = cookiearray[i].split('=');
+				return temparray[1];
+			}
+		} return null;
+	}
+
 function setCookie(){
 	//pengecekan inputan user
 		var username = document.getElementById("username").value;
@@ -145,77 +158,171 @@ function setCookie(){
 		var kelas2 = getcookie("kelas2");
 		//alert(kelas2);
 		var kelas3 = getcookie("kelas3");
-		//alert(kelas3);
-
-		var kelas= new Array();
-		if(kelas1!=null && kelas1!="")
+		var tempKelas=kelas1+kelas2+kelas3;
+		if(tempKelas==0)
 		{
-			kelas.push(1);
+			alert("Anda harus memilih minimal 1 kelas");
 		}
-		if(kelas2!=null && kelas2!="")
+		else
 		{
-			kelas.push(2);
+			var kelas= new Array();
+			if(kelas1!=null && kelas1!="")
+			{
+				kelas.push(1);
+			}
+			if(kelas2!=null && kelas2!="")
+			{
+				kelas.push(2);
+			}
+			if(kelas3!=null && kelas3!="")
+			{
+				kelas.push(3);
+			}
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "http://localhost/tamiyaku-server/api/user/registerNewUser/", true);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.send(JSON.stringify({
+				nama:username,
+				kota:kota,
+				no_hp:hp,
+				id_kelas:kelas,
+				password:password,
+				jenis_kelamin:gender,
+			}));
+			
+			
+			xhr.onreadystatechange = function() 
+			{ 
+				// If the request completed, close the extension popup
+				if (xhr.readyState == 4)
+				  if (xhr.status == 200)
+				  {
+					var json_data = xhr.responseText; 
+					var jsonObj = JSON.parse(json_data);
+					if(jsonObj.status==true)
+					{
+						mainView.router.loadPage('login.html');
+						alert("Data anda berhasil dibuat, silahkan login");
+					}
+					else
+					{
+						alert("Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi");
+					}
+				  }
+				eraseCookie("username");
+				eraseCookie("kota");
+				eraseCookie("hp");
+				eraseCookie("password");
+				eraseCookie("fileInput");
+				eraseCookie("gender");
+				eraseCookie("kelas1");
+				eraseCookie("kelas2");
+				eraseCookie("kelas3");
+			};
 		}
-		if(kelas3!=null && kelas3!="")
-		{
-			kelas.push(3);
-		}
-		
-		var json=JSON.stringify({
-			nama:username,
-			kota:kota,
-			no_hp:hp,
-			id_kelas:kelas,
-			password:password,
-			jenis_kelamin:gender,
-		});
-		
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost/tamiyaku-server/api/user/registerNewUser/", true);
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.send(JSON.stringify({
-			nama:username,
-			kota:kota,
-			no_hp:hp,
-			id_kelas:kelas,
-			password:password,
-			jenis_kelamin:gender,
-		}));
-		
-		
-		xhr.onreadystatechange = function() 
-        { 
-            // If the request completed, close the extension popup
-            if (xhr.readyState == 4)
-			  if (xhr.status == 200)
-			  {
-				var json_data = xhr.responseText; 
-				alert(json_data);
-			  }
-			eraseCookie("username");
-			eraseCookie("kota");
-			eraseCookie("hp");
-			eraseCookie("password");
-			eraseCookie("fileInput");
-			eraseCookie("gender");
-			eraseCookie("kelas1");
-			eraseCookie("kelas2");
-			eraseCookie("kelas3");
-        };
-		
-		
 	}
 	
-   
-   function getcookie(cookiename){
-		var cookiestring  = document.cookie;
-		var cookiearray = cookiestring.split(';');
-		for(var i =0 ; i < cookiearray.length ; ++i)
-		{ 
-			if(cookiearray[i].trim().match(cookiename+'='))
-			{ 
-				var temparray = cookiearray[i].split('=');
-				return temparray[1];
+	function loginPost() {
+		var no_hp = document.getElementById("no_hp").value;
+		var password = document.getElementById("password").value;
+		
+		
+		if(no_hp=="")
+		{
+			alert("Silahkan isi nomor HP anda");
+		}
+		else
+		{
+			if (isNaN(parseFloat(no_hp)) && !isFinite(no_hp)) 
+			{
+				alert("Nomor HP harus angka");
 			}
-		} return null;
+			else
+			{
+				if(password=="")
+				{
+					alert("Silahkan isi password anda");
+				}
+				else
+				{
+					if(password.length < 8)
+					{
+						alert("Password minimal berisi 8 karakter");
+					}
+					else
+					{
+						var xhr = new XMLHttpRequest();
+						xhr.open("POST", "http://localhost/tamiyaku-server/api/login/index/", true);
+						xhr.setRequestHeader('Content-Type', 'application/json');
+						xhr.send(JSON.stringify({
+							no_hp:no_hp,
+							password:password,
+						}));
+						
+						xhr.onreadystatechange = function() 
+						{ 
+							// If the request completed, close the extension popup
+							if (xhr.readyState == 4)
+							  if (xhr.status == 202)
+							  {
+								var json_data = xhr.responseText; 
+								var jsonObj = JSON.parse(json_data);
+								if(jsonObj.status=="TRUE")
+								{
+									var d = new Date();
+									//exdays var lama harinya
+									var exdays=1;
+									d.setTime(d.getTime() + (exdays*24*60*60*1000));
+									var expires = "expires=" + d.toGMTString()+";";
+									
+									mainView.router.loadPage('home.html');
+									document.cookie = "active_user_id="+jsonObj.id+";";
+									document.cookie = expires;
+									//var x = document.cookie;
+									//alert(x);
+									alert("Selamat datang kembali user id="+getcookie("active_user_id")+", cookies berakhir pada="+getcookie("expires"));
+								}
+								else
+								{
+									alert("Maaf data yang anda masukkan tidak cocok dengan data kami");
+								}
+							  }
+						};
+					}
+				}
+			}
+		}
 	}
+	
+	function cekLoginAktif() {
+		var active_user_id="";
+		var expires="";
+		active_user_id=getcookie("active_user_id");
+		expires=getcookie("expires");
+		
+		if(active_user_id!="")
+		{
+			var d = new Date();
+			var dexpires = new Date(expires);
+			if(d.getTime()<dexpires.getTime())
+			{
+				mainView.router.loadPage('home.html');
+				alert("Selamat datang kembali user id="+getcookie("active_user_id")+", cookies berakhir pada="+getcookie("expires"));
+			}
+			else
+			{
+				mainView.router.loadPage('login.html');
+				eraseCookie("active_user_id");
+				eraseCookie("expires");
+			}
+		}
+		else
+		{
+			mainView.router.loadPage('login.html');
+			eraseCookie("active_user_id");
+			eraseCookie("expires");
+		}
+	}
+   
+   
