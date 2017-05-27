@@ -278,7 +278,6 @@ function loginPost() {
 						contentType: false,
 						processData: false
 					}).done(function(z){
-						console.log(coba);
 						var d = new Date();
 					//exdays var lama harinya
 						var exdays=1;
@@ -309,7 +308,7 @@ function cekLoginAktif() {
 	active_user_email=getcookie("active_user_email");
 	expires=getcookie("expires");
 	
-	if(active_user_email!="")
+	if(active_user_email!="" && active_user_email!=null)
 	{
 		var d = new Date();
 		var dexpires = new Date(expires);
@@ -319,7 +318,7 @@ function cekLoginAktif() {
 			myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 		}
 		else
-		{
+		{	
 			myApp.alert('Sesi waktu anda habis, silahkan lakukan login kembali!');
 			mainView.router.loadPage('login.html');
 			eraseCookie("active_user_email");
@@ -345,7 +344,8 @@ function statusPost() {
 	//ON PROGRESS
 	var email = document.getElementById("active_user_email").value;
 	var status = document.getElementById("status").value;
-	//alert(kota);
+	
+	
 	var email = getcookie("email");
 	//alert(email);
 	var password = getcookie("password");
