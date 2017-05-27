@@ -32,6 +32,7 @@ function setCookie(){
 	var kota = document.getElementById("kota").value;
 	var email = document.getElementById("email").value;
 	var password = document.getElementById("password").value;
+	var con_password = document.getElementById("con_password").value;
 	var fileinput = document.getElementById("fileInput").value;
 	var gender;
 	var radios = document.getElementsByName('gender') ;
@@ -90,35 +91,50 @@ function setCookie(){
 						}
 						else
 						{
-							if(fileinput=="")
+							if(con_password=="")
 							{
-								myApp.alert('Silahkan pilih foto anda', 'Perhatian!');
+								myApp.alert('Konfirmasi Password harus diisi', 'Perhatian!');
 							}
 							else
 							{
-								if(gender=="")
+								if(con_password!=password)
 								{
-									myApp.alert('Silahkan pilih gender anda', 'Perhatian!');
+									myApp.alert('Password dan Konfirmasi Password tidak sama', 'Perhatian!');
 								}
 								else
 								{
-									var blob=$("#fileInput")[0].files[0];
-									var formData = new FormData();
-									formData.append("nama", username);
-									formData.append("kota", kota);
-									formData.append("email", email);
-									formData.append("password", password);
-									formData.append("jenis_kelamin", gender);
-									formData.append("file", blob);
-										//pake variable ini tok ckup
-									globalCookie["formData"] = formData;
-										document.cookie = "username="+username+";";
-									document.cookie = "kota="+kota+";";
-									document.cookie = "email="+email+";";
-									document.cookie = "password="+password+";";		
-									document.cookie = "fileInput="+formData+";";
-									document.cookie = "gender="+gender+";";
-									mainView.router.loadPage('pilihKelas.html');
+								
+									if(fileinput=="")
+									{
+										myApp.alert('Silahkan pilih foto anda', 'Perhatian!');
+									}
+									else
+									{
+										if(gender=="")
+										{
+											myApp.alert('Silahkan pilih gender anda', 'Perhatian!');
+										}
+										else
+										{
+											var blob=$("#fileInput")[0].files[0];
+											var formData = new FormData();
+											formData.append("nama", username);
+											formData.append("kota", kota);
+											formData.append("email", email);
+											formData.append("password", password);
+											formData.append("jenis_kelamin", gender);
+											formData.append("file", blob);
+												//pake variable ini tok ckup
+											globalCookie["formData"] = formData;
+												document.cookie = "username="+username+";";
+											document.cookie = "kota="+kota+";";
+											document.cookie = "email="+email+";";
+											document.cookie = "password="+password+";";		
+											document.cookie = "fileInput="+formData+";";
+											document.cookie = "gender="+gender+";";
+											mainView.router.loadPage('pilihKelas.html');
+										}
+									}
 								}
 							}
 						}
