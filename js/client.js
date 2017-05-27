@@ -278,16 +278,24 @@ function loginPost() {
 						contentType: false,
 						processData: false
 					}).done(function(z){
-						var d = new Date();
-					//exdays var lama harinya
-						var exdays=1;
-						d.setTime(d.getTime() + (exdays*24*60*60*1000));
-						var expires = "expires=" + d.toGMTString()+";";
-							
-						mainView.router.loadPage('home.html');
-						document.cookie = "active_user_email="+email+";";
-						document.cookie = expires;
-						myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+						
+						if(z.status=="TRUE")
+						{
+							var d = new Date();
+							//exdays var lama harinya
+							var exdays=1;
+							d.setTime(d.getTime() + (exdays*24*60*60*1000));
+							var expires = "expires=" + d.toGMTString()+";";
+								
+							mainView.router.loadPage('home.html');
+							document.cookie = "active_user_email="+email+";";
+							document.cookie = expires;
+							myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+						}
+						else
+						{
+							myApp.alert('Maaf Email dan Password yang anda masukkan tidak sesuai dengan data kami!','Perhatian!');
+						}
 						
 					}).fail(function(x){
 						myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
