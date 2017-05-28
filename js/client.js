@@ -26,12 +26,56 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+function storeImage(profilePicData, imageName) {
+
+    localStorage.setItem(imageName,profilePicData);
+}
+
+function getImage(imageName) {
+
+  if ( localStorage.getItem(imageName)) {
+	  //kalo ada gambarnya
+    return localStorage.getItem(imageName);
+  }
+  else {
+	  //kalo gaada gambarnya
+	return "ksosong.png";
+  }
+}
+
+function getKota() {
+	var link=urlnya+'/api/kota/';
+		console.log(link);
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var myOptions = z;
+
+			$.each(myOptions, function(i, el) 
+			{ 
+			   $('#kota_register').append( new Option(el.nama,el.id) );
+			});
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
+		}); 
+}
+//--------------------------------------------------------------------------------------------------------------------INDEX
+function gotoRegister(){
+	mainView.router.loadPage('daftar.html');
+	getKota();
+}
+//--------------------------------------------------------------------------------------------------------------------REGISTER
 function setCookie(){
 //pengecekan inputan user
 	var username = document.getElementById("username").value;
-	var kota = document.getElementById("kota").value;
-	var email = document.getElementById("email").value;
-	var password = document.getElementById("password").value;
+	var kota = $('#kota_register').find(":selected").val();
+	//var kota = document.getElementById("kota").value;
+	var email = document.getElementById("email_register").value;
+	var password = document.getElementById("password_register").value;
 	var con_password = document.getElementById("con_password").value;
 	var fileinput = document.getElementById("fileInput").value;
 	var gender;
@@ -60,9 +104,9 @@ function setCookie(){
 	}
 	else
 	{
-		if(kota=="")
+		if(kota=="" || kota==0 || kota=="0")
 		{
-			myApp.alert('Silahkan isi kota anda', 'Perhatian!');
+			myApp.alert('Silahkan pilih kota anda', 'Perhatian!');
 		}
 		else
 		{
@@ -119,7 +163,7 @@ function setCookie(){
 											var blob=$("#fileInput")[0].files[0];
 											var formData = new FormData();
 											formData.append("nama", username);
-											formData.append("kota", kota);
+											formData.append("id_kota", kota);
 											formData.append("email", email);
 											formData.append("password", password);
 											formData.append("jenis_kelamin", gender);
@@ -127,7 +171,7 @@ function setCookie(){
 												//pake variable ini tok ckup
 											globalCookie["formData"] = formData;
 												document.cookie = "username="+username+";";
-											document.cookie = "kota="+kota+";";
+											document.cookie = "id_kota="+kota+";";
 											document.cookie = "email="+email+";";
 											document.cookie = "password="+password+";";		
 											document.cookie = "fileInput="+formData+";";
@@ -261,10 +305,10 @@ function registerPost() {
 		});
 	}
 }
-
+//---------------------------------------------------------------------------------------------------------------------------------------LOGIN
 function loginPost() {
-	var email = document.getElementById("email").value;
-	var password = document.getElementById("password").value;
+	var email = document.getElementById("email_login").value;
+	var password = document.getElementById("password_login").value;
 	
 	
 	if(email=="")
@@ -292,9 +336,6 @@ function loginPost() {
 				}
 				else
 				{
-					//var formData = new FormData();
-					//formData.append("email",email);
-					//formData.append("password",password);
 					var link=urlnya+'/api/login/index/';
 					var formData=JSON.stringify({
 						email:email,
@@ -321,6 +362,8 @@ function loginPost() {
 							document.cookie = "active_user_email="+email+";";
 							document.cookie = expires;
 							myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+							storeImage(z.user.foto,'profilePic');
+							document.getElementById('profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
 						}
 						else
 						{
@@ -354,6 +397,7 @@ function cekLoginAktif() {
 		{
 			mainView.router.loadPage('home.html');
 			myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+			document.getElementById('profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
 		}
 		else
 		{	
@@ -377,7 +421,7 @@ function logout() {
 	eraseCookie("active_user_email");
 	eraseCookie("expires");
 }
-
+//------------------------------------------------------------------------------------------------------------------------------------------------HOME
 function komentariPost(clicked_id) {
 	//ON PROGRESS
 	var email = getcookie("active_user_email");
