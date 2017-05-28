@@ -55,7 +55,6 @@ function getImage(imageName) {
 
 function getKota() {
 	var link=urlnya+'/api/kota/';
-		console.log(link);
 		$.ajax({
 		    url: link,
 		    type: 'GET',
@@ -425,6 +424,7 @@ function cekLoginAktif() {
 						
 					});*/
 			mainView.router.loadPage('home.html');
+			getAllPost();
 			myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			//document.getElementById('.profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
@@ -498,6 +498,26 @@ function komentariPost(clicked_id) {
 			}
 		}
 	});
+}
+function getAllPost() {
+var id_user = getcookie("active_user_id");
+var formData=JSON.stringify({
+					id_user:id_user,
+				});
+var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			
+			console.log(z);
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+		}); 
 }
 
 function statusPost() {
