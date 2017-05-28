@@ -9,17 +9,17 @@ function eraseCookie(name) {
 }
 
 function getcookie(cookiename){
-		var cookiestring  = document.cookie;
-		var cookiearray = cookiestring.split(';');
-		for(var i =0 ; i < cookiearray.length ; ++i)
+	var cookiestring  = document.cookie;
+	var cookiearray = cookiestring.split(';');
+	for(var i =0 ; i < cookiearray.length ; ++i)
+	{ 
+		if(cookiearray[i].trim().match(cookiename+'='))
 		{ 
-			if(cookiearray[i].trim().match(cookiename+'='))
-			{ 
-				var temparray = cookiearray[i].split('=');
-				return temparray[1];
-			}
-		} return null;
-	}
+			var temparray = cookiearray[i].split('=');
+			return temparray[1];
+		}
+	} return null;
+}
 	
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -243,7 +243,21 @@ function registerPost() {
 			eraseCookie("kelas2");
 			eraseCookie("kelas3");
 		}).fail(function(x){
-			myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
+			myApp.alert(x.message+" "+x.error, 'Perhatian!');
+			
+			eraseCookie("username");
+			eraseCookie("kota");
+			eraseCookie("email");
+			eraseCookie("password");
+			eraseCookie("fileInput");
+			eraseCookie("gender");
+			eraseCookie("kelas1");
+			eraseCookie("kelas2");
+			eraseCookie("kelas3");
+			/*
+			for (var pair of formData.entries()) {
+				console.log(pair[0]+ ', ' + pair[1]); 
+			}*/
 		});
 	}
 }
@@ -364,55 +378,87 @@ function logout() {
 	eraseCookie("expires");
 }
 
+function komentariPost(clicked_id) {
+	//ON PROGRESS
+	var email = getcookie("active_user_email");
+	var id_post = "";
+	$(document).ready(function(){
+		
+		id_post=clicked_id;
+		var vardeksripsi="deskripsi_"+id_post;
+			var vartable="table_"+id_post;
+		
+		var table = document.getElementById(vartable).value;
+		
+		console.log(vartable);
+		
+		if($("#" + vardeksripsi).length == 0) {
+				$("#"+vartable).find('tbody')
+			.append(" <tr> <td colspan='2'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+		} 
+		else 
+		{
+			var deskripsi = document.getElementById(vardeksripsi).value;
+			if(deskripsi=="")
+			{
+				myApp.alert('Anda belum mengisi komentar', 'Perhatian!');
+			}
+			else
+			{
+				var link=urlnya+'/api/login/index/';
+				var formData=JSON.stringify({
+					email:email,
+					id_post:id_post,
+					deskripsi:deskripsi,
+				});
+				myApp.alert(formData, 'Data Dikirim!');
+				
+				/*
+				$.ajax({
+					url: link,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false
+				}).done(function(z){
+					mainView.router.loadPage('home.html');
+					//myApp.alert('Komentar dibuat', 'Berhasil!');
+				}).fail(function(x){
+					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+				});
+				*/
+			}
+		}
+	});
+}
+
 function statusPost() {
 	//ON PROGRESS
-	var email = document.getElementById("active_user_email").value;
+	var email = getcookie("active_user_email");
 	var status = document.getElementById("status").value;
 	
+	var link=urlnya+'/api/login/index/';
 	
-	var email = getcookie("email");
-	//alert(email);
-	var password = getcookie("password");
-	//alert(password);
-	var fileInput = getcookie("fileInput");
-	//alert(fileInput);
-	var gender = getcookie("gender");
-	if(gender=="male")
-		gender="Laki-laki";
-	else if(gender=="female")
-		gender="Perempuan";
-	//alert(gender);
-	var kelas1 = getcookie("kelas1");
-	//alert(kelas1);
-	var kelas2 = getcookie("kelas2");
-	//alert(kelas2);
-	var kelas3 = getcookie("kelas3");
-		var tempKelas=kelas1+kelas2+kelas3;
-	if(tempKelas==0)
+	if(status=="")
 	{
-		myApp.alert('Anda harus memilih minimal 1 kelas', 'Perhatian!');
+		myApp.alert('Anda belum mengisi status anda', 'Perhatian!');
 	}
 	else
 	{
-		var kelas= new Array();
-		if(kelas1!=null && kelas1!="")
-		{
-			kelas.push(1);
-		}
-		if(kelas2!=null && kelas2!="")
-		{
-			kelas.push(2);
-		}
-		if(kelas3!=null && kelas3!="")
-		{
-			kelas.push(3);
-		}
-			//di ambil variable e, pas d tambahin tok
-		var formData = globalCookie["formData"];
-		formData.append("id_kelas",kelas);
-		var link=urlnya+'/api/user/registerNewUser';
+		var blob=$("#fileInput")[0].files[0];
+		var formData = new FormData();
+		formData.append("email", email);
+		formData.append("status", status);
+		formData.append("file", blob);
 		
-		//ajax e aku mek iso jalan seng iki kwkwkwkw
+		var coba="";
+		for (var pair of formData.entries()) {
+						coba+=pair[0]+ ', ' + pair[1]; 
+		}
+		
+		myApp.alert(coba, 'Data Dikirim!');
+		
+		/*
 		$.ajax({
 		    url: link,
 		    data: formData,
@@ -420,22 +466,13 @@ function statusPost() {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			mainView.router.loadPage('login.html');
-			myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
+			mainView.router.loadPage('home.html');
+			//myApp.alert('Berrhasil bikin status', 'Berhasil!');
 			
-			eraseCookie("username");
-			eraseCookie("kota");
-			eraseCookie("email");
-			eraseCookie("password");
-			eraseCookie("fileInput");
-			eraseCookie("gender");
-			eraseCookie("kelas1");
-			eraseCookie("kelas2");
-			eraseCookie("kelas3");
 		}).fail(function(x){
-			myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
+			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 		});
+		*/
 	}
 }
-  
    
