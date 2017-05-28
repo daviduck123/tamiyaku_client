@@ -516,7 +516,6 @@ function statusPost() {
 		var blob=$("#fileInput")[0].files[0];
 		var formData = new FormData();
 		formData.append("id_user", id_user);
-		formData.append("id_grup", null);
 		formData.append("deskripsi", status);
 		formData.append("file", blob);
 
