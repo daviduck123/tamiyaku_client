@@ -3,9 +3,19 @@ var urlnya="http://localhost/tamiyaku-server";
 
 var globalCookie = [];
 
-
 function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
+}
+
+
+function logout() {
+	myApp.closePanel();
+	mainView.router.loadPage('login.html');
+	eraseCookie("active_user_id");
+	eraseCookie("active_user_nama");
+	eraseCookie("active_user_email");
+	eraseCookie("active_user_jenis_kelamin");
+	eraseCookie("expires");
 }
 
 function getcookie(cookiename){
@@ -310,7 +320,7 @@ function loginPost() {
 	var email = document.getElementById("email_login").value;
 	var password = document.getElementById("password_login").value;
 	
-	
+	$(document).ready(function() {
 	if(email=="")
 	{
 		myApp.alert('Silahkan isi E-Mail anda', 'Perhatian!');
@@ -359,11 +369,15 @@ function loginPost() {
 							var expires = "expires=" + d.toGMTString()+";";
 								
 							mainView.router.loadPage('home.html');
-							document.cookie = "active_user_email="+email+";";
+							document.cookie = "active_user_id="+z.user.id+";";
+							document.cookie = "active_user_email="+z.user.email+";";
+							document.cookie = "active_user_nama="+z.user.nama+";";
+							document.cookie = "active_user_jenis_kelamin="+z.user.jenis_kelamin+";";
 							document.cookie = expires;
-							myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+							myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 							storeImage(z.user.foto,'profilePic');
-							document.getElementById('profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
+							
+							 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 						}
 						else
 						{
@@ -381,50 +395,60 @@ function loginPost() {
 			}
 		}
 	}
+	});
 }
 	
 function cekLoginAktif() {
-	var active_user_email="";
+	var active_user_id="";
 	var expires="";
-	active_user_email=getcookie("active_user_email");
+	active_user_id=getcookie("active_user_id");
 	expires=getcookie("expires");
 	
-	if(active_user_email!="" && active_user_email!=null)
+	if(active_user_id!="" && active_user_id!=null)
 	{
 		var d = new Date();
 		var dexpires = new Date(expires);
 		if(d.getTime()<dexpires.getTime())
 		{
+			/*ini coba
+			$.ajax({
+						url: link,
+						data: formData,
+						type: 'POST',
+						contentType: false,
+						processData: false
+					}).done(function(z){
+						
+					
+						
+					}).fail(function(x){
+						
+					});*/
 			mainView.router.loadPage('home.html');
-			myApp.alert('Hi user_id='+getcookie("active_user_email")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
-			document.getElementById('profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
+			myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+			//document.getElementById('.profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
+			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 		}
 		else
 		{	
 			myApp.alert('Sesi waktu anda habis, silahkan lakukan login kembali!');
 			mainView.router.loadPage('login.html');
-			eraseCookie("active_user_email");
+			eraseCookie("active_user_id");
 			eraseCookie("expires");
 		}
 	}
 	else
 	{
 		mainView.router.loadPage('login.html');
-		eraseCookie("active_user_email");
+		eraseCookie("active_user_id");
 		eraseCookie("expires");
 	}
 }
 
-function logout() {
-	myApp.closePanel();
-	mainView.router.loadPage('login.html');
-	eraseCookie("active_user_email");
-	eraseCookie("expires");
-}
 //------------------------------------------------------------------------------------------------------------------------------------------------HOME
 function komentariPost(clicked_id) {
 	//ON PROGRESS
-	var email = getcookie("active_user_email");
+	var id_user = getcookie("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		
@@ -451,7 +475,7 @@ function komentariPost(clicked_id) {
 			{
 				var link=urlnya+'/api/login/index/';
 				var formData=JSON.stringify({
-					email:email,
+					id_user:id_user,
 					id_post:id_post,
 					deskripsi:deskripsi,
 				});
@@ -478,10 +502,10 @@ function komentariPost(clicked_id) {
 
 function statusPost() {
 	//ON PROGRESS
-	var email = getcookie("active_user_email");
+	var id_user = getcookie("active_user_id");
 	var status = document.getElementById("status").value;
 	
-	var link=urlnya+'/api/login/index/';
+	var link=urlnya+'/api/post/createPost/';
 	
 	if(status=="")
 	{
@@ -491,18 +515,11 @@ function statusPost() {
 	{
 		var blob=$("#fileInput")[0].files[0];
 		var formData = new FormData();
-		formData.append("email", email);
-		formData.append("status", status);
+		formData.append("id_user", id_user);
+		formData.append("id_grup", "");
+		formData.append("deskripsi", status);
 		formData.append("file", blob);
 		
-		var coba="";
-		for (var pair of formData.entries()) {
-						coba+=pair[0]+ ', ' + pair[1]; 
-		}
-		
-		myApp.alert(coba, 'Data Dikirim!');
-		
-		/*
 		$.ajax({
 		    url: link,
 		    data: formData,
@@ -511,12 +528,22 @@ function statusPost() {
 		    processData: false
 		}).done(function(z){
 			mainView.router.loadPage('home.html');
-			//myApp.alert('Berrhasil bikin status', 'Berhasil!');
+			var coba="";
+			for (var pair of formData.entries()) {
+							coba+=pair[0]+ ', ' + pair[1]; 
+			}
+			
+			myApp.alert(coba, 'Data Dikirim!');
 			
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var pair of formData.entries()) {
+							coba+=pair[0]+ ', ' + pair[1]; 
+			}
+			console.log(coba);
 		});
-		*/
+		
 	}
 }
    
