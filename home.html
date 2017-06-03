@@ -3,7 +3,7 @@
       <!-- Your main view, should have "view-main" class-->
       <div class="view view-main">
         <!-- Top Navbar-->
-        
+			
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
@@ -42,15 +42,30 @@
             </form>
                     <br>
                     <br>
-					<div id="isi_postingan">
-					<!-- tempat semua postingan -->
-					</div>
+					   <div id='pullToRefreshHome' class="page-content pull-to-refresh-content" data-ptr-distance="55">
+							<!-- Default pull to refresh layer-->
+							<div class="pull-to-refresh-layer">
+							  <div class="preloader"></div>
+							  <div class="pull-to-refresh-arrow"></div>
+							</div>
+							<div id="isi_postingan">
+							<!-- tempat semua postingan -->
+							</div>
+							 <!-- usual content below -->
+							<div class="list-block">
+						 <p>Just pull page down to let the magic happen.</p>
+						</div>
+					  </div><!--- tutup pull refresh--->
+					</div> 
                   </div>
                 </div>
               </div>
-             
             </div>
           </div>
+		  
+		  
+		  
+		  
         </div>
       </div>
     </div>

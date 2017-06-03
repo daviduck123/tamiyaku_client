@@ -368,6 +368,7 @@ function loginPost() {
 							var expires = "expires=" + d.toGMTString()+";";
 								
 							mainView.router.loadPage('home.html');
+							getAllPost() ;
 							document.cookie = "active_user_id="+z.user.id+";";
 							document.cookie = "active_user_email="+z.user.email+";";
 							document.cookie = "active_user_nama="+z.user.nama+";";
@@ -473,15 +474,14 @@ function komentariPost(clicked_id) {
 			}
 			else
 			{
-				var link=urlnya+'/api/login/index/';
+				var link=urlnya+'/api/komentar/';
 				var formData=JSON.stringify({
 					id_user:id_user,
 					id_post:id_post,
 					deskripsi:deskripsi,
 				});
-				myApp.alert(formData, 'Data Dikirim!');
+				//myApp.alert(formData, 'Data Dikirim!');
 				
-				/*
 				$.ajax({
 					url: link,
 					data: formData,
@@ -490,11 +490,10 @@ function komentariPost(clicked_id) {
 					processData: false
 				}).done(function(z){
 					mainView.router.loadPage('home.html');
-					//myApp.alert('Komentar dibuat', 'Berhasil!');
+					myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
-				*/
 			}
 		}
 	});
@@ -518,18 +517,18 @@ var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_user;
 							coba+=pair['id']+"|"; 
 							dataLength++;
 			}
-			console.log(coba);
-			console.log(z);
+			//console.log(coba);
+			//console.log(z);
 			
 			for(var i=0;i<dataLength;i++)
 			{
 				if(z[i]['foto']!="")
 				{
-					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+i+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr><tr><td colspan='2' ><img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'></td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+i+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
+					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr><tr><td colspan='2' ><img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'></td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
 				}
 				else
 				{
-					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+i+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+i+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
+					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
 				}
 			}
 			
@@ -565,6 +564,7 @@ function statusPost() {
 		    processData: false
 		}).done(function(z){
 			mainView.router.loadPage('home.html');
+			getAllPost();
 			/*var coba="";
 			for (var pair of formData.entries()) {
 							coba+=pair[0]+ ', ' + pair[1]; 

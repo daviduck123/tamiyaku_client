@@ -26,10 +26,22 @@ myApp.onPageInit('index', function (page) {
     
     $$('.create-page').on('click', function () {
         createContentPage();
-    });
+    });																					
 
 });
 
+// Pull to refresh content
+var ptrContent = $$('.pull-to-refresh-content');
+ 
+ ptrContent.on('refresh', function (e) {
+        // Emulate 2s loading
+        setTimeout(function () {
+			console.log("aaa");
+            myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
+        }, 2000);
+    });
+	
+myApp.initPullToRefresh("#pullToRefreshHome");
 
 // Generate dynamic page
 var dynamicPageIndex = 0;
