@@ -22,8 +22,6 @@ myApp.onPageInit('about', function (page) {
     });
 });
 myApp.onPageInit('index', function (page) {
-    // run createContentPage func after link was clicked
-    
     $$('.create-page').on('click', function () {
         createContentPage();
     });																					
@@ -31,26 +29,20 @@ myApp.onPageInit('index', function (page) {
 });
 
 myApp.onPageInit('buatGrup', function (page) {
-    // run createContentPage func after link was clicked
-    
-	console.log("masuk buat grup");
 	getKotaGrup();
 });
 
 
-
 myApp.onPageInit('home', function (page) {
-    // run createContentPage func after link was clicked
-    
-	console.log("masuk home");
 	getAllPost();
 });
 
 myApp.onPageInit('daftar', function (page) {
-    // run createContentPage func after link was clicked
-    
-	console.log("masuk daftar");
 	getKota();
+});
+
+$$('.panel-left').on('panel:opened', function () {
+    //myApp.alert('Left panel opened!');
 });
 
 
