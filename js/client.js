@@ -455,15 +455,14 @@ function komentariPost(clicked_id) {
 		
 		id_post=clicked_id;
 		var vardeksripsi="deskripsi_"+id_post;
-			var vartable="table_"+id_post;
+		var vartable="table_"+id_post;
 		
 		var table = document.getElementById(vartable).value;
 		
-		console.log(vartable);
+		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody')
-			.append(" <tr> <td colspan='2'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				$("#"+vartable).find('tbody').append(" <tr> <td><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
 		} 
 		else 
 		{
@@ -498,12 +497,102 @@ function komentariPost(clicked_id) {
 		}
 	});
 }
+function bacaKomentar(clicked_id) {
+	//ON PROGRESS
+	var id_post = clicked_id;
+	
+	if($("#isi_komentar_"+id_post).length == 0) 
+	{
+		
+			$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_post='+id_post;
+				
+			$.ajax({
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				
+				if(z.length>0)
+				{
+					var html= "<div  id='isi_komentar_"+id_post+"'>";
+					for(var i=0;i<z.length;i++)
+					{
+						//if(z[i]['foto']!="")
+						//{
+							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
+							html += 			"<tr>";
+							html += 				"<td rowspan='2'>";
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 				"</td>";
+							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							html += 			"</tr>";
+							html += 			"<tr>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+							html += 			"</tr>";
+							html += 		"</table>";
+							
+							//$("#kolom_komentar_"+clicked_id).append(html);
+						//}
+						//else
+						//{																													
+							
+						//}
+					}
+					html +=  "</div>";
+					console.log(html);
+					$("#kolom_komentar_"+clicked_id).append(html);
+				}
+				else
+				{
+					//nggak ada yang komentar
+				}
+				//console.log(z);
+				/*
+				for(var i=0;i<dataLength;i++)
+				{
+					if(z[i]['foto']!="")
+					{
+						var html=		"<table id='table_"+z[i]['id']+"' style='background-color:#e6e6e6;'  width='100%;'>";
+						html += 			"<tr>";
+						html += 				"<td rowspan='2'>";
+						html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 				"</td>";
+						html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+						html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+						html += 			"</tr>";
+						html += 			"<tr>";
+						html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+						html += 			"</tr>";
+						html += 		"</table>";
+					}
+					else
+					{
+						
+					}
+				}
+				*/
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+	} 
+	else 
+	{
+		$("#isi_komentar_"+id_post).remove();
+		//$("#table_"+id_post).append("<div id='kolom_komentar_"+z[i]['id']+"'></div>");
+	}
+	
+}
 function getAllPost() {
 var id_user = getcookie("active_user_id");
 var formData=JSON.stringify({
 					id_user:id_user,
 				});
-var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_user;
+var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
 
 		$.ajax({
 		    url: link,
@@ -524,11 +613,59 @@ var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_user;
 			{
 				if(z[i]['foto']!="")
 				{
-					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr><tr><td colspan='2' ><img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'></td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
+					var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2' >";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan").append(html);
 				}
 				else
 				{
-					$("#isi_postingan").append("<div style='margin-bottom:50px;'><table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'><tr><td rowspan='2'><img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'></td><td style='font-weight:bold;'>"+z[i]['id_user']+"</td></tr><tr><td style='font-size:10px;'>"+z[i]['created_at']+"</td></tr><tr><td colspan='2'>"+z[i]['deskripsi']+"</td></tr></table><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p><p style='margin-top:-5px; float:right; margin-right:10px;'>23 Komentar</p></div>");
+					
+					var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan").append(html);
 				}
 			}
 			
