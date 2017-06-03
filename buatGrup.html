@@ -1,0 +1,97 @@
+  
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="buatGrup" class="page">
+            <!-- Scrollable page content-->
+            <div class="page-content">
+             <form action="/action_page.php">
+            <center>
+            <img src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
+            </center>
+            <br>
+            <br>
+            <br>
+            <center>
+            <table style="margin-top:-30px;">
+                <tr>
+                    <td><p>Nama Grup</p></td>
+                    <td><input id="nama_grup" type="text" required></td>
+                </tr>
+                <!--<tr>
+                    <td><p>Alamat</p></td>
+                    <td><textarea style="resize:none; margin-top:10px; height:60px;"></textarea></td>
+                </tr>-->
+				<tr>
+                    <td><p>Kelas</p></td>
+					<td>
+					<select name="kelas_grup" id="kelas_grup">
+					  <option value="0">Pilih Kelas</option>
+					  <option value="1">STB</option>
+					  <option value="2">STO</option>
+					  <option value="3">Speed</option>
+					</select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Kota</p></td>
+					<td>
+					<select name="kota_grup" id="kota_grup">
+					  <option value="0">Pilih Kota</option>
+					</select>
+                    </td>
+                </tr>
+				<tr>
+                    <td><p>Lokasi</p></td>
+                    <td><input id="lokasi_grup" type="text" required></td>
+                </tr>
+                <tr>
+                    <td><p>Lokasi Peta</p></td>
+                    <div style="height:0px;overflow:hidden">
+                        <input type="file" id="fileInput" name="fileInput" accept="image/*"/>
+                        </div>
+					<td><p><a href="#" class="button"  onclick="gotoGoogleMap();" style="width:150px;">Pilih Lokasi..</a></p></td>
+                </tr>
+				<tr>
+					<td></td>
+					<td>
+						<div id="latlng_grup">
+							<div id="isi_latlng_grup">Lokasi belum ditentukan..</div>
+						</div>
+					</td>
+				</tr>
+                <tr>
+                    <td><p>Foto Profile</p></td>
+                    <div style="height:0px;overflow:hidden">
+                        <input type="file" id="fileInput_grup" name="fileInput" accept="image/*"/>
+                        </div>
+					<td><p><a href="#" class="button"  onclick="chooseFile();" style="width:150px;">Pilih Gambar..</a></p></td>
+                </tr>
+            </table><td><p><a href="#" class="button"  onclick="buatGrupPost();" style="width:250px;">Selesai..</a></p></td>
+            </center>
+              </div>
+              </form>
+              <div class="content-block-title">Side panels</div>
+              <div class="content-block">
+                <div class="row">
+                  <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
+                  <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<!-- About Popup -->
+  <div class="popup popup-about">
+    <div class="content-block">
+      <p>About</p>
+      <p><a href="#" class="close-popup">Close popup</a></p>
+      <p>Lorem ipsum dolor ...</p>
+    </div>
+  </div>
+	
+	
+	

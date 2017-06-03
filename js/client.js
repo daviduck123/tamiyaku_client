@@ -724,18 +724,116 @@ function gotoCreateGroup(){
 }
 
 function gotoGoogleMap(){
-	mainView.router.loadPage('bukaPeta.html');
-	var nama_grup = document.getElementById("nama_grup").value;
-	var kota = $('#kota_grup').find(":selected").val();
-	var kelas = $('#kelas_grup').find(":selected").val();
-	var lokasi = document.getElementById("lokasi_grup").value;
+	myApp.popup('.popup-about');
+	var popupHTML = '<div class="popup">'+
+                    '<div class="content-block">'+
+                      '<p>Silahkan pilih peta letak lokasi grup.</p>'+
+					  '<div id="petaku" style="width:330px; height:300px;"></div>'+
+                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
+                    '</div>'+
+                  '</div>'
+	myApp.popup(popupHTML);
 	
-	document.cookie = "nama_grup="+nama_grup+";";
-	document.cookie = "kota_grup="+kota+";";
-	document.cookie = "kelas_grup="+kelas+";";
-	document.cookie = "lokasi_grup="+lokasi+";";
-	
-	//console.log(nama_grup+" "+ kota +" "+kelas+" "+lokasi);
+	var map;
+	function showPosition(position) {
+		console.log("lat:"+position.coords.latitude+"\nlng:"+position.coords.longitude);
+		map = new GMaps({
+				div: '#petaku',
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+				click: function(e) {
+					alert('Silahkan geser marker ke lokasi yang anda inginkan!');
+				  },
+			});
+			
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+			
+			if(lat != null && lng != null)
+			{
+				var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
+				html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
+				html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+				html	+=	"</div>"
+				$("#isi_latlng_grup").remove();
+				$("#latlng_grup").append(html);
+			}
+			
+			map.addMarker({
+
+				lat: position.coords.latitude,
+				lng: position.coords.longitude,
+				draggable: true,
+				dragend: function(event) {
+					var lat = event.latLng.lat();
+					var lng = event.latLng.lng();
+					myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
+					
+					if(lat != null && lng != null)
+					{
+						var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
+						html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
+						html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+						html	+=	"</div>"
+						$("#isi_latlng_grup").remove();
+						$("#latlng_grup").append(html);
+					}
+				}
+			});
+	}
+    
+	$(document).ready(function(){
+		if (navigator.geolocation) 
+		{
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} 
+		else 
+		{ 
+			var lat = -7.2582548000000005;
+			var lng = 112.76117359999999;
+			
+			if(lat != null && lng != null)
+			{
+				var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
+				html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
+				html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+				html	+=	"</div>"
+				$("#isi_latlng_grup").remove();
+				$("#latlng_grup").append(html);
+			}
+			
+			map = new GMaps({
+				div: '#petaku',
+				lat: ﻿﻿-7.2582548000000005,
+				lng: 112.76117359999999,
+				click: function(e) {
+					alert('Silahkan geser marker ke lokasi yang anda inginkan!');
+				  },
+			});	
+			
+			map.addMarker({
+
+				lat:  ﻿-7.2582548000000005,
+				lng: 112.76117359999999,
+				draggable: true,
+				dragend: function(event) {
+					var lat = event.latLng.lat();
+					var lng = event.latLng.lng();
+					myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
+					
+					if(lat != null && lng != null)
+					{
+						var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
+						html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
+						html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+						html	+=	"</div>"
+						$("#isi_latlng_grup").remove();
+						$("#latlng_grup").append(html);
+					}
+				}
+			});
+		}
+	});	
 }
 
 
@@ -766,8 +864,8 @@ function buatGrupPost() {
 	var kota = $('#kota_grup').find(":selected").val();
 	var kelas = $('#kelas_grup').find(":selected").val();
 	var lokasi = document.getElementById("lokasi_grup").value;
-	var lat = getcookie("lat_grup");
-	var lng = getcookie("lng_grup");
+	var lat = document.getElementById("lat_grup").value;
+	var lng = document.getElementById("lng_grup").value;
 	var id_user = getcookie("active_user_id");
 	var fileinput = document.getElementById("fileInput").value;
 	
