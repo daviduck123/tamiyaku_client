@@ -7,7 +7,6 @@ function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
 }
 
-
 function logout() {
 	myApp.closePanel();
 	mainView.router.loadPage('login.html');
@@ -75,7 +74,7 @@ function getKota() {
 //--------------------------------------------------------------------------------------------------------------------INDEX
 function gotoRegister(){
 	mainView.router.loadPage('daftar.html');
-	getKota();
+	//getKota();
 }
 //--------------------------------------------------------------------------------------------------------------------REGISTER
 function setCookie(){
@@ -270,12 +269,11 @@ function registerPost() {
 		{
 			kelas.push(3);
 		}
-			//di ambil variable e, pas d tambahin tok
+		
 		var formData = globalCookie["formData"];
 		formData.append("id_kelas",kelas);
 		var link=urlnya+'/api/user/registerNewUser';
 		
-		//ajax e aku mek iso jalan seng iki kwkwkwkw
 		$.ajax({
 		    url: link,
 		    data: formData,
@@ -368,7 +366,7 @@ function loginPost() {
 							var expires = "expires=" + d.toGMTString()+";";
 								
 							mainView.router.loadPage('home.html');
-							getAllPost() ;
+							//getAllPost() ;
 							document.cookie = "active_user_id="+z.user.id+";";
 							document.cookie = "active_user_email="+z.user.email+";";
 							document.cookie = "active_user_nama="+z.user.nama+";";
@@ -425,7 +423,7 @@ function cekLoginAktif() {
 						
 					});*/
 			mainView.router.loadPage('home.html');
-			getAllPost();
+			//getAllPost();
 			myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			//document.getElementById('.profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
@@ -583,7 +581,6 @@ function bacaKomentar(clicked_id) {
 	else 
 	{
 		$("#isi_komentar_"+id_post).remove();
-		//$("#table_"+id_post).append("<div id='kolom_komentar_"+z[i]['id']+"'></div>");
 	}
 	
 }
@@ -701,7 +698,7 @@ function statusPost() {
 		    processData: false
 		}).done(function(z){
 			mainView.router.loadPage('home.html');
-			getAllPost();
+			//getAllPost();
 			/*var coba="";
 			for (var pair of formData.entries()) {
 							coba+=pair[0]+ ', ' + pair[1]; 
@@ -720,4 +717,142 @@ function statusPost() {
 		
 	}
 }
-   
+//-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
+function gotoCreateGroup(){
+	mainView.router.loadPage('buatGrup.html');
+	myApp.closePanel();
+}
+
+function gotoGoogleMap(){
+	mainView.router.loadPage('bukaPeta.html');
+	var nama_grup = document.getElementById("nama_grup").value;
+	var kota = $('#kota_grup').find(":selected").val();
+	var kelas = $('#kelas_grup').find(":selected").val();
+	var lokasi = document.getElementById("lokasi_grup").value;
+	
+	document.cookie = "nama_grup="+nama_grup+";";
+	document.cookie = "kota_grup="+kota+";";
+	document.cookie = "kelas_grup="+kelas+";";
+	document.cookie = "lokasi_grup="+lokasi+";";
+	
+	//console.log(nama_grup+" "+ kota +" "+kelas+" "+lokasi);
+}
+
+
+
+function getKotaGrup() {
+	var link=urlnya+'/api/kota/';
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var myOptions = z;
+
+			$.each(myOptions, function(i, el) 
+			{ 
+			   $('#kota_grup').append( new Option(el.nama,el.id) );
+			});
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
+		}); 
+}
+
+function buatGrupPost() {
+	
+	var namaGrup = document.getElementById("nama_grup").value;
+	var kota = $('#kota_grup').find(":selected").val();
+	var kelas = $('#kelas_grup').find(":selected").val();
+	var lokasi = document.getElementById("lokasi_grup").value;
+	var lat = getcookie("lat_grup");
+	var lng = getcookie("lng_grup");
+	var id_user = getcookie("active_user_id");
+	var fileinput = document.getElementById("fileInput").value;
+	
+	if(namaGrup=="")
+	{
+		myApp.alert('Silahkan isi nama grup', 'Perhatian!');
+	}
+	else
+	{
+		if(kota=="" || kota==0 || kota=="0")
+		{
+			myApp.alert('Silahkan pilih kota grup', 'Perhatian!');
+		}
+		else
+		{
+			if(kelas=="" || kelas==0 || kelas=="0")
+			{
+				myApp.alert('Silahkan pilih kelas grup', 'Perhatian!');
+			}
+			else
+			{
+				if(lokasi=="")
+				{
+					myApp.alert('Silahkan pilih lokasi grup', 'Perhatian!');
+				}
+				else
+				{
+					if(lat == null || lng == null)
+					{
+						myApp.alert('Silahkan pilih lokasi peta grup', 'Perhatian!');
+					}
+					else
+					{
+						if(fileinput=="")
+						{
+							myApp.alert('Silahkan pilih foto anda', 'Perhatian!');
+						}
+						else
+						{
+							var blob=$("#fileInput")[0].files[0];
+							var formData = new FormData();
+							formData.append("nama", namaGrup);
+							formData.append("lokasi", lokasi);
+							formData.append("lat", lat);
+							formData.append("lng", lng);
+							formData.append("id_kota", kota);
+							formData.append("id_user", id_user);
+							formData.append("id_kelas", kelas);
+							formData.append("file", blob);
+							
+							var link=urlnya+'/api/grup/createGrup';
+							//console.log(formData);
+							
+							for (var pair of formData.entries()) {
+								console.log(pair[0]+ ', ' + pair[1]); 
+							}
+							$.ajax({
+								url: link,
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false
+							}).done(function(z){
+								mainView.router.loadPage('home.html');
+								myApp.alert('Grup berhasil dibuat', 'Berhasil!');
+								
+								eraseCookie("nama_grup");
+								eraseCookie("kelas_grup");
+								eraseCookie("kota_grup");
+								eraseCookie("lokasi_grup");
+								eraseCookie("lat_grup");
+								eraseCookie("lng_grup");
+							}).fail(function(x){
+								myApp.alert(x.message+" "+x.error, 'Perhatian!');
+								eraseCookie("nama_grup");
+								eraseCookie("kelas_grup");
+								eraseCookie("kota_grup");
+								eraseCookie("lokasi_grup");
+								eraseCookie("lat_grup");
+								eraseCookie("lng_grup");
+							});
+						}
+					}
+				}
+			}		
+		}
+	}
+}

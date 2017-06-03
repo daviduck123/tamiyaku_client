@@ -18,6 +18,8 @@
     <script type="text/javascript" src="lib/react.js"></script>
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="js/client.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAudNbiUUBae1gQx4Oi3FuqpfmQScfA6kc"></script>
+	<script type="text/javascript" src="js/gmaps.js"></script>
     <script>
 	function chooseFile() {
    document.getElementById("fileInput").click();
@@ -115,7 +117,7 @@
                                                 </div>
                                                 </li>
                                             </a>
-                                            <a href="#" style="color:white;">
+                                            <a href="#" onclick="gotoCreateGroup();" class="button" style="color:white;">
                                                 <li class="item-content">
                                                 <div class="item-media"><i class="icon fa fa-plus"></i></div>
                                                 <div class="item-inner">
