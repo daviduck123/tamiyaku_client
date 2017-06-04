@@ -964,20 +964,23 @@ function getAllGrup() {
 							dataLength++;
 			}
 			
-			for(var i=0;i<dataLength;i++)
+			if(dataLength!=0)
 			{
-				var html =	'<a href="#" id="grup_'+z[i]['id']+'" style="color:white;">';
-				html += 				'<li class="item-content">';
-				html += 					'<div class="item-media">';
-				html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
-				html += 					'</div>';
-				html += 					'<div class="item-inner">';
-				html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
-				html += 					'</div>';
-				html += 				'</li>';
-				html += 			'</a>';
-				
-				$("#isi_kumpulan_grup").append(html);
+				for(var i=0;i<dataLength;i++)
+				{
+					var html =	'<a href="#" id="grup_'+z[i]['id']+'" style="color:white;">';
+					html += 				'<li class="item-content">';
+					html += 					'<div class="item-media">';
+					html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					'</div>';
+					html += 					'<div class="item-inner">';
+					html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
+					html += 					'</div>';
+					html += 				'</li>';
+					html += 			'</a>';
+					
+					$("#isi_kumpulan_grup").append(html);
+				}
 			}
 			
 		}).fail(function(x){
