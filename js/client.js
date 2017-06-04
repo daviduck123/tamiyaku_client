@@ -545,7 +545,7 @@ function bacaKomentar(clicked_id) {
 						//}
 					}
 					html +=  "</div>";
-					console.log(html);
+					//console.log(html);
 					$("#kolom_komentar_"+clicked_id).append(html);
 				}
 				else
@@ -1163,7 +1163,7 @@ function bacaGrupKomentar(clicked_id) {
 						//}
 					}
 					html +=  "</div>";
-					console.log(html);
+					//console.log(html);
 					$("#kolom_komentar_grup_"+clicked_id).append(html);
 				}
 				else
@@ -1178,7 +1178,7 @@ function bacaGrupKomentar(clicked_id) {
 	} 
 	else 
 	{
-		$("#isi_komentar_"+id_post).remove();
+		$("#isi_komentar_grup_"+id_post).remove();
 	}
 }
 
