@@ -15,6 +15,11 @@ myApp.onPageInit('index', function (page) {
    
 });
 
+myApp.onPageInit('grup', function (page) {
+	var id_grup = getcookie("id_grup");
+	getAllGrupPost(id_grup);
+});
+
 myApp.onPageInit('buatGrup', function (page) {
 	getKotaGrup();
 });

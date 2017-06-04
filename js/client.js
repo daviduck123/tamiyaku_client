@@ -366,7 +366,6 @@ function loginPost() {
 							var expires = "expires=" + d.toGMTString()+";";
 								
 							mainView.router.loadPage('home.html');
-							//getAllPost() ;
 							document.cookie = "active_user_id="+z.user.id+";";
 							document.cookie = "active_user_email="+z.user.email+";";
 							document.cookie = "active_user_nama="+z.user.nama+";";
@@ -424,9 +423,7 @@ function cekLoginAktif() {
 						
 					});*/
 			mainView.router.loadPage('home.html');
-			//getAllPost();
-			myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
-			//document.getElementById('.profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
+			//myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 
 		}
@@ -620,9 +617,9 @@ function getAllPost() {
 				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 				html += 			"<tr>";
 				html += 				"<td rowspan='2'>";
-				html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
-				html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -651,9 +648,9 @@ function getAllPost() {
 				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 				html += 			"<tr>";
 				html += 				"<td rowspan='2'>";
-				html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
-				html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -722,6 +719,12 @@ function gotoCreateGroup(){
 	myApp.closePanel();
 }
 
+function gotoGroup(clickedId){
+	document.cookie = "id_grup="+clickedId+";";
+	mainView.router.loadPage('grup.html');
+	myApp.closePanel();
+}
+
 function gotoGoogleMap(){
 	myApp.popup('.popup-about');
 	var popupHTML = '<div class="popup">'+
@@ -735,7 +738,7 @@ function gotoGoogleMap(){
 	
 	var map;
 	function showPosition(position) {
-		console.log("lat:"+position.coords.latitude+"\nlng:"+position.coords.longitude);
+		//console.log("lat:"+position.coords.latitude+"\nlng:"+position.coords.longitude);
 		map = new GMaps({
 				div: '#petaku',
 				lat: position.coords.latitude,
@@ -916,9 +919,9 @@ function buatGrupPost() {
 							var link=urlnya+'/api/grup/createGrup';
 							//console.log(formData);
 							
-							for (var pair of formData.entries()) {
-								console.log(pair[0]+ ', ' + pair[1]); 
-							}
+							//for (var pair of formData.entries()) {
+							//	console.log(pair[0]+ ', ' + pair[1]); 
+							//}
 							$.ajax({
 								url: link,
 								data: formData,
@@ -961,7 +964,7 @@ function getAllGrup() {
 			{
 				for(var i=0;i<dataLength;i++)
 				{
-					var html =	'<a href="#" id="grup_'+z[i]['id']+'" style="color:white;">';
+					var html =	'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" style="color:white;">';
 					html += 				'<li class="item-content">';
 					html += 					'<div class="item-media">';
 					html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
@@ -979,4 +982,201 @@ function getAllGrup() {
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
 		}); 
+}
+
+function getAllGrupPost(clickedId) {
+var id_grup = clickedId;
+
+var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_postingan_grup").html("");
+			for(var i=0;i<dataLength;i++)
+			{
+				if(z[i]['foto']!="")
+				{
+					var html=	"<div id='posting_grup_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table__grup_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2' >";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_grup_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariGrupPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaGrupKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_grup").append(html);
+				}
+				else
+				{
+					
+					var html=	"<div id='posting_grup_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_grup_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_grup_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariGrupPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaGrupKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_grup").append(html);
+				}
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+		}); 
+}
+
+function statusGrupPost() {
+	//ON PROGRESS
+	var id_user = getcookie("active_user_id");
+	var status = document.getElementById("status_grup").value;
+	var id_grup = getcookie("id_grup");
+	
+	var link=urlnya+'/api/post/createPost/';
+	
+	if(status=="")
+	{
+		myApp.alert('Anda belum mengisi isi postingan anda', 'Perhatian!');
+	}
+	else
+	{
+		var blob=$("#fileInput")[0].files[0];
+		var formData = new FormData();
+		formData.append("id_user", id_user);
+		formData.append("id_grup", id_grup);
+		formData.append("deskripsi", status);
+		formData.append("file", blob);
+
+		$.ajax({
+		    url: link,
+		    data: formData,
+		    type: 'POST',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			mainView.router.loadPage('grup.html');
+			//getAllPost();
+			/*var coba="";
+			for (var pair of formData.entries()) {
+							coba+=pair[0]+ ', ' + pair[1]; 
+			}*/
+			
+			myApp.alert("Berhasil post di grup", 'Data Dikirim!');
+			
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var pair of formData.entries()) {
+							coba+=pair[0]+ ', ' + pair[1]; 
+			}
+			console.log(coba);
+		});
+		
+	}
+}
+
+function bacaKomentar(clicked_id) {
+	//ON PROGRESS
+	var id_post = clicked_id;
+	
+	if($("#isi_komentar_"+id_post).length == 0) 
+	{
+		
+			$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_post='+id_post;
+				
+			$.ajax({
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				
+				if(z.length>0)
+				{
+					var html= "<div  id='isi_komentar_"+id_post+"'>";
+					for(var i=0;i<z.length;i++)
+					{
+						//if(z[i]['foto']!="")
+						//{
+							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
+							html += 			"<tr>";
+							html += 				"<td rowspan='2'>";
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 				"</td>";
+							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							html += 			"</tr>";
+							html += 			"<tr>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+							html += 			"</tr>";
+							html += 		"</table>";
+							
+							//$("#kolom_komentar_"+clicked_id).append(html);
+						//}
+						//else
+						//{																													
+							
+						//}
+					}
+					html +=  "</div>";
+					console.log(html);
+					$("#kolom_komentar_"+clicked_id).append(html);
+				}
+				else
+				{
+					//nggak ada yang komentar
+				}
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+	} 
+	else 
+	{
+		$("#isi_komentar_"+id_post).remove();
+	}
+	
 }
