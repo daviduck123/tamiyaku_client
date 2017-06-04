@@ -1116,7 +1116,7 @@ function statusGrupPost() {
 	}
 }
 
-function bacaKomentar(clicked_id) {
+function bacaGrupKomentar(clicked_id) {
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -1135,7 +1135,7 @@ function bacaKomentar(clicked_id) {
 				
 				if(z.length>0)
 				{
-					var html= "<div  id='isi_komentar_"+id_post+"'>";
+					var html= "<div  id='isi_komentar_grup_"+id_post+"'>";
 					for(var i=0;i<z.length;i++)
 					{
 						//if(z[i]['foto']!="")
@@ -1178,5 +1178,55 @@ function bacaKomentar(clicked_id) {
 	{
 		$("#isi_komentar_"+id_post).remove();
 	}
-	
+}
+
+function komentariGrupPost(clicked_id) {
+	//ON PROGRESS
+	var id_user = getcookie("active_user_id");
+	var id_post = "";
+	$(document).ready(function(){
+		
+		id_post=clicked_id;
+		var vardeksripsi="deskripsi_"+id_post;
+		var vartable="table_"+id_post;
+		
+		var table = document.getElementById(vartable).value;
+		
+		//console.log(vartable);
+		
+		if($("#" + vardeksripsi).length == 0) {
+				$("#"+vartable).find('tbody').append(" <tr> <td><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+		} 
+		else 
+		{
+			var deskripsi = document.getElementById(vardeksripsi).value;
+			if(deskripsi=="")
+			{
+				myApp.alert('Anda belum mengisi komentar', 'Perhatian!');
+			}
+			else
+			{
+				var link=urlnya+'/api/komentar/';
+				var formData=JSON.stringify({
+					id_user:id_user,
+					id_post:id_post,
+					deskripsi:deskripsi,
+				});
+				//myApp.alert(formData, 'Data Dikirim!');
+				
+				$.ajax({
+					url: link,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false
+				}).done(function(z){
+					mainView.router.loadPage('home.html');
+					myApp.alert('Komentar dibuat', 'Berhasil!');
+				}).fail(function(x){
+					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+				});
+			}
+		}
+	});
 }
