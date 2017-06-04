@@ -593,88 +593,88 @@ function bacaKomentar(clicked_id) {
 	
 }
 function getAllPost() {
-var id_user = getcookie("active_user_id");
-var formData=JSON.stringify({
-					id_user:id_user,
-				});
-var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
+	var id_user = getcookie("active_user_id");
+	var formData=JSON.stringify({
+						id_user:id_user,
+					});
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
 
-		$.ajax({
-		    url: link,
-		    type: 'GET',
-		    contentType: false,
-		    processData: false
-		}).done(function(z){
-			var coba="";
-			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
-				dataLength++;
-			}
-			$("#isi_postingan").html("");
-			for(var i=0;i<dataLength;i++)
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var coba="";
+		var dataLength=0;
+		for (var pair of z) {
+			coba+=pair['id']+"|"; 
+			dataLength++;
+		}
+		$("#isi_postingan").html("");
+		for(var i=0;i<dataLength;i++)
+		{
+			if(z[i]['foto']!="")
 			{
-				if(z[i]['foto']!="")
-				{
-					var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
-					html += 			"<tr>";
-					html += 				"<td rowspan='2'>";
-					html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
-					html += 				"</td>";
-					html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html += 				"<td colspan='2' >";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
-					html += 				"</td>";
-					html += 			"</tr>";
-					html += 		"</table>";
-					html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
-					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
-					html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
-					html += 	"</div>";
-					
-					$("#isi_postingan").append(html);
-				}
-				else
-				{
-					
-					var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
-					html += 			"<tr>";
-					html += 				"<td rowspan='2'>";
-					html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
-					html += 				"</td>";
-					html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
-					html += 			"</tr>";
-					html += 		"</table>";
-					html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
-					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
-					html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
-					html += 	"</div>";
-					
-					$("#isi_postingan").append(html);
-				}
+				var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+				html += 			"<tr>";
+				html += 				"<td rowspan='2'>";
+				html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 				"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2' >";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+				html += 				"</td>";
+				html += 			"</tr>";
+				html += 		"</table>";
+				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+				html += 		"</div>";
+				html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+				html += 	"</div>";
+				
+				$("#isi_postingan").append(html);
 			}
-			
-		}).fail(function(x){
-			myApp.alert("Pengambilan status user gagal", 'Perhatian!');
-		}); 
+			else
+			{
+				
+				var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+				html += 			"<tr>";
+				html += 				"<td rowspan='2'>";
+				html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 				"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+				html += 			"</tr>";
+				html += 		"</table>";
+				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+				html += 		"</div>";
+				html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+				html += 	"</div>";
+				
+				$("#isi_postingan").append(html);
+			}
+		}
+		
+	}).fail(function(x){
+		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+	}); 
 }
 
 function statusPost() {
@@ -703,26 +703,19 @@ function statusPost() {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			mainView.router.loadPage('home.html');
-			//getAllPost();
-			/*var coba="";
-			for (var pair of formData.entries()) {
-							coba+=pair[0]+ ', ' + pair[1]; 
-			}*/
-			
-			//myApp.alert("", 'Data Dikirim!');
-			
+			getAllPost();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
 			for (var pair of formData.entries()) {
-							coba+=pair[0]+ ', ' + pair[1]; 
+				coba+=pair[0]+ ', ' + pair[1]; 
 			}
 			console.log(coba);
 		});
 		
 	}
 }
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
 function gotoCreateGroup(){
 	mainView.router.loadPage('buatGrup.html');
