@@ -959,10 +959,8 @@ function getAllGrup() {
 			$("#isi_kumpulan_grup").remove();
 			$("#kumpulan_grup").append('<div id="isi_kumpulan_grup"></div>');
 			
-			var coba="";
 			var dataLength=0;
 			for (var pair of z) {
-							coba+=pair['id']+"|"; 
 							dataLength++;
 			}
 			
