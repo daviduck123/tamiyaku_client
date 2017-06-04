@@ -1,0 +1,90 @@
+ <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Top Navbar-->
+			
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="grup" class="page">
+            <!-- Scrollable page content-->
+            <div class="navbar">
+          <div class="navbar-inner">
+          <div class="left">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
+            </div>
+            <!-- We have home navbar without left link-->
+            <div class="center sliding" style="font-weight:bold;">Beranda</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
+            </div>
+          </div>
+        </div>
+            <div class="page-content">
+			<center>
+			<table id="detil_grup" style="margin-top:20px;">
+              <tr>
+                <td rowspan="4"><img src="img/i-f7-material.png" style="width:90px; height:90px;  margin-right:10px"></td>
+                <td style="font-weight:bold;"><a id="nama_grup">Neo ALit Cahya</a></td>
+              </tr>
+              <tr>
+                <td style="font-weight:bold;"><a id="kota_grup">Surabaya</a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">087855293802</span></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="gotoHome();"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>
+              </tr>
+              </table>
+			  </center>
+             <form action="/action_page.php">
+                      <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-input">
+                            <center><textarea id="status_grup" style="resize:none; margin-top:10px; width:90%; height:60px;" 
+                            placeholder="Tulis apa yang ingin anda bahas.."></textarea>
+                            </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-content" style="margin-top:-10px;">
+                    <div class="item-inner" >
+                        <div style="height:0px;overflow:hidden">
+                        <input type="file" id="fileInput" name="fileInput" accept="image/*"/>
+                        </div>
+                        <p><a href="#" class="button active" onclick="statusGrupPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>
+                        <p><a href="#" class="button"  onclick="chooseFile();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>
+            </form>
+                    <br>
+                    <br>
+					   <div id='pullToRefreshHome' class="page-content pull-to-refresh-content" data-ptr-distance="55">
+							<!-- Default pull to refresh layer-->
+							<div class="pull-to-refresh-layer">
+							  <div class="preloader"></div>
+							  <div class="pull-to-refresh-arrow"></div>
+							</div>
+							<div id="isi_postingan_grup">
+							<!-- tempat semua postingan -->
+							</div>
+							 <!-- usual content below -->
+							<div class="list-block">
+						 <p>Just pull page down to let the magic happen.</p>
+						</div>
+					  </div><!--- tutup pull refresh--->
+					</div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+		  
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+   
