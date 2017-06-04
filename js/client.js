@@ -445,6 +445,12 @@ function cekLoginAktif() {
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------HOME
+
+function gotoHome(){
+	mainView.router.loadPage('home.html');
+	myApp.closePanel();
+}
+
 function komentariPost(clicked_id) {
 	//ON PROGRESS
 	var id_user = getcookie("active_user_id");
@@ -836,8 +842,6 @@ function gotoGoogleMap(){
 	});	
 }
 
-
-
 function getKotaGrup() {
 	var link=urlnya+'/api/kota/';
 		$.ajax({
@@ -931,21 +935,8 @@ function buatGrupPost() {
 							}).done(function(z){
 								mainView.router.loadPage('home.html');
 								myApp.alert('Grup berhasil dibuat', 'Berhasil!');
-								
-								eraseCookie("nama_grup");
-								eraseCookie("kelas_grup");
-								eraseCookie("kota_grup");
-								eraseCookie("lokasi_grup");
-								eraseCookie("lat_grup");
-								eraseCookie("lng_grup");
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
-								eraseCookie("nama_grup");
-								eraseCookie("kelas_grup");
-								eraseCookie("kota_grup");
-								eraseCookie("lokasi_grup");
-								eraseCookie("lat_grup");
-								eraseCookie("lng_grup");
 							});
 						}
 					}
@@ -953,4 +944,45 @@ function buatGrupPost() {
 			}		
 		}
 	}
+}
+
+function getAllGrup() {
+	var id_user = getcookie("active_user_id");
+	var link=urlnya+'/api/grup?id_user='+id_user;
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			
+			$("#isi_kumpulan_grup").remove();
+			$("#kumpulan_grup").append('<div id="isi_kumpulan_grup"></div>');
+			
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+							coba+=pair['id']+"|"; 
+							dataLength++;
+			}
+			
+			for(var i=0;i<dataLength;i++)
+			{
+				var html =	'<a href="#" id="grup_'+z[i]['id']+'" style="color:white;">';
+				html += 				'<li class="item-content">';
+				html += 					'<div class="item-media">';
+				html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 					'</div>';
+				html += 					'<div class="item-inner">';
+				html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
+				html += 					'</div>';
+				html += 				'</li>';
+				html += 			'</a>';
+				
+				$("#isi_kumpulan_grup").append(html);
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
+		}); 
 }

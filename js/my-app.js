@@ -42,6 +42,7 @@ myApp.onPageInit('daftar', function (page) {
 });
 
 $$('.panel-left').on('panel:opened', function () {
+	getAllGrup();
     //myApp.alert('Left panel opened!');
 });
 
