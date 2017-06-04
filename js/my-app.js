@@ -35,6 +35,7 @@ myApp.onPageInit('buatGrup', function (page) {
 
 myApp.onPageInit('home', function (page) {
 	getAllPost();
+    setPullRefreshHome();
 });
 
 myApp.onPageInit('daftar', function (page) {
@@ -46,20 +47,6 @@ $$('.panel-left').on('panel:opened', function () {
     //myApp.alert('Left panel opened!');
 });
 
-
-
-// Pull to refresh content
-var ptrContent = $$('.pull-to-refresh-content');
- 
- ptrContent.on('refresh', function (e) {
-        // Emulate 2s loading
-        setTimeout(function () {
-			console.log("aaa");
-            myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
-        }, 2000);
-    });
-	
-myApp.initPullToRefresh("#pullToRefreshHome");
 
 // Generate dynamic page
 var dynamicPageIndex = 0;
@@ -88,4 +75,17 @@ function createContentPage() {
         '</div>'
     );
 	return;
+}
+function setPullRefreshHome(){
+    var ptrContent = $$('.pull-to-refresh-content');
+     
+     ptrContent.on('refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                getAllPost();
+                myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
+            }, 2000);
+        });
+        
+    myApp.initPullToRefresh("#pullToRefreshHome");
 }

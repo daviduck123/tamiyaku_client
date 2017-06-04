@@ -376,6 +376,7 @@ function loginPost() {
 							storeImage(z.user.foto,'profilePic');
 							
 							 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
+
 						}
 						else
 						{
@@ -427,6 +428,7 @@ function cekLoginAktif() {
 			myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			//document.getElementById('.profilePicture').setAttribute( 'src', 'data:image/jpeg;base64,'+getImage('profilePic') );
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
+
 		}
 		else
 		{	
@@ -606,12 +608,10 @@ var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
 			var coba="";
 			var dataLength=0;
 			for (var pair of z) {
-							coba+=pair['id']+"|"; 
-							dataLength++;
+				coba+=pair['id']+"|"; 
+				dataLength++;
 			}
-			//console.log(coba);
-			//console.log(z);
-			
+			$("#isi_postingan").html("");
 			for(var i=0;i<dataLength;i++)
 			{
 				if(z[i]['foto']!="")
