@@ -1122,7 +1122,7 @@ function bacaGrupKomentar(clicked_id) {
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
-	if($("#isi_komentar_"+id_post).length == 0) 
+	if($("#isi_komentar_grup_"+id_post).length == 0) 
 	{
 		
 			$(document).ready(function(){
@@ -1164,7 +1164,7 @@ function bacaGrupKomentar(clicked_id) {
 					}
 					html +=  "</div>";
 					console.log(html);
-					$("#kolom_komentar_"+clicked_id).append(html);
+					$("#kolom_komentar_grup_"+clicked_id).append(html);
 				}
 				else
 				{
@@ -1189,8 +1189,8 @@ function komentariGrupPost(clicked_id) {
 	$(document).ready(function(){
 		
 		id_post=clicked_id;
-		var vardeksripsi="deskripsi_"+id_post;
-		var vartable="table_"+id_post;
+		var vardeksripsi="deskripsi_grup_"+id_post;
+		var vartable="table_grup_"+id_post;
 		
 		var table = document.getElementById(vartable).value;
 		
@@ -1223,7 +1223,7 @@ function komentariGrupPost(clicked_id) {
 					contentType: false,
 					processData: false
 				}).done(function(z){
-					mainView.router.loadPage('home.html');
+					mainView.router.loadPage('grup.html');
 					myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
