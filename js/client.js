@@ -701,6 +701,7 @@ function statusPost() {
 		    processData: false
 		}).done(function(z){
 			getAllPost();
+			$("#status").val("");
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -1103,7 +1104,8 @@ function statusGrupPost() {
 			}*/
 			
 			myApp.alert("Berhasil post di grup", 'Data Dikirim!');
-			
+			getAllGrupPost(id_grup);
+			$("#status_grup").val("");
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";

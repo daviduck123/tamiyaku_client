@@ -18,6 +18,7 @@ myApp.onPageInit('index', function (page) {
 myApp.onPageInit('grup', function (page) {
 	var id_grup = getcookie("id_grup");
 	getAllGrupPost(id_grup);
+    setPullRefreshGrup();
 });
 
 myApp.onPageInit('buatGrup', function (page) {
@@ -40,11 +41,23 @@ $$('.panel-left').on('panel:opened', function () {
 
 
 function setPullRefreshHome(){
-    var ptrContent = $$('.pull-to-refresh-content');
+    var ptrContent = $$('#pullToRefreshHome');
     ptrContent.on('refresh', function (e) {
             // Emulate 2s loading
             setTimeout(function () {
                 getAllPost();
+                myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
+            }, 2000);
+        });
+}
+
+function setPullRefreshGrup(){
+    var ptrContent = $$('#pullToRefreshGrup');
+    ptrContent.on('refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+                var id_grup = getcookie("id_grup");
+                getAllGrupPost(id_grup);
                 myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
             }, 2000);
         });
