@@ -85,10 +85,9 @@ function setCookie(){
 	var email = document.getElementById("email_register").value;
 	var password = document.getElementById("password_register").value;
 	var con_password = document.getElementById("con_password").value;
-	var fileinput = document.getElementById("fileInput").value;
+	var fileinput = document.getElementById("file_register").value;
 	var gender;
 	var radios = document.getElementsByName('gender') ;
-		console.log($("#fileInput"));
 	
 	for (var i = 0, length = radios.length; i < length; i++) 
 	{
@@ -168,7 +167,7 @@ function setCookie(){
 										}
 										else
 										{
-											var blob=$("#fileInput")[0].files[0];
+											var blob=$("#file_register")[0].files[0];
 											var formData = new FormData();
 											formData.append("nama", username);
 											formData.append("id_kota", kota);
@@ -408,20 +407,6 @@ function cekLoginAktif() {
 		var dexpires = new Date(expires);
 		if(d.getTime()<dexpires.getTime())
 		{
-			/*ini coba
-			$.ajax({
-						url: link,
-						data: formData,
-						type: 'POST',
-						contentType: false,
-						processData: false
-					}).done(function(z){
-						
-					
-						
-					}).fail(function(x){
-						
-					});*/
 			mainView.router.loadPage('home.html');
 			//myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
@@ -451,7 +436,7 @@ function gotoHome(){
 }
 
 function komentariPost(clicked_id) {
-	//ON PROGRESS
+	
 	var id_user = getcookie("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
@@ -461,8 +446,6 @@ function komentariPost(clicked_id) {
 		var vartable="table_"+id_post;
 		
 		var table = document.getElementById(vartable).value;
-		
-		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
@@ -552,31 +535,6 @@ function bacaKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
-				//console.log(z);
-				/*
-				for(var i=0;i<dataLength;i++)
-				{
-					if(z[i]['foto']!="")
-					{
-						var html=		"<table id='table_"+z[i]['id']+"' style='background-color:#e6e6e6;'  width='100%;'>";
-						html += 			"<tr>";
-						html += 				"<td rowspan='2'>";
-						html += 					"<img src='data:image/jpeg;base64,"+getImage('profilePic')+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
-						html += 				"</td>";
-						html += 				"<td style='font-weight:bold;'>"+z[i]['id_user']+"</td>";
-						html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
-						html += 			"</tr>";
-						html += 			"<tr>";
-						html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
-						html += 			"</tr>";
-						html += 		"</table>";
-					}
-					else
-					{
-						
-					}
-				}
-				*/
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -687,7 +645,7 @@ function statusPost() {
 	}
 	else
 	{
-		var blob=$("#fileInput")[0].files[0];
+		var blob=$("#file_home")[0].files[0];
 		var formData = new FormData();
 		formData.append("id_user", id_user);
 		formData.append("deskripsi", status);
@@ -754,12 +712,12 @@ function gotoGoogleMap(){
 			
 			if(lat != null && lng != null)
 			{
-				var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
-				html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
-				html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+				var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+				html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
+				html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 				html	+=	"</div>"
-				$("#isi_latlng_grup").remove();
-				$("#latlng_grup").append(html);
+				$("#isi_latlng_buatGrup").remove();
+				$("#latlng_buatGrup").append(html);
 			}
 			
 			map.addMarker({
@@ -774,12 +732,12 @@ function gotoGoogleMap(){
 					
 					if(lat != null && lng != null)
 					{
-						var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
-						html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
-						html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+						var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+						html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
+						html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 						html	+=	"</div>"
-						$("#isi_latlng_grup").remove();
-						$("#latlng_grup").append(html);
+						$("#isi_latlng_buatGrup").remove();
+						$("#latlng_buatGrup").append(html);
 					}
 				}
 			});
@@ -797,12 +755,12 @@ function gotoGoogleMap(){
 			
 			if(lat != null && lng != null)
 			{
-				var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
-				html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
-				html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+				var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+				html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
+				html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 				html	+=	"</div>"
-				$("#isi_latlng_grup").remove();
-				$("#latlng_grup").append(html);
+				$("#isi_latlng_buatGrup").remove();
+				$("#latlng_buatGrup").append(html);
 			}
 			
 			map = new GMaps({
@@ -826,12 +784,12 @@ function gotoGoogleMap(){
 					
 					if(lat != null && lng != null)
 					{
-						var html =	"<div id='isi_latlng_grup'>Latitude = "+lat+"<br>Longitude = "+lng;
-						html	+=		"<input type='hidden' id='lat_grup' value='"+lat+"'>";
-						html	+=		"<input type='hidden' id='lng_grup' value='"+lng+"'>";
+						var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+						html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
+						html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 						html	+=	"</div>"
-						$("#isi_latlng_grup").remove();
-						$("#latlng_grup").append(html);
+						$("#isi_latlng_buatGrup").remove();
+						$("#latlng_buatGrup").append(html);
 					}
 				}
 			});
@@ -839,7 +797,7 @@ function gotoGoogleMap(){
 	});	
 }
 
-function getKotaGrup() {
+function getKotaBuatGrup() {
 	var link=urlnya+'/api/kota/';
 		$.ajax({
 		    url: link,
@@ -851,7 +809,7 @@ function getKotaGrup() {
 
 			$.each(myOptions, function(i, el) 
 			{ 
-			   $('#kota_grup').append( new Option(el.nama,el.id) );
+			   $('#kota_buatGrup').append( new Option(el.nama,el.id) );
 			});
 			
 		}).fail(function(x){
@@ -861,14 +819,14 @@ function getKotaGrup() {
 
 function buatGrupPost() {
 	
-	var namaGrup = document.getElementById("nama_grup").value;
-	var kota = $('#kota_grup').find(":selected").val();
-	var kelas = $('#kelas_grup').find(":selected").val();
-	var lokasi = document.getElementById("lokasi_grup").value;
-	var lat = document.getElementById("lat_grup").value;
-	var lng = document.getElementById("lng_grup").value;
+	var namaGrup = document.getElementById("nama_buatGrup").value;
+	var kota = $('#kota_buatGrup').find(":selected").val();
+	var kelas = $('#kelas_buatGrup').find(":selected").val();
+	var lokasi = document.getElementById("lokasi_buatGrup").value;
+	var lat = document.getElementById("lat_buatGrup").value;
+	var lng = document.getElementById("lng_buatGrup").value;
 	var id_user = getcookie("active_user_id");
-	var fileinput = document.getElementById("fileInput").value;
+	var fileinput = document.getElementById("file_buatGrup").value;
 	
 	if(namaGrup=="")
 	{
@@ -906,7 +864,7 @@ function buatGrupPost() {
 						}
 						else
 						{
-							var blob=$("#fileInput")[0].files[0];
+							var blob=$("#file_buatGrup")[0].files[0];
 							var formData = new FormData();
 							formData.append("nama", namaGrup);
 							formData.append("lokasi", lokasi);
@@ -1082,7 +1040,7 @@ function statusGrupPost() {
 	}
 	else
 	{
-		var blob=$("#fileInput")[0].files[0];
+		var blob=$("#file_grup")[0].files[0];
 		var formData = new FormData();
 		formData.append("id_user", id_user);
 		formData.append("id_grup", id_grup);

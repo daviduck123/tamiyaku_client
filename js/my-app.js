@@ -22,7 +22,7 @@ myApp.onPageInit('grup', function (page) {
 });
 
 myApp.onPageInit('buatGrup', function (page) {
-	getKotaGrup();
+	getKotaBuatGrup();
 });
 
 
