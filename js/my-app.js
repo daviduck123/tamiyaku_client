@@ -73,6 +73,10 @@ myApp.onPageInit('daftar', function (page) {
 	getKota();
 });
 
+myApp.onPageInit('lomba', function (page) {
+	getAllPostEvent();
+});
+
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
 });

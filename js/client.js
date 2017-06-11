@@ -1568,6 +1568,7 @@ function gotoBuatEvent(){
 
 function gotoLomba(){
 	mainView.router.loadPage('lomba.html');
+	getAllEventPost();
 	/*
 	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
 	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
@@ -1665,18 +1666,6 @@ function buatEventPost() {
 				}
 				else
 				{
-					if(juara2=="" || juara2==0 || juara2=="0")
-					{
-						myApp.alert('Silahkan isi total hadiah juara 2', 'Perhatian!');
-					}
-					else
-					{
-						if(juara3=="" || juara3==0 || juara3=="0")
-						{
-							myApp.alert('Silahkan isi total hadiah juara 3', 'Perhatian!');
-						}
-						else
-						{
 							if(ticket=="" || ticket==0 || ticket=="0")
 							{
 								myApp.alert('Silahkan isi biaya ticket masuk', 'Perhatian!');
@@ -1743,10 +1732,116 @@ function buatEventPost() {
 									}
 								}
 							}
-						}
-					}
 				}		
 			}
 		}
 	}
+}
+
+function getAllEventPost() {
+	var id_user=getcookie("active_user_id");
+	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_container_event").html("");
+			
+			//munculkan semua post
+			for(var i=0;i<dataLength;i++)
+			{
+					var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table__event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;" style="font-weight:bold;"><div style="width:100px;">'+z[i]['deskripsi']+'</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2" style="font-weight:bold;">Erick Ganteng Race</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">16/03/2016</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Kota</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">Surabaya</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Hadiah</div> </td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">BTO. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">16/03/2016</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">16/03/2016</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">16/03/2016</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				'<td colspan="5" class="q" >';
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_Event_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaEventKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					
+					$("#isi_container_event").append(html);
+					
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
+		}); 
 }
