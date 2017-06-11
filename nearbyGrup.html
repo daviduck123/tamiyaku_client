@@ -7,7 +7,7 @@
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
-          <div data-page="grup" class="page">
+          <div data-page="nearbyGrup" class="page">
             <!-- Scrollable page content-->
             <div class="navbar">
           <div class="navbar-inner">
@@ -23,39 +23,34 @@
         </div>
             <div class="page-content">
 			<center>
-			
-				<div id="isi_detil_grup"></div>
-              
+			<table id="detil_grup" style="margin-top:20px;">
+              <tr>
+                <td rowspan="4"><img src="img/i-f7-material.png" style="width:90px; height:90px;  margin-right:10px"></td>
+                <td style="font-weight:bold;"><a id="nama_grup">Mozarella</a></td>
+              </tr>
+              <tr>
+                <td style="font-weight:bold;"><a id="kota_grup">Surabaya</a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">Jalan Tenggilis Mejoyo</span></a></td>
+              </tr>
+              <tr>
+                <td colspan="2"><a href="#" onclick="gotoHome();"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>
+              </tr>
+              </table>
 			  </center>
-             <form action="/action_page.php">
-                      <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-input">
-                            <center><textarea id="status_grup" style="resize:none; margin-top:10px; width:90%; height:60px;" 
-                            placeholder="Tulis apa yang ingin anda bahas.."></textarea>
-                            </center>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item-content" style="margin-top:-10px;">
-                    <div class="item-inner" >
-                        <div style="height:0px;overflow:hidden">
-                        <input type="file" id="file_grup" accept="image/*"/>
-                        </div>
-                        <p><a href="#" class="button active" onclick="statusGrupPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>
-                        <p><a href="#" class="button"  onclick="chooseFile_grup();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>
-            </form>
                     <br>
                     <br>
-					   <div id='pullToRefreshGrup' class="page-content pull-to-refresh-content" data-ptr-distance="55">
+					<div id="map-canvas"  style="width:330px; height:300px;"></div>
+					   <div id='pullToRefreshNearbyGrup' class="page-content pull-to-refresh-content" data-ptr-distance="55">
 							<!-- Default pull to refresh layer-->
 							<div class="pull-to-refresh-layer">
 							  <div class="preloader"></div>
 							  <div class="pull-to-refresh-arrow"></div>
 							</div>
-							<div id="isi_postingan_grup">
+							
 							<!-- tempat semua postingan -->
-							</div>
+							
 							 <!-- usual content below -->
 							<div class="list-block">
 						 <p>Just pull page down to let the magic happen.</p>
@@ -75,13 +70,4 @@
       </div>
     </div>
     <!-- Path to Framework7 Library JS-->
-	
-	<!-- POPUP PETA LOKASI GRUP -->
-  <div class="popup popup-grup">
-    <div class="content-block">
-      <p>About</p>
-      <p><a href="#" class="close-popup">Close popup</a></p>
-      <p>Lorem ipsum dolor ...</p>
-    </div>
-  </div>
    

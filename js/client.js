@@ -673,15 +673,257 @@ function statusPost() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
+function getNearbyGrup(){
+	
+}
+function getNearbyGrupNOTUSED(){
+	
+	//kumpalan array lokasi semua grup yang ada
+	var locations = [{lat:45, lon:-120, grup:"grup1"}, {lat:45, lon:-120.0111, grup:"grup2"}, {lat:45.0011, lon:-120, grup:"grup3"}];
+	var nearLocation = [];
+	
+	
+	function removeByIndex(array, index){
+		return array.filter(function(elem, _index){
+			return index != _index ? true : false;
+		});
+	}
+	
+    if ( navigator.geolocation )
+    {
+        navigator.geolocation.getCurrentPosition( UserLocation, errorCallback,{maximumAge:60000,timeout:10000});
+    }
+    else
+	{
+		//diubah ke surabaya
+        ClosestLocation( 45, -120.0367, "Washington, DC" );
+	}
+
+    function errorCallback( error )
+    {
+    }
+
+    function UserLocation( position )
+    {
+        ClosestLocation( position.coords.latitude, position.coords.longitude, "Lokasiku sekarang!" );
+    }
+
+    function ClosestLocation( lat, lon, title )
+    {
+        var latlng = new google.maps.LatLng( lat, lon );    
+
+        var mapOptions = { zoom: 12, center: latlng  };
+
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        var marker = new google.maps.Marker( { 
+            position: latlng,     
+            map: map,      
+            title: title
+        });
+
+        var contentString = "<b>" + title + "</b>";
+        var infowindow = new google.maps.InfoWindow( { content: contentString } );
+		
+        google.maps.event.addListener( marker, 'click', function() { infowindow.open( map, marker ); });
+
+        var closest = 0;
+        var mindist = 99999;
+		
+
+        for(var i = 0; i < locations.length; i++) 
+        {
+            // ambil jarak user dg lokasi
+            var dist = Haversine( locations[ i ].lat, locations[ i ].lon, lat, lon );
+			//console.log("Jarak : "+dist);
+			if(dist<=5)
+			{
+				var latDipilih=locations[ i ].lat;
+				var lonDipilih=locations[ i ].lon;
+				var namaGrup=locations[ i ].grup;
+				//console.log(namaGrup);
+				nearLocation.push({lat:latDipilih, lon:lonDipilih, grup:namaGrup});
+			}
+        }
+		
+		var infowindow = new google.maps.InfoWindow();
+
+		var marker, i;
+
+		for (i = 0; i < locations.length; i++) 
+		{  
+			var latlng = new google.maps.LatLng( nearLocation[i].lat, nearLocation[i].lon ); 
+			marker = new google.maps.Marker({
+				position: latlng,
+				map: map,
+		  });
+
+		  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			return function() {
+			  infowindow.setContent(nearLocation[i].grup);
+			  infowindow.open(map, marker);
+			}
+		  })(marker, i));
+		}
+        
+
+        map.setCenter( latlng );
+    }
+
+    // Convert Degress to Radians
+    function Deg2Rad( deg ) {
+       return deg * Math.PI / 180;
+    }
+
+    // Get Distance between two lat/lng points using the Haversine function
+    // First published by Roger Sinnott in Sky & Telescope magazine in 1984 (“Virtues of the Haversine”)
+    //
+    function Haversine( lat1, lon1, lat2, lon2 )
+    {
+        var R = 6372.8; // Earth Radius in Kilometers
+
+        var dLat = Deg2Rad(lat2-lat1);  
+        var dLon = Deg2Rad(lon2-lon1);  
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * 
+                        Math.sin(dLon/2) * Math.sin(dLon/2);  
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; 
+
+        // Return Distance in Kilometers
+        return d;
+    }
+
+    // Get Distance between two lat/lng points using the Pythagoras Theorem on a Equirectangular projection to account
+    // for curvature of the longitude lines.
+    function PythagorasEquirectangular( lat1, lon1, lat2, lon2 )
+    {
+        lat1 = Deg2Rad(lat1);
+        lat2 = Deg2Rad(lat2);
+        lon1 = Deg2Rad(lon1);
+        lon2 = Deg2Rad(lon2);
+        var R = 6371; // km
+        var x = (lon2-lon1) * Math.cos((lat1+lat2)/2);
+        var y = (lat2-lat1);
+        var d = Math.sqrt(x*x + y*y) * R;
+        return d;
+    }
+}
+
+function gotoNearbyGrup(){
+	mainView.router.loadPage('nearbyGrup.html');
+	myApp.closePanel();
+}
+
 function gotoCreateGroup(){
 	mainView.router.loadPage('buatGrup.html');
 	myApp.closePanel();
 }
 
 function gotoGroup(clickedId){
+	eraseCookie("id_grup");
 	document.cookie = "id_grup="+clickedId+";";
 	mainView.router.loadPage('grup.html');
+	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
+	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
+	getAllGrupPost(clickedId);
+	getInfoGrup(clickedId);
+	//===========================
 	myApp.closePanel();
+}
+
+function gotoPetaGrup(latData, lngData){
+	myApp.popup('.popup-grup');
+	var popupHTML = '<div class="popup">'+
+                    '<div class="content-block">'+
+                      '<p>Letak lokasi grup.</p>'+
+					  '<div id="petaLokasiGrup" style="width:330px; height:300px;"></div>'+
+                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
+                    '</div>'+
+                  '</div>'
+	myApp.popup(popupHTML);
+	
+	var map = new GMaps({
+		div: '#petaLokasiGrup',
+		lat: latData,
+		lng: lngData,
+	});
+	
+	
+	
+	if ( navigator.geolocation )
+    {
+		navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else
+	{
+		//tidak bisa ambil lat lng
+		map.addMarker({
+			lat: latData,
+			lng: lngData,
+			draggable: false,
+			infoWindow: {
+			  content: '<p>Tidak bisa menghitung jarak dikarenakan posisi anda sekarang tidak dapat diambil</p>'
+			}
+		});
+	}
+	
+	function showPosition(position) {
+		console.log("lat:"+position.coords.latitude+"\nlng:"+position.coords.longitude);
+        var latKuSekarang = position.coords.latitude;
+		var lngKuSekarang = position.coords.longitude;
+		
+		var dist = Haversine( latData, lngData, latKuSekarang, lngKuSekarang );
+		map.addMarker({
+			lat: latData,
+			lng: lngData,
+			draggable: false,
+			infoWindow: {
+			  content: '<p>Posisi anda sekarang ke lokasi grup '+ dist.toFixed(2)+' km'
+			}
+		});
+	}
+
+    // Convert Degress to Radians
+    function Deg2Rad( deg ) {
+       return deg * Math.PI / 180;
+    }
+
+    // Get Distance between two lat/lng points using the Haversine function
+    // First published by Roger Sinnott in Sky & Telescope magazine in 1984 (“Virtues of the Haversine”)
+    //
+    function Haversine( lat1, lon1, lat2, lon2 )
+    {
+        var R = 6372.8; // Earth Radius in Kilometers
+
+        var dLat = Deg2Rad(lat2-lat1);  
+        var dLon = Deg2Rad(lon2-lon1);  
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * 
+                        Math.sin(dLon/2) * Math.sin(dLon/2);  
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; 
+
+        // Return Distance in Kilometers
+        return d;
+    }
+
+    // Get Distance between two lat/lng points using the Pythagoras Theorem on a Equirectangular projection to account
+    // for curvature of the longitude lines.
+    function PythagorasEquirectangular( lat1, lon1, lat2, lon2 )
+    {
+        lat1 = Deg2Rad(lat1);
+        lat2 = Deg2Rad(lat2);
+        lon1 = Deg2Rad(lon1);
+        lon2 = Deg2Rad(lon2);
+        var R = 6371; // km
+        var x = (lon2-lon1) * Math.cos((lat1+lat2)/2);
+        var y = (lat2-lat1);
+        var d = Math.sqrt(x*x + y*y) * R;
+        return d;
+    }
 }
 
 function gotoGoogleMap(){
@@ -728,7 +970,7 @@ function gotoGoogleMap(){
 				dragend: function(event) {
 					var lat = event.latLng.lat();
 					var lng = event.latLng.lng();
-					myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
+					//myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
 					
 					if(lat != null && lng != null)
 					{
@@ -780,7 +1022,7 @@ function gotoGoogleMap(){
 				dragend: function(event) {
 					var lat = event.latLng.lat();
 					var lng = event.latLng.lng();
-					myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
+					//myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
 					
 					if(lat != null && lng != null)
 					{
@@ -944,9 +1186,8 @@ function getAllGrup() {
 }
 
 function getAllGrupPost(clickedId) {
-var id_grup = clickedId;
-
-var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
+	var id_grup = clickedId;
+	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 
 		$.ajax({
 		    url: link,
@@ -1022,8 +1263,81 @@ var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 			}
 			
 		}).fail(function(x){
-			myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
 		}); 
+}
+
+function getInfoGrup(clickedId){
+	var id_grup = clickedId;
+	var link=urlnya+'/api/grup/getGrupInfo?id_grup='+id_grup;
+		
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var dataLength=0;
+			for (var pair of z) {
+				dataLength++;
+			}
+			var indeks=0;
+			$("#isi_detil_grup").html("");
+			for(var i=0;i<dataLength;i++)
+			{
+				var nama=z[i]['nama'];
+				var foto=z[i]['foto'];
+				var lat=z[i]['lat'];
+				var lng=z[i]['lng'];
+				var lokasi=z[i]['lokasi'];
+				var id_kota=z[i]['id_kota'];
+				
+				var link=urlnya+'/api/kota/';
+				$.ajax({
+					url: link,
+					type: 'GET',
+					contentType: false,
+					processData: false
+				}).done(function(zz){
+					
+					if(indeks==0)
+					{
+						indeks++;
+						var html=	'<table id="detil_grup" style="margin-top:20px;">';
+						html += 		'<tr>';
+						html += 			'<td rowspan="4"><img src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
+						html += 			'<td style="font-weight:bold;"><a id="nama_grup">'+nama+'</a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			'<td style="font-weight:bold;"><a id="kota_grup">'+zz[id_kota]['nama']+'</a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			' <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
+						html += 		'</tr>';
+						html += 	'</table';
+						
+						//jika sudah ada tidak perlu bikin lagi
+						if($("#detil_grup").length == 0) {
+							$("#isi_detil_grup").append(html);
+						}
+						
+					}
+				}).fail(function(x){
+					myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+				}); 	
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan informasi grup gagal", 'Perhatian!');
+		}); 
+}
+
+function getNamaKotaById(id)
+{
+	
 }
 
 function statusGrupPost() {
