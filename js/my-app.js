@@ -74,7 +74,7 @@ myApp.onPageInit('daftar', function (page) {
 });
 
 myApp.onPageInit('lomba', function (page) {
-	getAllPostEvent();
+	getAllEventPost();
 });
 
 $$('.panel-left').on('panel:opened', function () {
