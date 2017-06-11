@@ -1794,7 +1794,7 @@ function getAllEventPost() {
 					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
 					html +=					'<td>: </td>';
 					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
 					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
