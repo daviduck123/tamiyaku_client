@@ -660,6 +660,7 @@ function statusPost() {
 		}).done(function(z){
 			getAllPost();
 			$("#status").val("");
+			$("#file_home").val("");
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -1031,7 +1032,6 @@ function gotoGoogleMap(){
 				lat: position.coords.latitude,
 				lng: position.coords.longitude,
 				click: function(e) {
-					alert('Silahkan geser marker ke lokasi yang anda inginkan!');
 				  },
 			});
 			
@@ -1450,12 +1450,8 @@ function statusGrupPost() {
 		    processData: false
 		}).done(function(z){
 			mainView.router.loadPage('grup.html');
-			//getAllPost();
-			/*var coba="";
-			for (var pair of formData.entries()) {
-							coba+=pair[0]+ ', ' + pair[1]; 
-			}*/
-			
+			$("#status_grup").val("");
+			$("#file_grup").val("");
 			myApp.alert("Berhasil post di grup", 'Data Dikirim!');
 			getAllGrupPost(id_grup);
 			$("#status_grup").val("");
