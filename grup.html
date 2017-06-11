@@ -15,36 +15,23 @@
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
             </div>
             <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Beranda</div>
+            <div class="center sliding" style="font-weight:bold;">Grup</div>
             <div class="right">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
             </div>
           </div>
         </div>
             <div class="page-content">
+			<div id="leaveGrup" style="position: absolute; right: 20px; margin-top: 23px;"><div id="isi_leaveGrup"></div></div>
 			<center>
-			
+				
 				<div id="isi_detil_grup"></div>
               
 			  </center>
-             <form action="/action_page.php">
-                      <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-input">
-                            <center><textarea id="status_grup" style="resize:none; margin-top:10px; width:90%; height:60px;" 
-                            placeholder="Tulis apa yang ingin anda bahas.."></textarea>
-                            </center>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item-content" style="margin-top:-10px;">
-                    <div class="item-inner" >
-                        <div style="height:0px;overflow:hidden">
-                        <input type="file" id="file_grup" accept="image/*"/>
-                        </div>
-                        <p><a href="#" class="button active" onclick="statusGrupPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>
-                        <p><a href="#" class="button"  onclick="chooseFile_grup();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>
-            </form>
+			  <div id="form_komentari_grup">
+				<div id="isi_form_komentari_grup"></div>
+			  </div>
+             
                     <br>
                     <br>
 					   <div id='pullToRefreshGrup' class="page-content pull-to-refresh-content" data-ptr-distance="55">

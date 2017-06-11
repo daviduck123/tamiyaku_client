@@ -2,7 +2,7 @@
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
-          <div data-page="buatGrup" class="page">
+          <div data-page="buatEvent" class="page">
             <!-- Scrollable page content-->
 			<div class="navbar">
           <div class="navbar-inner">
@@ -10,34 +10,28 @@
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
             </div>
             <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Buat Grup</div>
+            <div class="center sliding" style="font-weight:bold;">Buat Event</div>
             <div class="right">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
             </div>
           </div>
         </div>
             <div class="page-content">
-             <form action="/action_page.php">
-            <center>
-            <img src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
-            </center>
-            <br>
-            <br>
             <br>
             <center>
-            <table style="margin-top:-30px;">
+            <table style="margin-top:-0px;">
                 <tr>
-                    <td><p>Nama Grup</p></td>
-                    <td><input id="nama_buatGrup" type="text" required></td>
+                    <td><p>Nama Event Lomba</p></td>
+                    <td><input id="nama_buatEvent" type="text" required></td>
                 </tr>
-                <!--<tr>
-                    <td><p>Alamat</p></td>
-                    <td><textarea style="resize:none; margin-top:10px; height:60px;"></textarea></td>
-                </tr>-->
+				<tr>
+                    <td><p>Tanggal</p></td>
+                    <td><input type="datetime-local" id="tanggal_buatEvent" name="tanggal_buatEvent"></td>
+                </tr>
 				<tr>
                     <td><p>Kelas</p></td>
 					<td>
-					<select name="kelas_buatGrup" id="kelas_buatGrup">
+					<select name="kelas_buatEvent" id="kelas_buatEvent">
 					  <option value="0">Pilih Kelas</option>
 					  <option value="1">STB</option>
 					  <option value="2">STO</option>
@@ -46,37 +40,52 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><p>Hadiah</p></td>
+                    <td>
+						1. Rp<input id="total_juara1Event" type="number" required></td>
+					</td>
+                </tr>
+				<tr>
+                    <td height="48"></td>
+                    <td>
+						2. Rp<input id="total_juara2Event" type="number" required></td>
+					</td>
+                </tr>
+				<tr>
+                    <td height="48"></td>
+                    <td>
+						3. Rp<input id="total_juara3Event" type="number" required></td>
+					</td>
+                </tr>
+				<tr>
+                    <td><p>Ticket</p></td>
+                    <td>Rp.<input id="ticket_buatEvent" type="number" required></td>
+                </tr>
+				<tr>
                     <td><p>Kota</p></td>
 					<td>
-					<select name="kota_buatGrup" id="kota_buatGrup">
+					<select name="kota_buatEvent" id="kota_buatEvent">
 					  <option value="0">Pilih Kota</option>
 					</select>
                     </td>
                 </tr>
 				<tr>
                     <td><p>Detil Lokasi</p></td>
-                    <td><input id="lokasi_buatGrup" type="text" required></td>
-                </tr>
-                <tr>
-                    <td><p>Lokasi Peta</p></td>
-					<td><p><a href="#" class="button"  onclick="gotoGoogleMap();" style="width:150px;">Pilih Lokasi..</a></p></td>
+                    <td><input id="lokasi_buatEvent" type="text" required></td>
                 </tr>
 				<tr>
-					<td></td>
-					<td>
-						<div id="latlng_buatGrup">
-							<div id="isi_latlng_buatGrup">Lokasi belum ditentukan..</div>
-						</div>
-					</td>
-				</tr>
-                <tr>
-                    <td><p>Foto Profile</p></td>
+                    <td><p>Track</p></td>
                     <div style="height:0px;overflow:hidden">
-                        <input type="file" id="file_buatGrup" accept="image/*"/>
+                        <input type="file" id="file_buatEvent" accept="image/*"/>
                         </div>
-					<td><p><a href="#" class="button"  onclick="chooseFile_buatGrup();" style="width:150px;">Pilih Gambar..</a></p></td>
+					<td><p><a href="#" class="button" onclick="chooseFile_buatEvent();" style="width:150px;">Pilih Gambar..</a></p></td>
                 </tr>
-            </table><td><p><a href="#" class="button"  onclick="buatGrupPost();" style="width:250px;">Selesai..</a></p></td>
+				<tr>
+                    <td><p>Deskripsi</p></td>
+                    <td><textarea id="deskripsi_buatEvent" style="resize:none; margin-top:10px; height:60px;"></textarea></td>
+                </tr>
+                
+            </table><td><p><a href="#" class="button"  onclick="buatEventPost();" style="width:250px;">Selesai..</a></p></td>
             </center>
               </div>
               </form>

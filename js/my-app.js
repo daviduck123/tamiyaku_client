@@ -16,10 +16,39 @@ myApp.onPageInit('index', function (page) {
 });
 
 myApp.onPageInit('grup', function (page) {
+	
+	var id_user = getcookie("active_user_id");
 	var id_grup = getcookie("id_grup");
-	getAllGrupPost(id_grup);
-	getInfoGrup(id_grup);
-    setPullRefreshGrup();
+	
+	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
+	console.log(link);
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var dataLength=0;
+		for (var pair of z) {
+			dataLength++;
+		}
+		
+		if(dataLength>0)
+		{
+			getAllGrupPost(id_grup);
+			getInfoGrup(id_grup);
+			showButtonLeaveGrup(id_grup);
+			setPullRefreshGrup();
+		}
+		else
+		{
+			getInfoGrup(id_grup);
+			showButtonJoinGrup(id_grup);
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+	});
+	
 });
 
 myApp.onPageInit('nearbyGrup', function (page) {
@@ -29,6 +58,10 @@ myApp.onPageInit('nearbyGrup', function (page) {
 
 myApp.onPageInit('buatGrup', function (page) {
 	getKotaBuatGrup();
+});
+
+myApp.onPageInit('buatEvent', function (page) {
+	getKotaBuatEvent();
 });
 
 myApp.onPageInit('home', function (page) {

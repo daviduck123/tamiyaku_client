@@ -765,140 +765,6 @@ function getNearbyGrup(){
 		*/
 	}
 }
-function getNearbyGrupNOTUSED(){
-	
-	//kumpalan array lokasi semua grup yang ada
-	var locations = [{lat:45, lon:-120, grup:"grup1"}, {lat:45, lon:-120.0111, grup:"grup2"}, {lat:45.0011, lon:-120, grup:"grup3"}];
-	var nearLocation = [];
-	
-	
-	function removeByIndex(array, index){
-		return array.filter(function(elem, _index){
-			return index != _index ? true : false;
-		});
-	}
-	
-    if ( navigator.geolocation )
-    {
-        navigator.geolocation.getCurrentPosition( UserLocation, errorCallback,{maximumAge:60000,timeout:10000});
-    }
-    else
-	{
-		//diubah ke surabaya
-        ClosestLocation( 45, -120.0367, "Washington, DC" );
-	}
-
-    function errorCallback( error )
-    {
-    }
-
-    function UserLocation( position )
-    {
-        ClosestLocation( position.coords.latitude, position.coords.longitude, "Lokasiku sekarang!" );
-    }
-
-    function ClosestLocation( lat, lon, title )
-    {
-        var latlng = new google.maps.LatLng( lat, lon );    
-
-        var mapOptions = { zoom: 12, center: latlng  };
-
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-        var marker = new google.maps.Marker( { 
-            position: latlng,     
-            map: map,      
-            title: title
-        });
-
-        var contentString = "<b>" + title + "</b>";
-        var infowindow = new google.maps.InfoWindow( { content: contentString } );
-		
-        google.maps.event.addListener( marker, 'click', function() { infowindow.open( map, marker ); });
-
-        var closest = 0;
-        var mindist = 99999;
-		
-
-        for(var i = 0; i < locations.length; i++) 
-        {
-            // ambil jarak user dg lokasi
-            var dist = Haversine( locations[ i ].lat, locations[ i ].lon, lat, lon );
-			//console.log("Jarak : "+dist);
-			if(dist<=5)
-			{
-				var latDipilih=locations[ i ].lat;
-				var lonDipilih=locations[ i ].lon;
-				var namaGrup=locations[ i ].grup;
-				//console.log(namaGrup);
-				nearLocation.push({lat:latDipilih, lon:lonDipilih, grup:namaGrup});
-			}
-        }
-		
-		var infowindow = new google.maps.InfoWindow();
-
-		var marker, i;
-
-		for (i = 0; i < locations.length; i++) 
-		{  
-			var latlng = new google.maps.LatLng( nearLocation[i].lat, nearLocation[i].lon ); 
-			marker = new google.maps.Marker({
-				position: latlng,
-				map: map,
-		  });
-
-		  google.maps.event.addListener(marker, 'click', (function(marker, i) {
-			return function() {
-			  infowindow.setContent(nearLocation[i].grup);
-			  infowindow.open(map, marker);
-			}
-		  })(marker, i));
-		}
-        
-
-        map.setCenter( latlng );
-    }
-
-    // Convert Degress to Radians
-    function Deg2Rad( deg ) {
-       return deg * Math.PI / 180;
-    }
-
-    // Get Distance between two lat/lng points using the Haversine function
-    // First published by Roger Sinnott in Sky & Telescope magazine in 1984 (“Virtues of the Haversine”)
-    //
-    function Haversine( lat1, lon1, lat2, lon2 )
-    {
-        var R = 6372.8; // Earth Radius in Kilometers
-
-        var dLat = Deg2Rad(lat2-lat1);  
-        var dLon = Deg2Rad(lon2-lon1);  
-
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-                        Math.cos(Deg2Rad(lat1)) * Math.cos(Deg2Rad(lat2)) * 
-                        Math.sin(dLon/2) * Math.sin(dLon/2);  
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-        var d = R * c; 
-
-        // Return Distance in Kilometers
-        return d;
-    }
-
-    // Get Distance between two lat/lng points using the Pythagoras Theorem on a Equirectangular projection to account
-    // for curvature of the longitude lines.
-    function PythagorasEquirectangular( lat1, lon1, lat2, lon2 )
-    {
-        lat1 = Deg2Rad(lat1);
-        lat2 = Deg2Rad(lat2);
-        lon1 = Deg2Rad(lon1);
-        lon2 = Deg2Rad(lon2);
-        var R = 6371; // km
-        var x = (lon2-lon1) * Math.cos((lat1+lat2)/2);
-        var y = (lat2-lat1);
-        var d = Math.sqrt(x*x + y*y) * R;
-        return d;
-    }
-}
 
 function gotoNearbyGrup(){
 	mainView.router.loadPage('nearbyGrup.html');
@@ -916,8 +782,37 @@ function gotoGroup(clickedId){
 	mainView.router.loadPage('grup.html');
 	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
 	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
-	getAllGrupPost(clickedId);
-	getInfoGrup(clickedId);
+	var id_user = getcookie("active_user_id");
+	var id_grup = getcookie("id_grup");
+	
+	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
+	console.log(link);
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var dataLength=0;
+		for (var pair of z) {
+			dataLength++;
+		}
+		
+		if(dataLength>0)
+		{
+			getAllGrupPost(id_grup);
+			getInfoGrup(id_grup);
+			showButtonLeaveGrup(id_grup);
+		}
+		else
+		{
+			getInfoGrup(id_grup);
+			showButtonJoinGrup(id_grup);
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+	});
+	
 	//===========================
 	myApp.closePanel();
 }
@@ -994,21 +889,6 @@ function gotoPetaGrup(latData, lngData){
         var d = R * c; 
 
         // Return Distance in Kilometers
-        return d;
-    }
-
-    // Get Distance between two lat/lng points using the Pythagoras Theorem on a Equirectangular projection to account
-    // for curvature of the longitude lines.
-    function PythagorasEquirectangular( lat1, lon1, lat2, lon2 )
-    {
-        lat1 = Deg2Rad(lat1);
-        lat2 = Deg2Rad(lat2);
-        lon1 = Deg2Rad(lon1);
-        lon2 = Deg2Rad(lon2);
-        var R = 6371; // km
-        var x = (lon2-lon1) * Math.cos((lat1+lat2)/2);
-        var y = (lat2-lat1);
-        var d = Math.sqrt(x*x + y*y) * R;
         return d;
     }
 }
@@ -1271,6 +1151,78 @@ function getAllGrup() {
 		}); 
 }
 
+function showButtonJoinGrup(id){
+	
+	$("#isi_form_komentari_grup").remove();
+	$("#form_komentari_grup").append('<div id="isi_form_komentari_grup"></div>');
+			
+	var html =	'<p><a href="#" id="joinGrup" class="button active" onclick="joinThisGrup('+id+');" type="submit" style="width:100px; float:right; margin-right:5%;">Join Grup</a></p>';
+	
+	//jika sudah ada tidak perlu bikin lagi
+	if($("#joinGrup").length == 0) {
+		$("#isi_form_komentari_grup").append(html);
+	}
+}
+
+function showButtonLeaveGrup(id){
+	console.log("masuk");
+	$("#isi_leaveGrup").remove();
+	$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
+			
+	var html =	'<a href="#" id="keluarGrup" class ="badge" onclick="leaveThisGrup('+id+');" type="submit">Keluar grup</a>';
+	
+	//jika sudah ada tidak perlu bikin lagi
+	//if($("#keluarGrup").length == 0) {
+		$("#isi_leaveGrup").append(html);
+	//}
+}
+
+function leaveThisGrup(clickedId){
+	var id_grup=clickedId;
+	var id_user = getcookie("active_user_id");
+	
+	var link=urlnya+'/api/grup/leaveGrup?id_grup='+id_grup+'&id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			console.log(z.status);
+			if(z.status==true)
+			{
+				myApp.alert("Anda telahh keluar dari grup", 'Perhatian!');
+				showButtonJoinGrup(clickedId);
+			}
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
+		}); 
+}
+
+function joinThisGrup(clickedId){
+	var id_grup=clickedId;
+	var id_user = getcookie("active_user_id");
+	
+	var link=urlnya+'/api/grup/joinGrup?id_grup='+id_grup+'&id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			console.log(z.status);
+			if(z.status==true)
+			{
+				myApp.alert("Join grup berhasil", 'Perhatian!');
+				getAllGrupPost(clickedId);
+			}
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
+		}); 
+}
+
 function getAllGrupPost(clickedId) {
 	var id_grup = clickedId;
 	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
@@ -1288,6 +1240,31 @@ function getAllGrupPost(clickedId) {
 				dataLength++;
 			}
 			$("#isi_postingan_grup").html("");
+			$("#isi_form_komentari_grup").html("");
+			
+			var html2= '<form action="/action_page.php">';
+			html2 +=	'<div class="item-content">';
+			html2 +=		'<div class="item-inner">';
+			html2 +=			'<div class="item-input">';
+			html2 +=				'<center><textarea id="status_grup" style="resize:none; margin-top:10px; width:90%; height:60px;" ';
+			html2 +=					'placeholder="Tulis apa yang ingin anda bahas.."></textarea>';
+			html2 +=				'</center>';
+			html2 +=			'</div>';
+			html2 +=		'</div>';
+			html2 +=	' </div>';
+			html2 +=	'<div class="item-content" style="margin-top:-10px;">';
+			html2 +=	'<div class="item-inner" >';
+			html2 +=	'<div style="height:0px;overflow:hidden">';
+			html2 +=	'<input type="file" id="file_grup" accept="image/*"/>';
+			html2 +=	'</div>';
+			html2 +=	'<p><a href="#" class="button active" onclick="statusGrupPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
+			html2 +=	'<p><a href="#" class="button"  onclick="chooseFile_grup();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+			html2 +=	'</form>';
+			
+			
+			$("#isi_form_komentari_grup").append(html2);
+			
+			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
 			{
 				if(z[i]['foto']!="")
@@ -1369,6 +1346,7 @@ function getInfoGrup(clickedId){
 			}
 			var indeks=0;
 			$("#isi_detil_grup").html("");
+			
 			for(var i=0;i<dataLength;i++)
 			{
 				var nama=z[i]['nama'];
@@ -1401,7 +1379,7 @@ function getInfoGrup(clickedId){
 						html += 			' <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
 						html += 		'</tr>';
 						html += 		'<tr>';
-						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
+						html += 			'<td colspan="2"><a href="#" 	><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
 						html += 		'</tr>';
 						html += 	'</table';
 						
@@ -1409,7 +1387,6 @@ function getInfoGrup(clickedId){
 						if($("#detil_grup").length == 0) {
 							$("#isi_detil_grup").append(html);
 						}
-						
 					}
 				}).fail(function(x){
 					myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
@@ -1580,4 +1557,196 @@ function komentariGrupPost(clicked_id) {
 			}
 		}
 	});
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------EVENT / LOMBA
+
+function gotoBuatEvent(){
+	mainView.router.loadPage('buatEvent.html');
+	myApp.closePanel();
+}
+
+function gotoLomba(){
+	mainView.router.loadPage('lomba.html');
+	/*
+	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
+	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
+	var id_user = getcookie("active_user_id");
+	var id_grup = getcookie("id_grup");
+	
+	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
+	console.log(link);
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var dataLength=0;
+		for (var pair of z) {
+			dataLength++;
+		}
+		
+		if(dataLength>0)
+		{
+			getAllGrupPost(id_grup);
+			getInfoGrup(id_grup);
+			showButtonLeaveGrup(id_grup);
+		}
+		else
+		{
+			getInfoGrup(id_grup);
+			showButtonJoinGrup(id_grup);
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+	});
+	
+	//===========================
+	*/
+	myApp.closePanel();
+}
+
+function getKotaBuatEvent() {
+	var link=urlnya+'/api/kota/';
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var myOptions = z;
+
+			$.each(myOptions, function(i, el) 
+			{ 
+			   $('#kota_buatEvent').append( new Option(el.nama,el.id) );
+			});
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
+		}); 
+}
+
+function buatEventPost() {
+	var id_user=getcookie("active_user_id");
+	var namaEvent = document.getElementById("nama_buatEvent").value;
+	var tanggal = document.getElementById("tanggal_buatEvent").value;
+	var kelas = $('#kelas_buatEvent').find(":selected").val();
+	var juara1 = document.getElementById("total_juara1Event").value;
+	var juara2 = document.getElementById("total_juara2Event").value;
+	var juara3 = document.getElementById("total_juara3Event").value;
+	var ticket = document.getElementById("ticket_buatEvent").value;
+	var kota = $('#kota_buatEvent').find(":selected").val();
+	var lokasi = document.getElementById("lokasi_buatEvent").value;
+	var deskripsi = document.getElementById("deskripsi_buatEvent").value;
+	var fileinput = document.getElementById("file_buatEvent").value;
+	
+	if(namaEvent=="")
+	{
+		myApp.alert('Silahkan isi nama Event', 'Perhatian!');
+	}
+	else
+	{
+		if(tanggal=="")
+		{
+			myApp.alert('Silahkan isi tanggal Event', 'Perhatian!');
+		}
+		else
+		{
+			if(kelas=="" || kelas==0 || kelas=="0")
+			{
+				myApp.alert('Silahkan pilih kelas Event', 'Perhatian!');
+			}
+			else
+			{
+				if(juara1=="" || juara1==0 || juara1=="0")
+				{
+					myApp.alert('Silahkan isi total hadiah juara 1', 'Perhatian!');
+				}
+				else
+				{
+					if(juara2=="" || juara2==0 || juara2=="0")
+					{
+						myApp.alert('Silahkan isi total hadiah juara 2', 'Perhatian!');
+					}
+					else
+					{
+						if(juara3=="" || juara3==0 || juara3=="0")
+						{
+							myApp.alert('Silahkan isi total hadiah juara 3', 'Perhatian!');
+						}
+						else
+						{
+							if(ticket=="" || ticket==0 || ticket=="0")
+							{
+								myApp.alert('Silahkan isi biaya ticket masuk', 'Perhatian!');
+							}
+							else
+							{
+								if(kota=="" || kota==0 || kota=="0")
+								{
+									myApp.alert('Silahkan pilih kota Event', 'Perhatian!');
+								}
+								else
+								{
+									if(lokasi=="")
+									{
+										myApp.alert('Silahkan pilih lokasi Event', 'Perhatian!');
+									}
+									else
+									{
+										if(deskripsi=="")
+										{
+											myApp.alert('Silahkan isi deskripsi event lomba', 'Perhatian!');
+										}
+										else
+										{
+											if(fileinput=="")
+											{
+												myApp.alert('Silahkan pilih foto track event lomba', 'Perhatian!');
+											}
+											else
+											{
+												var blob=$("#file_buatEvent")[0].files[0];
+												var formData = new FormData();
+												formData.append("nama", namaEvent);
+												formData.append("tanggal", tanggal);
+												formData.append("tempat", lokasi);
+												formData.append("hadiah1", juara1);
+												formData.append("hadiah2", juara2);
+												formData.append("hadiah3", juara3);
+												formData.append("harga_tiket", ticket);
+												formData.append("deskripsi", deskripsi);
+												formData.append("id_user", id_user);
+												formData.append("id_kota", kota);
+												formData.append("id_kelas", kelas);
+												formData.append("file", blob);
+												
+												console.log(formData);
+												
+												var link=urlnya+'/api/event/createEvent';
+												
+												$.ajax({
+													url: link,
+													data: formData,
+													type: 'POST',
+													contentType: false,
+													processData: false
+												}).done(function(z){
+													//mainView.router.loadPage('home.html');
+													myApp.alert('Event berhasil dibuat', 'Berhasil!');
+												}).fail(function(x){
+													myApp.alert(x.message+" "+x.error, 'Perhatian!');
+												});
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}		
+			}
+		}
+	}
 }
