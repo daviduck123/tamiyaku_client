@@ -674,7 +674,95 @@ function statusPost() {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
 function getNearbyGrup(){
+	var id_user = getcookie("active_user_id");
+
+	if ( navigator.geolocation )
+	{
+		navigator.geolocation.getCurrentPosition(showPosition);
+	}
+	else
+	{
+		//tidak bisa ambil lat lng
+		myApp.alert('Posisi anda tidak dapat diakses', 'Perhatian!');
+	}
 	
+	function showPosition(position) {
+		var latKuSekarang = position.coords.latitude;
+		var lngKuSekarang = position.coords.longitude;
+		
+		var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang;
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var dataLength=0;
+			for (var pair of z) {
+				dataLength++;
+			}
+			
+			$("#isi_list_grup_disekitar").remove();
+			$("#list_grup_disekitar").append('<div id="isi_list_grup_disekitar"></div>');
+			
+			for(var i=0;i<dataLength;i++)
+			{
+				var jarak=parseFloat(z[i]['distance']);
+				jarak = jarak.toFixed(1);
+					var html =			'<li>';
+					html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
+					html += 					'<div class="item-content">';
+					html += 						'<div class="item-media"><img src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
+					html += 						'<div class="item-inner">';
+					html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
+					html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
+					html += 						'</div>';
+					html += 					'</div>';
+					html += 				'</a>';
+					html += 			'</li>';
+					
+					$("#isi_list_grup_disekitar").append(html);
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+		});
+		/*
+		//kalau pake map dibawah ini nyalakan
+		var map = new GMaps({
+			div: '#mapNearByGrup',
+			lat: latKuSekarang,
+			lng: lngKuSekarang,
+		});
+		
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var dataLength=0;
+			for (var pair of z) {
+				dataLength++;
+			}
+			
+			for(var i=0;i<dataLength;i++)
+			{
+				map.addMarker({
+					lat: z[i]['lat'],
+					lng: z[i]['lng'],
+					draggable: false,
+					infoWindow: {
+					  content: '<p>'+z[i]['nama']+', jarak '+ z[i]['distance']+' km'
+					}
+				});
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+		});
+		*/
+	}
 }
 function getNearbyGrupNOTUSED(){
 	
@@ -849,8 +937,6 @@ function gotoPetaGrup(latData, lngData){
 		lat: latData,
 		lng: lngData,
 	});
-	
-	
 	
 	if ( navigator.geolocation )
     {
@@ -1333,11 +1419,6 @@ function getInfoGrup(clickedId){
 		}).fail(function(x){
 			myApp.alert("Pengambilan informasi grup gagal", 'Perhatian!');
 		}); 
-}
-
-function getNamaKotaById(id)
-{
-	
 }
 
 function statusGrupPost() {

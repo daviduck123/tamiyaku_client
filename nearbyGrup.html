@@ -1,9 +1,9 @@
- <!-- Views-->
+    <!-- Views-->
     <div class="views">
       <!-- Your main view, should have "view-main" class-->
       <div class="view view-main">
         <!-- Top Navbar-->
-			
+        
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
@@ -15,59 +15,31 @@
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
             </div>
             <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Beranda</div>
+            <div class="center sliding" style="font-weight:bold;">Disekitar Saya</div>
             <div class="right">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
             </div>
           </div>
         </div>
             <div class="page-content">
-			<center>
-			<table id="detil_grup" style="margin-top:20px;">
-              <tr>
-                <td rowspan="4"><img src="img/i-f7-material.png" style="width:90px; height:90px;  margin-right:10px"></td>
-                <td style="font-weight:bold;"><a id="nama_grup">Mozarella</a></td>
-              </tr>
-              <tr>
-                <td style="font-weight:bold;"><a id="kota_grup">Surabaya</a></td>
-              </tr>
-              <tr>
-                <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">Jalan Tenggilis Mejoyo</span></a></td>
-              </tr>
-              <tr>
-                <td colspan="2"><a href="#" onclick="gotoHome();"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>
-              </tr>
-              </table>
-			  </center>
-                    <br>
-                    <br>
-					<div id="map-canvas"  style="width:330px; height:300px;"></div>
-					   <div id='pullToRefreshNearbyGrup' class="page-content pull-to-refresh-content" data-ptr-distance="55">
-							<!-- Default pull to refresh layer-->
-							<div class="pull-to-refresh-layer">
-							  <div class="preloader"></div>
-							  <div class="pull-to-refresh-arrow"></div>
+            <div  style="margin-top:0px;">
+            <div class="content-block searchbar-not-found">
+            <div class="content-block-inner">Nothing found</div>
+            </div>
+             <div class="list-block list-block-search searchbar-found">
+                     <div class="list-block contacts-block">
+                        <div class="list-group" style="margin-bottom:20px; margin-top:-30px;">
+                          <ul>
+                          <li class="list-group-title">List Grup Disekitar</li>
+							<div id="list_grup_disekitar" >
+								<div id="isi_list_grup_disekitar"></div>
 							</div>
-							
-							<!-- tempat semua postingan -->
-							
-							 <!-- usual content below -->
-							<div class="list-block">
-						 <p>Just pull page down to let the magic happen.</p>
-						</div>
-					  </div><!--- tutup pull refresh--->
-					</div> 
-                  </div>
-                </div>
+                            </ul>
+                            </div>
+                     </div>
+               </div>
+               </div>
               </div>
             </div>
           </div>
-		  
-		  
-		  
-		  
         </div>
-      </div>
-    </div>
-    <!-- Path to Framework7 Library JS-->
-   
