@@ -475,7 +475,8 @@ function komentariPost(clicked_id) {
 					processData: false
 				}).done(function(z){
 					mainView.router.loadPage('home.html');
-					myApp.alert('Komentar dibuat', 'Berhasil!');
+					//myApp.alert('Komentar dibuat', 'Berhasil!');
+					getAllPost();
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
@@ -509,7 +510,7 @@ function bacaKomentar(clicked_id) {
 						//{
 							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
 							html += 			"<tr>";
-							html += 				"<td rowspan='2'>";
+							html += 				"<td rowspan='2' width='10%'>";
 							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -1470,7 +1471,7 @@ function bacaGrupKomentar(clicked_id) {
 						//{
 							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
 							html += 			"<tr>";
-							html += 				"<td rowspan='2'>";
+							html += 				"<td rowspan='2' width='10%'>";
 							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -1550,7 +1551,8 @@ function komentariGrupPost(clicked_id) {
 					processData: false
 				}).done(function(z){
 					mainView.router.loadPage('grup.html');
-					myApp.alert('Komentar dibuat', 'Berhasil!');
+					getAllGrupPost(id_post);
+					//myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
@@ -1762,7 +1764,7 @@ function getAllEventPost() {
 					var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 					html += 		"<table id='table__event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
-					html += 				"<td rowspan='2'>";
+					html += 				"<td rowspan='2' width='10%'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
