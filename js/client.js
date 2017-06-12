@@ -448,7 +448,7 @@ function komentariPost(clicked_id) {
 		var table = document.getElementById(vartable).value;
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody').append(" <tr> <td><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
 		} 
 		else 
 		{
@@ -1193,7 +1193,7 @@ function leaveThisGrup(clickedId){
 			console.log(z.status);
 			if(z.status==true)
 			{
-				myApp.alert("Anda telahh keluar dari grup", 'Perhatian!');
+				myApp.alert("Anda telah keluar dari grup", 'Perhatian!');
 				showButtonJoinGrup(clickedId);
 			}
 		}).fail(function(x){
@@ -1217,6 +1217,7 @@ function joinThisGrup(clickedId){
 			if(z.status==true)
 			{
 				myApp.alert("Join grup berhasil", 'Perhatian!');
+				showButtonLeaveGrup(clickedId);
 				getAllGrupPost(clickedId);
 			}
 		}).fail(function(x){
@@ -1380,7 +1381,7 @@ function getInfoGrup(clickedId){
 						html += 			' <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
 						html += 		'</tr>';
 						html += 		'<tr>';
-						html += 			'<td colspan="2"><a href="#" 	><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
+						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
 						html += 		'</tr>';
 						html += 	'</table';
 						
@@ -1524,7 +1525,7 @@ function komentariGrupPost(clicked_id) {
 		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody').append(" <tr> <td><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
 		} 
 		else 
 		{
@@ -1762,7 +1763,7 @@ function getAllEventPost() {
 			for(var i=0;i<dataLength;i++)
 			{
 					var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table__event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2' width='10%'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
@@ -1817,7 +1818,7 @@ function getAllEventPost() {
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
-					html += 		"<div id='kolom_komentar_Event_"+z[i]['id']+"'>";
+					html += 		"<div id='kolom_komentar_event_"+z[i]['id']+"'>";
 					html += 		"</div>";
 					html += 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
 					html += 			"<p><a href='#' onclick='bacaEventKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
@@ -1830,5 +1831,333 @@ function getAllEventPost() {
 			
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
+		}); 
+}
+
+function bacaEventKomentar(clicked_id) {
+	//ON PROGRESS
+	var id_post = clicked_id;
+	
+	if($("#isi_komentar_event_"+id_post).length == 0) 
+	{
+		
+			$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_post='+id_post;
+				
+			$.ajax({
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				
+				if(z.length>0)
+				{
+					var html= "<div  id='isi_komentar_event_"+id_post+"'>";
+					for(var i=0;i<z.length;i++)
+					{
+						//if(z[i]['foto']!="")
+						//{
+							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
+							html += 			"<tr>";
+							html += 				"<td rowspan='2' width='10%'>";
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 				"</td>";
+							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							html += 			"</tr>";
+							html += 			"<tr>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+							html += 			"</tr>";
+							html += 		"</table>";
+							
+							//$("#kolom_komentar_"+clicked_id).append(html);
+						//}
+						//else
+						//{																													
+							
+						//}
+					}
+					html +=  "</div>";
+					//console.log(html);
+					$("#kolom_komentar_event_"+clicked_id).append(html);
+				}
+				else
+				{
+					//nggak ada yang komentar
+				}
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+	} 
+	else 
+	{
+		$("#isi_komentar_event_"+id_post).remove();
+	}
+}
+
+function komentariEventPost(clicked_id) {
+	//ON PROGRESS
+	var id_user = getcookie("active_user_id");
+	var id_post = "";
+	$(document).ready(function(){
+		
+		id_post=clicked_id;
+		var vardeksripsi="deskripsi_event_"+id_post;
+		var vartable="table_event_"+id_post;
+		
+		var table = document.getElementById(vartable).value;
+		
+		//console.log(vartable);
+		
+		if($("#" + vardeksripsi).length == 0) {
+				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+		} 
+		else 
+		{
+			var deskripsi = document.getElementById(vardeksripsi).value;
+			if(deskripsi=="")
+			{
+				myApp.alert('Anda belum mengisi komentar', 'Perhatian!');
+			}
+			else
+			{
+				var link=urlnya+'/api/komentar/';
+				var formData=JSON.stringify({
+					id_user:id_user,
+					id_post:id_post,
+					deskripsi:deskripsi,
+				});
+				//myApp.alert(formData, 'Data Dikirim!');
+				
+				$.ajax({
+					url: link,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false
+				}).done(function(z){
+					mainView.router.loadPage('lomba.html');
+					getAllEventPost(id_post);
+					//myApp.alert('Komentar dibuat', 'Berhasil!');
+				}).fail(function(x){
+					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
+				});
+			}
+		}
+	});
+}
+//========================================================================================================================================================TEMAN
+function gotoTeman(clickedId){
+	var id_teman = clickedId;
+	mainView.router.loadPage('profilTeman.html');
+	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
+	//jika mengakses teman pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
+	var id_user = getcookie("active_user_id");
+	
+	var link=urlnya+'/api/user/checkIsTeman?id_user='+id_user+'&id_teman='+id_teman;
+	console.log(link);
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var dataLength=0;
+		for (var pair of z) {
+			dataLength++;
+		}
+		
+		if(dataLength>0)
+		{
+			getAllTemanPost(id_teman);
+			getInfoTeman(id_teman);
+			showButtonLeaveTeman(id_teman);
+		}
+		else
+		{
+			getInfoTeman(id_teman);
+			showButtonJoinTeman(id_teman);
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan data teman disekitar gagal", 'Perhatian!');
+	});
+	
+	//===========================
+	myApp.closePanel();
+}
+function getAllTemanPost(clickedId) {
+	var id_teman = clickedId;
+	var link=urlnya+'/api/post/getAllPostByTeman?id_teman='+id_trup;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_postingan_teman").html("");
+			$("#isi_form_komentari_teman").html("");
+			
+			var html2= '<form action="/action_page.php">';
+			html2 +=	'<div class="item-content">';
+			html2 +=		'<div class="item-inner">';
+			html2 +=			'<div class="item-input">';
+			html2 +=				'<center><textarea id="status_teman" style="resize:none; margin-top:10px; width:90%; height:60px;" ';
+			html2 +=					'placeholder="Tulis apa yang ingin anda bahas.."></textarea>';
+			html2 +=				'</center>';
+			html2 +=			'</div>';
+			html2 +=		'</div>';
+			html2 +=	' </div>';
+			html2 +=	'<div class="item-content" style="margin-top:-10px;">';
+			html2 +=	'<div class="item-inner" >';
+			html2 +=	'<div style="height:0px;overflow:hidden">';
+			html2 +=	'<input type="file" id="file_teman" accept="image/*"/>';
+			html2 +=	'</div>';
+			html2 +=	'<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
+			html2 +=	'<p><a href="#" class="button"  onclick="chooseFile_teman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+			html2 +=	'</form>';
+			
+			
+			$("#isi_form_komentari_teman").append(html2);
+			
+			//munculkan semua post
+			for(var i=0;i<dataLength;i++)
+			{
+				if(z[i]['foto']!="")
+				{
+					var html=	"<div id='posting_teman_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table__teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2' >";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_teman").append(html);
+				}
+				else
+				{
+					
+					var html=	"<div id='posting_teman_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_teman").append(html);
+				}
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
+		}); 
+}
+function getProfilTeman(clickedId){
+	var id_teman = clickedId;
+	var link=urlnya+'/api/user/getTemanInfo?id_teman='+id_teman;
+		
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var dataLength=0;
+			for (var pair of z) {
+				dataLength++;
+			}
+			var indeks=0;
+			$("#isi_container_info_teman").html("");
+			
+			for(var i=0;i<dataLength;i++)
+			{
+				var nama=z[i]['nama'];
+				var foto=z[i]['foto'];
+				var lat=z[i]['lat'];
+				var lng=z[i]['lng'];
+				var lokasi=z[i]['lokasi'];
+				var id_kota=z[i]['id_kota'];
+				
+				var link=urlnya+'/api/kota/';
+				$.ajax({
+					url: link,
+					type: 'GET',
+					contentType: false,
+					processData: false
+				}).done(function(zz){
+					
+					if(indeks==0)
+					{
+						indeks++;
+						var html=	'<table id="detil_teman" style="margin-top:20px;">';
+						html += 		'<tr>';
+						html += 			'<td rowspan="4"><img src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
+						html += 			'<td style="font-weight:bold;"><a id="nama_teman">'+nama+'</a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			'<td style="font-weight:bold;"><a id="kota_teman">'+zz[id_kota]['nama']+'</a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			' <td colspan="2"><a id="alamat_teman"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
+						html += 		'</tr>';
+						html += 		'<tr>';
+						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
+						html += 		'</tr>';
+						html += 	'</table';
+						
+						//jika sudah ada tidak perlu bikin lagi
+						if($("#container_info_teman").length == 0) {
+							$("#isi_container_info_teman").append(html);
+						}
+					}
+				}).fail(function(x){
+					myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+				}); 	
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
 		}); 
 }
