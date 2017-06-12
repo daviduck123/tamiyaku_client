@@ -1193,6 +1193,8 @@ function leaveThisGrup(clickedId){
 			console.log(z.status);
 			if(z.status==true)
 			{
+				$("#isi_leaveGrup").remove();
+				$("#isi_postingan_grup").remove();
 				myApp.alert("Anda telah keluar dari grup", 'Perhatian!');
 				showButtonJoinGrup(clickedId);
 			}
@@ -1572,42 +1574,6 @@ function gotoBuatEvent(){
 function gotoLomba(){
 	mainView.router.loadPage('lomba.html');
 	getAllEventPost();
-	/*
-	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
-	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
-	var id_user = getcookie("active_user_id");
-	var id_grup = getcookie("id_grup");
-	
-	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
-	console.log(link);
-	$.ajax({
-	    url: link,
-	    type: 'GET',
-	    contentType: false,
-	    processData: false
-	}).done(function(z){
-		var dataLength=0;
-		for (var pair of z) {
-			dataLength++;
-		}
-		
-		if(dataLength>0)
-		{
-			getAllGrupPost(id_grup);
-			getInfoGrup(id_grup);
-			showButtonLeaveGrup(id_grup);
-		}
-		else
-		{
-			getInfoGrup(id_grup);
-			showButtonJoinGrup(id_grup);
-		}
-	}).fail(function(x){
-		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
-	});
-	
-	//===========================
-	*/
 	myApp.closePanel();
 }
 
