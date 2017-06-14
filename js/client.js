@@ -1166,7 +1166,6 @@ function showButtonJoinGrup(id){
 }
 
 function showButtonLeaveGrup(id){
-	console.log("masuk");
 	$("#isi_leaveGrup").remove();
 	$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
 			
@@ -1359,6 +1358,7 @@ function getInfoGrup(clickedId){
 				var lng=z[i]['lng'];
 				var lokasi=z[i]['lokasi'];
 				var id_kota=z[i]['id_kota'];
+				id_kota-=1;
 				
 				var link=urlnya+'/api/kota/';
 				$.ajax({
@@ -1367,7 +1367,6 @@ function getInfoGrup(clickedId){
 					contentType: false,
 					processData: false
 				}).done(function(zz){
-					
 					if(indeks==0)
 					{
 						indeks++;
