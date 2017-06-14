@@ -87,10 +87,13 @@ myApp.onPageInit('profilTeman', function (page) {
 });
 
 $$('.panel-left').on('panel:opened', function () {
-	var id_teman = getcookie("id_teman");
-	getAllGrup(id_teman);
+	getAllGrup();
 });
 
+$$('.panel-right').on('panel:opened', function () {
+	var id_user = getcookie("active_user_id");
+	getAllNotif(id_user);
+});
 
 function setPullRefreshHome(){
     var ptrContent = $$('#pullToRefreshHome');
