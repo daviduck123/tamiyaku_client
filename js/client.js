@@ -1916,7 +1916,9 @@ function komentariEventPost(clicked_id) {
 	});
 }
 //========================================================================================================================================================TEMAN
-function gotoTeman(clickedId){
+function gotoProfilTeman(clickedId){
+	eraseCookie("id_profilTeman");
+	document.cookie = "id_profilTeman="+clickedId+";";
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
 	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
@@ -2062,68 +2064,55 @@ function getAllTemanPost(clickedId) {
 }
 function getProfilTeman(clickedId){
 	var id_teman = clickedId;
-	var link=urlnya+'/api/user/getTemanInfo?id_teman='+id_teman;
+	var link=urlnya+'/api/user/getFriend?id_teman='+id_teman;
 		
-		$.ajax({
-		    url: link,
-		    type: 'GET',
-		    contentType: false,
-		    processData: false
-		}).done(function(z){
-			var dataLength=0;
-			for (var pair of z) {
-				dataLength++;
-			}
-			var indeks=0;
-			$("#isi_container_info_teman").html("");
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var dataLength=0;
+		for (var pair of z) {
+			dataLength++;
+		}
+		
+		$("#isi_container_info_teman1").html("");
+		$("#isi_container_info_teman2").html("");
+		
+		for(var i=0;i<dataLength;i++)
+		{
+			var nama=z[i]['nama'];
+			var foto=z[i]['foto'];
+			var email=z[i]['email'];
+			var telepon=z[i]['telepon'];
 			
-			for(var i=0;i<dataLength;i++)
-			{
-				var nama=z[i]['nama'];
-				var foto=z[i]['foto'];
-				var lat=z[i]['lat'];
-				var lng=z[i]['lng'];
-				var lokasi=z[i]['lokasi'];
-				var id_kota=z[i]['id_kota'];
-				
-				var link=urlnya+'/api/kota/';
-				$.ajax({
-					url: link,
-					type: 'GET',
-					contentType: false,
-					processData: false
-				}).done(function(zz){
+			var html=	'<table id="infoProfile" style="margin-top:20px;">';
+			html += 		'<tr>';
+			html += 			'<td rowspan="3"><img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;"></td>';
+			
+			var html2 = 		'</tr>';
+			html2 += 		'<tr>';
+			html2 += 			'<td><a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a></td>';
+			html2 += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+			html2 += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+			html2 += 		'</tr>';
+			
+			html2 += 		'<tr>';
+			html2 += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+			html2 += 		'</tr>';
+			html2 += 	'</table';
+			
+			//jika sudah ada tidak perlu bikin lagi
+			if($("#container_info_teman1").length == 0) {
+				$("#isi_container_info_teman1").append(html);
+			}
+			if($("#container_info_teman2").length == 0) {
+				$("#isi_container_info_teman2").append(html);
+			}
 					
-					if(indeks==0)
-					{
-						indeks++;
-						var html=	'<table id="detil_teman" style="margin-top:20px;">';
-						html += 		'<tr>';
-						html += 			'<td rowspan="4"><img src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
-						html += 			'<td style="font-weight:bold;"><a id="nama_teman">'+nama+'</a></td>';
-						html += 		'</tr>';
-						html += 		'<tr>';
-						html += 			'<td style="font-weight:bold;"><a id="kota_teman">'+zz[id_kota]['nama']+'</a></td>';
-						html += 		'</tr>';
-						html += 		'<tr>';
-						html += 			' <td colspan="2"><a id="alamat_teman"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
-						html += 		'</tr>';
-						html += 		'<tr>';
-						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
-						html += 		'</tr>';
-						html += 	'</table';
-						
-						//jika sudah ada tidak perlu bikin lagi
-						if($("#container_info_teman").length == 0) {
-							$("#isi_container_info_teman").append(html);
-						}
-					}
-				}).fail(function(x){
-					myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
-				}); 	
-			}
-			
-		}).fail(function(x){
-			myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
-		}); 
+		}		
+	}).fail(function(x){
+		myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
+	}); 
 }

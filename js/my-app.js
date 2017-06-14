@@ -77,8 +77,18 @@ myApp.onPageInit('lomba', function (page) {
 	getAllEventPost();
 });
 
+myApp.onPageInit('teman', function (page) {
+	getAllEventPost();
+});
+
+myApp.onPageInit('profilTeman', function (page) {
+	var id_teman = getcookie("id_profilTeman");
+	getProfilTeman(id_teman);
+});
+
 $$('.panel-left').on('panel:opened', function () {
-	getAllGrup();
+	var id_teman = getcookie("id_teman");
+	getAllGrup(id_teman);
 });
 
 
