@@ -3,8 +3,6 @@ function gotoProfilTeman(clickedId){
 	document.cookie = "id_profilTeman="+clickedId+";";
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
-	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
-	//jika mengakses teman pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
 	var id_user = getcookie("active_user_id");
 	
 	var link=urlnya+'/api/user/checkIsTeman?id_user='+id_user+'&id_teman='+id_teman;
@@ -22,17 +20,17 @@ function gotoProfilTeman(clickedId){
 		
 		if(dataLength>0)
 		{
+			//getAllTemanPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
+			//jika mengakses teman pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
 			getAllTemanPost(id_teman);
-			getProfilTeman(id_teman);
-			//showButtonLeaveTeman(id_teman);
+			getProfilTeman(id_teman,1);
 		}
 		else
 		{
-			getProfilTeman(id_teman);
-			//showButtonJoinTeman(id_teman);
+			getProfilTeman(id_teman,0);
 		}
 	}).fail(function(x){
-		myApp.alert("Pengambilan data teman disekitar gagal", 'Perhatian!');
+		myApp.alert("Pengambilan data profil teman gagal", 'Perhatian!');
 	});
 	
 	//===========================
@@ -41,7 +39,7 @@ function gotoProfilTeman(clickedId){
 function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_teman='+id_teman;
-
+	console.log("asdasd");
 		$.ajax({
 		    url: link,
 		    type: 'GET',
@@ -144,9 +142,9 @@ function getAllTemanPost(clickedId) {
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
 }
-function getProfilTeman(clickedId){
+function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
-	var link=urlnya+'/api/user/getUserByIdUser?id_teman='+id_teman;
+	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
 		
 	$.ajax({
 	    url: link,
@@ -159,8 +157,8 @@ function getProfilTeman(clickedId){
 			dataLength++;
 		}
 		
-		$("#isi_container_info_teman1").html("");
-		$("#isi_container_info_teman2").html("");
+		$("#nama_profilTeman").html("");
+		$("#isi_container_info_teman").html("");
 		
 		for(var i=0;i<dataLength;i++)
 		{
@@ -169,29 +167,87 @@ function getProfilTeman(clickedId){
 			var email=z[i]['email'];
 			var telepon=z[i]['telepon'];
 			
-			var html=	'<table id="infoProfile" style="margin-top:20px;">';
-			html += 		'<tr>';
-			html += 			'<td rowspan="3"><img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;"></td>';
-			
-			var html2 = 		'</tr>';
-			html2 += 		'<tr>';
-			html2 += 			'<td><a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a></td>';
-			html2 += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
-			html2 += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
-			html2 += 		'</tr>';
-			
-			html2 += 		'<tr>';
-			html2 += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-			html2 += 		'</tr>';
-			html2 += 	'</table';
+			if(statusTeman==1)
+			{
+				var html=	'<table id="infoProfile" style="margin-top:20px;">';
+				html += 		'<tr>';
+				html += 			'<td rowspan="3">';
+				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+				html += 			'</td>';
+				html += 	'</tr>';
+				html += 		'<tr>';
+				html += 			'<td>';
+				html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
+				html += 			'</td>';
+				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+				html += 		'</tr>';
+				html += 		'<tr>';
+				html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+				html += 		'</tr>';
+				html += 	'</table>';
+				
+				html +='					<form action="/action_page.php">';
+				html +='						  <div class="item-content">';
+				html +='							<div class="item-inner">';
+				html +='								<div class="item-input">';
+				html +='								<center><textarea id="status" style="resize:none; margin-top:10px; width:90%; height:60px;" ';
+				html +='								placeholder="Tulis pesan anda..."></textarea>';
+				html +='								</center>';
+				html +='								</div>';
+				html +='							</div>';
+				html +='						</div>';
+				html +='						<div class="item-content" style="margin-top:-10px;">';
+				html +='						<div class="item-inner" >';
+				html +='							<div style="height:0px;overflow:hidden">';
+				html +='							<input type="file" id="file_home" accept="image/*"/>';
+				html +='							</div>';
+				html +='							<p><a href="#" class="button active" onclick="statusPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
+				html +='							<p><a href="#" class="button"  onclick="chooseFile_home();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+				html +='				</form>';
+				html +='						<br>';
+				html +='						<br>';
+				html +='						   <div id="pullToRefreshHome" class="page-content pull-to-refresh-content" data-ptr-distance="55">';
+				html +='								<!-- Default pull to refresh layer-->';
+				html +='								<div class="pull-to-refresh-layer">';
+				html +='								  <div class="preloader"></div>';
+				html +='								  <div class="pull-to-refresh-arrow"></div>';
+				html +='								</div>';
+				html +='							<div id="isi_postingan">';
+				html +='				  </div>';
+				html +='						  </div>';
+				html +='				<!--- tutup pull refresh --->';
+				html +='						</div> ';
+				html +='					  </div>';
+			}
+			else
+			{
+				var html=	'<table id="infoProfile" style="margin-top:20px;">';
+				html += 		'<tr>';
+				html += 			'<td rowspan="3">';
+				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+				html += 			'</td>';
+				html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="" class="button" disabled style="width:100%;">Tambah teman</a></td>';
+				html += 	'</tr>';
+				html += 		'<tr>';
+				html += 			'<td>';
+				html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
+				html += 			'</td>';
+				
+				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+				html += 		'</tr>';
+				html += 		'<tr>';
+				html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+				html += 		'</tr>';
+				html += 	'</table>';
+			}
 			
 			//jika sudah ada tidak perlu bikin lagi
-			if($("#container_info_teman1").length == 0) {
-				$("#isi_container_info_teman1").append(html);
-			}
-			if($("#container_info_teman2").length == 0) {
-				$("#isi_container_info_teman2").append(html);
-			}
+			//if($("#container_info_teman1").length == 0) {
+				$("#isi_container_info_teman").append(html);
+			//}
+			$("#nama_profilTeman").append(nama);
 					
 		}		
 	}).fail(function(x){
