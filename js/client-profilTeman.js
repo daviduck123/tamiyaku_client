@@ -38,8 +38,8 @@ function gotoProfilTeman(clickedId){
 }
 function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
-	var link=urlnya+'/api/post/getAllPostFriendByUser?id_teman='+id_teman;
-	console.log("asdasd");
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
+
 		$.ajax({
 		    url: link,
 		    type: 'GET',
@@ -253,4 +253,69 @@ function getProfilTeman(clickedId, statusTeman){
 	}).fail(function(x){
 		myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
 	}); 
+}
+
+function bacaTemanKomentar(clicked_id) {
+	//ON PROGRESS
+	var id_post = clicked_id;
+	
+	if($("#isi_komentar_"+id_post).length == 0) 
+	{
+		
+			$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_post='+id_post;
+				
+			$.ajax({
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				
+				if(z.length>0)
+				{
+					var html= "<div  id='isi_komentar_"+id_post+"'>";
+					for(var i=0;i<z.length;i++)
+					{
+						//if(z[i]['foto']!="")
+						//{
+							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
+							html += 			"<tr>";
+							html += 				"<td rowspan='2' width='10%'>";
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 				"</td>";
+							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							html += 			"</tr>";
+							html += 			"<tr>";
+							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+							html += 			"</tr>";
+							html += 		"</table>";
+							
+							//$("#kolom_komentar_"+clicked_id).append(html);
+						//}
+						//else
+						//{																													
+							
+						//}
+					}
+					html +=  "</div>";
+					//console.log(html);
+					$("#kolom_komentar_"+clicked_id).append(html);
+				}
+				else
+				{
+					//nggak ada yang komentar
+				}
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+	} 
+	else 
+	{
+		$("#isi_komentar_"+id_post).remove();
+	}
+	
 }
