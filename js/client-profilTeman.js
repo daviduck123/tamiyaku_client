@@ -23,13 +23,13 @@ function gotoProfilTeman(clickedId){
 		if(dataLength>0)
 		{
 			getAllTemanPost(id_teman);
-			getInfoTeman(id_teman);
-			showButtonLeaveTeman(id_teman);
+			getProfilTeman(id_teman);
+			//showButtonLeaveTeman(id_teman);
 		}
 		else
 		{
-			getInfoTeman(id_teman);
-			showButtonJoinTeman(id_teman);
+			getProfilTeman(id_teman);
+			//showButtonJoinTeman(id_teman);
 		}
 	}).fail(function(x){
 		myApp.alert("Pengambilan data teman disekitar gagal", 'Perhatian!');
@@ -40,7 +40,7 @@ function gotoProfilTeman(clickedId){
 }
 function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
-	var link=urlnya+'/api/post/getAllPostByTeman?id_teman='+id_teman;
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_teman='+id_teman;
 
 		$.ajax({
 		    url: link,
@@ -146,7 +146,7 @@ function getAllTemanPost(clickedId) {
 }
 function getProfilTeman(clickedId){
 	var id_teman = clickedId;
-	var link=urlnya+'/api/user/getFriend?id_teman='+id_teman;
+	var link=urlnya+'/api/user/getUserByIdUser?id_teman='+id_teman;
 		
 	$.ajax({
 	    url: link,
