@@ -240,7 +240,7 @@ function bacaEventKomentar(clicked_id) {
 	{
 		
 			$(document).ready(function(){
-			var link=urlnya+'/api/komentar?id_post='+id_post;
+			var link=urlnya+'/api/komentar?id_event='+id_post;
 				
 			$.ajax({
 				url: link,
@@ -325,7 +325,7 @@ function komentariEventPost(clicked_id) {
 				var link=urlnya+'/api/komentar/';
 				var formData=JSON.stringify({
 					id_user:id_user,
-					id_post:id_post,
+					id_event:id_post,
 					deskripsi:deskripsi,
 				});
 				//myApp.alert(formData, 'Data Dikirim!');

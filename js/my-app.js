@@ -123,6 +123,19 @@ function setPullRefreshGrup(){
         });
 }
 
+function setPullRefreshProfilTeman(){
+    var ptrContent = $$('#pullToRefreshProfileTeman');
+    ptrContent.on('refresh', function (e) {
+            // Emulate 2s loading
+            setTimeout(function () {
+				var id_teman=document.getElementById('#id_teman_temp').value;
+				console.log(id_teman);
+                getAllTemanPost(id_teman);
+                myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
+            }, 2000);
+        });
+}
+
 var fruits = ('Apple Apricot Avocado Banana Melon Orange Peach Pear Pineapple').split(' ');
 
 var autocompleteDropdownSimple = myApp.autocomplete({

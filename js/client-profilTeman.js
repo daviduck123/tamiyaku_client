@@ -4,7 +4,6 @@ function gotoProfilTeman(clickedId){
 	var id_user = getcookie("active_user_id");
 	
 	var link=urlnya+'/api/user/checkIsTeman?id_user='+id_user+'&id_teman='+id_teman;
-	console.log(link);
 	$.ajax({
 	    url: link,
 	    type: 'GET',
@@ -21,12 +20,12 @@ function gotoProfilTeman(clickedId){
 			//getAllTemanPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
 			//jika mengakses teman pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
 			getAllTemanPost(id_teman);
-			console.log("teman");
+			//console.log("teman");
 			getProfilTeman(id_teman,1);
 		}
 		else
 		{
-			console.log("belumteman");
+			//console.log("belumteman");
 			getProfilTeman(id_teman,0);
 		}
 	}).fail(function(x){
@@ -145,7 +144,6 @@ function getAllTemanPost(clickedId) {
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
-		console.log(link);
 	$.ajax({
 	    url: link,
 	    type: 'GET',
@@ -197,7 +195,7 @@ function getProfilTeman(clickedId, statusTeman){
 				html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
 				html += 		'</tr>';
 				html += 	'</table>';
-				
+				/*//buat post status
 				html +='					<form action="/action_page.php">';
 				html +='						  <div class="item-content">';
 				html +='							<div class="item-inner">';
@@ -216,18 +214,10 @@ function getProfilTeman(clickedId, statusTeman){
 				html +='							<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
 				html +='							<p><a href="#" class="button"  onclick="chooseFile_profilTeman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
 				html +='				</form>';
+				*/
 				html +='						<br>';
 				html +='						<br>';
-				html +='						   <div id="pullToRefreshHome" class="page-content pull-to-refresh-content" data-ptr-distance="55">';
-				html +='								<!-- Default pull to refresh layer-->';
-				html +='								<div class="pull-to-refresh-layer">';
-				html +='								  <div class="preloader"></div>';
-				html +='								  <div class="pull-to-refresh-arrow"></div>';
-				html +='								</div>';
-				html +='							<div id="isi_postingan">';
-				html +='				  </div>';
-				html +='						  </div>';
-				html +='				<!--- tutup pull refresh --->';
+				
 				html +='						</div> ';
 				html +='					  </div>';
 			}

@@ -53,7 +53,6 @@ function getAllTeman() {
 			
 			html +=		'</ul>';
 			html +=	'</div>';
-			console.log(html);
 			$("#container_teman").append(html);
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
