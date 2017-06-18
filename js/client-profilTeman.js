@@ -145,7 +145,7 @@ function getAllTemanPost(clickedId) {
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
-		
+		console.log(link);
 	$.ajax({
 	    url: link,
 	    type: 'GET',
@@ -153,23 +153,29 @@ function getProfilTeman(clickedId, statusTeman){
 	    processData: false
 	}).done(function(z){
 		var dataLength=0;
-		for (var pair of z) {
-			dataLength++;
-		}
-		
+		//dataLength=(z + '').length;
+		dataLength=1;
 		$("#nama_profilTeman").html("");
 		$("#isi_container_info_teman").html("");
-		
+		//$("#container_info_teman").remove();
 		for(var i=0;i<dataLength;i++)
 		{
+			/*
 			var nama=z[i]['nama'];
 			var foto=z[i]['foto'];
 			var email=z[i]['email'];
 			var telepon=z[i]['telepon'];
+			*/
+			var id=z.id;
+			var nama=z.nama;
+			var foto=z.foto;
+			var email=z.email;
+			var telepon=z.telepon;
 			
 			if(statusTeman==1)
 			{
-				var html=	'<table id="infoProfile" style="margin-top:20px;">';
+				var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+				html +=	'<table id="infoProfile" style="margin-top:20px;">';
 				html += 		'<tr>';
 				html += 			'<td rowspan="3">';
 				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
@@ -200,10 +206,10 @@ function getProfilTeman(clickedId, statusTeman){
 				html +='						<div class="item-content" style="margin-top:-10px;">';
 				html +='						<div class="item-inner" >';
 				html +='							<div style="height:0px;overflow:hidden">';
-				html +='							<input type="file" id="file_home" accept="image/*"/>';
+				html +='							<input type="file" id="file_profilTeman" accept="image/*"/>';
 				html +='							</div>';
-				html +='							<p><a href="#" class="button active" onclick="statusPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
-				html +='							<p><a href="#" class="button"  onclick="chooseFile_home();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+				html +='							<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
+				html +='							<p><a href="#" class="button"  onclick="chooseFile_profileTeman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
 				html +='				</form>';
 				html +='						<br>';
 				html +='						<br>';
@@ -244,9 +250,9 @@ function getProfilTeman(clickedId, statusTeman){
 			}
 			
 			//jika sudah ada tidak perlu bikin lagi
-			//if($("#container_info_teman1").length == 0) {
+			if($("#infoProfile").length == 0) {
 				$("#isi_container_info_teman").append(html);
-			//}
+			}
 			$("#nama_profilTeman").append(nama);
 					
 		}		
@@ -259,7 +265,7 @@ function bacaTemanKomentar(clicked_id) {
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
-	if($("#isi_komentar_"+id_post).length == 0) 
+	if($("#isi_komentar_teman_"+id_post).length == 0) 
 	{
 		
 			$(document).ready(function(){
@@ -274,7 +280,7 @@ function bacaTemanKomentar(clicked_id) {
 				
 				if(z.length>0)
 				{
-					var html= "<div  id='isi_komentar_"+id_post+"'>";
+					var html= "<div  id='isi_komentar_teman_"+id_post+"'>";
 					for(var i=0;i<z.length;i++)
 					{
 						//if(z[i]['foto']!="")
@@ -301,7 +307,7 @@ function bacaTemanKomentar(clicked_id) {
 					}
 					html +=  "</div>";
 					//console.log(html);
-					$("#kolom_komentar_"+clicked_id).append(html);
+					$("#kolom_komentar_teman_"+clicked_id).append(html);
 				}
 				else
 				{
@@ -315,7 +321,103 @@ function bacaTemanKomentar(clicked_id) {
 	} 
 	else 
 	{
-		$("#isi_komentar_"+id_post).remove();
+		$("#isi_komentar_teman_"+id_post).remove();
 	}
 	
+}
+
+function komentariTemanPost(clicked_id) {
+	//ON PROGRESS
+	var id_user = getcookie("active_user_id");
+	var id_post = "";
+	$(document).ready(function(){
+		
+		id_post=clicked_id;
+		var vardeksripsi="deskripsi_teman_"+id_post;
+		var vartable="table_teman_"+id_post;
+		
+		var table = document.getElementById(vartable).value;
+		
+		//console.log(vartable);
+		
+		if($("#" + vardeksripsi).length == 0) {
+				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+		} 
+		else 
+		{
+			var deskripsi = document.getElementById(vardeksripsi).value;
+			if(deskripsi=="")
+			{
+				myApp.alert('Anda belum mengisi komentar', 'Perhatian!');
+			}
+			else
+			{
+				var link=urlnya+'/api/komentar/';
+				var formData=JSON.stringify({
+					id_user:id_user,
+					id_post:id_post,
+					deskripsi:deskripsi,
+				});
+				//myApp.alert(formData, 'Data Dikirim!');
+				
+				$.ajax({
+					url: link,
+					data: formData,
+					type: 'POST',
+					contentType: false,
+					processData: false
+				}).done(function(z){
+					//mainView.router.loadPage('profilTeman.html');
+					var id_teman = document.getElementById("id_teman_temp").value;
+					getAllTemanPost(id_teman);
+					//getAllTemanPost(id_teman);
+					//getProfilTeman(id_teman,1);
+					//myApp.alert('Komentar dibuat', 'Berhasil!');
+				}).fail(function(x){
+					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+				});
+			}
+		}
+	});
+}
+
+function statusTemanPost() {
+	//ON PROGRESS
+	var id_teman = document.getElementById("id_teman_temp").value;
+	var status = document.getElementById("status").value;
+	
+	var link=urlnya+'/api/post/createPost/';
+	
+	if(status=="")
+	{
+		myApp.alert('Anda belum mengisi status anda', 'Perhatian!');
+	}
+	else
+	{
+		var blob=$("#file_profilTeman")[0].files[0];
+		var formData = new FormData();
+		formData.append("id_user", id_teman);
+		formData.append("deskripsi", status);
+		formData.append("file", blob);
+
+		$.ajax({
+		    url: link,
+		    data: formData,
+		    type: 'POST',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllTemanPost(id_teman);
+			$("#status").val("");
+			$("#file_profilTeman").val("");
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat mengirim status pada teman, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var pair of formData.entries()) {
+				coba+=pair[0]+ ', '; 
+			}
+			console.log(coba);
+		});
+		
+	}
 }

@@ -236,7 +236,7 @@ function statusPost() {
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
 			for (var pair of formData.entries()) {
-				coba+=pair[0]+ ', ' + pair[1]; 
+				coba+=pair[0]+ ', '; 
 			}
 			console.log(coba);
 		});
