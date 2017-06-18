@@ -16,10 +16,30 @@ function getAllTeman() {
 			}
 			$("#container_teman").html("");
 			
+			var html=	'';
+			var tempHurufAwal='';
+			var tambahTutupdiv=0;
 			//munculkan semua teman
 			for(var i=0;i<dataLength;i++)
-			{						
-					var html=	'<li>';
+			{			
+				var hurufDepan=z[i]['nama'].substring(1, 0).toUpperCase();
+				if(tempHurufAwal!=hurufDepan)
+				{
+					if(tambahTutupdiv==1)
+					{
+						html +=		'</ul>';
+						html +=	'</div>';
+						tambahTutupdiv=0;
+					}
+					html +=	'<div class="list-group" style="margin-bottom:20px; margin-top:-30px;">';
+					html +=		'<ul>';
+					html +=			'<li class="list-group-title" >'+hurufDepan+'</li>';
+					html +=	'';
+					
+					tambahTutupdiv=1;
+					tempHurufAwal=hurufDepan;
+				}
+					html +=		'<li>';
 					html +=			'<a href="#" onclick="gotoProfilTeman('+z[i]['id']+');" class="item-link">';
 					html += 			'<div class="item-content">';
 					html += 				'<div class="item-media"><img src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:30px; height:30px;"></div>';
@@ -29,10 +49,12 @@ function getAllTeman() {
 					html += 			'</div>';
 					html += 		'</a>';
 					html += 	'</li>';
-					
-					$("#container_teman").append(html);
 			}
 			
+			html +=		'</ul>';
+			html +=	'</div>';
+			console.log(html);
+			$("#container_teman").append(html);
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
