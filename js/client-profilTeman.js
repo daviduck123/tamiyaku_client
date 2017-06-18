@@ -1,6 +1,6 @@
 function gotoProfilTeman(clickedId){
-	eraseCookie("id_profilTeman");
-	document.cookie = "id_profilTeman="+clickedId+";";
+	//eraseCookie("id_profilTeman");
+	//document.cookie = "id_profilTeman="+clickedId+";";
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
 	var id_user = getcookie("active_user_id");
@@ -23,10 +23,12 @@ function gotoProfilTeman(clickedId){
 			//getAllTemanPost dipanggil akan dipanggil jika saat ini user buka page teman dan ingin membuka teman yg lain karena element html terbuat dan dapat diakses
 			//jika mengakses teman pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
 			getAllTemanPost(id_teman);
+			console.log("teman");
 			getProfilTeman(id_teman,1);
 		}
 		else
 		{
+			console.log("belumteman");
 			getProfilTeman(id_teman,0);
 		}
 	}).fail(function(x){
@@ -83,7 +85,7 @@ function getAllTemanPost(clickedId) {
 				if(z[i]['foto']!="")
 				{
 					var html=	"<div id='posting_teman_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table__teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
@@ -153,10 +155,15 @@ function getProfilTeman(clickedId, statusTeman){
 	    processData: false
 	}).done(function(z){
 		var dataLength=0;
-		//dataLength=(z + '').length;
 		dataLength=1;
 		$("#nama_profilTeman").html("");
 		$("#isi_container_info_teman").html("");
+		$("#isi_form_komentari_teman").html("");
+		//$("#isi_container_info_teman").remove();
+		//$("#container_info_teman").append('<div id="isi_container_info_teman"></div>');
+		//$("#isi_form_komentari_teman").remove();
+		//$("#isi_postingan_teman").append('<div id="isi_form_komentari_teman"></div>');
+		
 		//$("#container_info_teman").remove();
 		for(var i=0;i<dataLength;i++)
 		{
@@ -209,7 +216,7 @@ function getProfilTeman(clickedId, statusTeman){
 				html +='							<input type="file" id="file_profilTeman" accept="image/*"/>';
 				html +='							</div>';
 				html +='							<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
-				html +='							<p><a href="#" class="button"  onclick="chooseFile_profileTeman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+				html +='							<p><a href="#" class="button"  onclick="chooseFile_profilTeman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
 				html +='				</form>';
 				html +='						<br>';
 				html +='						<br>';
@@ -336,9 +343,6 @@ function komentariTemanPost(clicked_id) {
 		var vardeksripsi="deskripsi_teman_"+id_post;
 		var vartable="table_teman_"+id_post;
 		
-		var table = document.getElementById(vartable).value;
-		
-		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");

@@ -83,8 +83,8 @@ myApp.onPageInit('teman', function (page) {
 });
 
 myApp.onPageInit('profilTeman', function (page) {
-	var id_teman = getcookie("id_profilTeman");
-	getProfilTeman(id_teman);
+	//var id_teman = getcookie("id_profilTeman");
+	//getProfilTeman(id_teman);
 });
 
 $$('.panel-left').on('panel:opened', function () {
