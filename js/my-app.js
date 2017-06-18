@@ -93,6 +93,11 @@ myApp.onPageInit('searchTemanGrup', function (page) {
 
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
+	var username = getcookie("active_user_nama");
+	$("#index_name").html("");
+	$("#index_name").append(username);
+	
+	$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 });
 
 $$('.panel-right').on('panel:opened', function () {
