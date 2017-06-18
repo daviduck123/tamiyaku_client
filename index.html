@@ -84,13 +84,12 @@
                         </tr>
             </table>
             <div  style="position:relative; top:-25px; left:10px;">
-            <table  style="margin-left:0px;" >
-                        <tr>
+            <table  style="margin-left:0px;" ><tr>
                             <td>
-                            <input type="text" name="name" placeholder="Cari Teman/Grup" style="width:160px;">
+                            <input type="text" id='cariTemanGrup' placeholder="Cari Teman/Grup" style="width:160px;" class="item-link item-content autocomplete-opener">
                             </td>
                             <td>
-                            <p><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-search"></i></a></p>
+                            <p><a href="#" onclick="searchTeman(document.getElementById('cariTemanGrup').value)" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px; color:white"><i class="icon fa fa-search"></i></a></p>
                             </td>
                         </tr>
             </table>
@@ -242,7 +241,6 @@
         <script type="text/javascript" src="js/gmaps.js"></script>
         <script type="text/javascript" src="js/framework7.min.js"></script>
         <!-- <script data-main="app" src="lib/require.js"></script> -->
-
         <script type="text/javascript" src="js/my-app.js"></script>
         <script type="text/javascript" src="js/client-base.js"></script>
 		<script type="text/javascript" src="js/client-daftar.js"></script>
@@ -253,5 +251,6 @@
 		<script type="text/javascript" src="js/client-event.js"></script>
 		<script type="text/javascript" src="js/client-profilTeman.js"></script>
         <script type="text/javascript" src="js/client-teman.js"></script>
+		<script type="text/javascript" src="js/client-searchTeman.js"></script>
     </body>
 </html>

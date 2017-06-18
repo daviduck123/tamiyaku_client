@@ -7,7 +7,7 @@
         <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
-          <div data-page="nearbyGrup" class="page">
+          <div data-page="searchTemanGrup" class="page">
             <!-- Scrollable page content-->
             <div class="navbar">
           <div class="navbar-inner">
@@ -15,12 +15,18 @@
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
             </div>
             <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Disekitar Saya</div>
+            <div class="center sliding" style="font-weight:bold;">Pencarian</div>
             <div class="right">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
             </div>
           </div>
         </div>
+            <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+                <div class="searchbar-input">
+                    <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+                </div>
+                <a href="#" class="searchbar-cancel">Cancel</a>
+            </form>
             <div class="page-content">
             <div  style="margin-top:0px;">
             <div class="content-block searchbar-not-found">
@@ -28,14 +34,9 @@
             </div>
              <div class="list-block list-block-search searchbar-found">
                      <div class="list-block contacts-block">
-                        <div class="list-group" style="margin-bottom:20px; margin-top:-30px;">
-                          <ul>
-                          <li class="list-group-title">List Grup Disekitar</li>
-							<div id="list_grup_disekitar" >
-								<div id="isi_list_grup_disekitar"></div>
+							<div id="container_searchTemanGrup" >
+								<div id="isi_container_searchTemanGrup"></div>
 							</div>
-                            </ul>
-                        </div>
                      </div>
                </div>
                </div>
