@@ -102,7 +102,7 @@ function buatJualBarangPost() {
 
 function getAllJualBeliPost() {
 	var id_user=getcookie("active_user_id");
-	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
+	var link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;
 
 		$.ajax({
 		    url: link,
@@ -116,13 +116,13 @@ function getAllJualBeliPost() {
 				coba+=pair['id']+"|"; 
 				dataLength++;
 			}
-			$("#isi_container_event").html("");
+			$("#isi_container_jualBeli").html("");
 			
 			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
 			{
-					var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2' width='10%'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
@@ -177,31 +177,31 @@ function getAllJualBeliPost() {
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
-					html += 		"<div id='kolom_komentar_event_"+z[i]['id']+"'>";
+					html += 		"<div id='kolom_komentar_jualBeli_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
-					html += 			"<p><a href='#' onclick='bacaEventKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 			"<p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
 					
-					$("#isi_container_event").append(html);
+					$("#isi_container_jualBeli").append(html);
 					
 			}
 			
 		}).fail(function(x){
-			myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
+			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
 }
 
-function bacaEventKomentar(clicked_id) {
+function bacaJualBeliKomentar(clicked_id) {
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
-	if($("#isi_komentar_event_"+id_post).length == 0) 
+	if($("#isi_komentar_jualBeli_"+id_post).length == 0) 
 	{
 		
 			$(document).ready(function(){
-			var link=urlnya+'/api/komentar?id_event='+id_post;
+			var link=urlnya+'/api/komentar?id_jualBeli='+id_post;
 				
 			$.ajax({
 				url: link,
@@ -212,7 +212,7 @@ function bacaEventKomentar(clicked_id) {
 				
 				if(z.length>0)
 				{
-					var html= "<div  id='isi_komentar_event_"+id_post+"'>";
+					var html= "<div  id='isi_komentar_jualBeli_"+id_post+"'>";
 					for(var i=0;i<z.length;i++)
 					{
 						//if(z[i]['foto']!="")
@@ -239,7 +239,7 @@ function bacaEventKomentar(clicked_id) {
 					}
 					html +=  "</div>";
 					//console.log(html);
-					$("#kolom_komentar_event_"+clicked_id).append(html);
+					$("#kolom_komentar_jualBeli_"+clicked_id).append(html);
 				}
 				else
 				{
@@ -253,19 +253,19 @@ function bacaEventKomentar(clicked_id) {
 	} 
 	else 
 	{
-		$("#isi_komentar_event_"+id_post).remove();
+		$("#isi_komentar_jualBeli_"+id_post).remove();
 	}
 }
 
-function komentariEventPost(clicked_id) {
+function komentariJualBeliPost(clicked_id) {
 	//ON PROGRESS
 	var id_user = getcookie("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		
 		id_post=clicked_id;
-		var vardeksripsi="deskripsi_event_"+id_post;
-		var vartable="table_event_"+id_post;
+		var vardeksripsi="deskripsi_jualBeli_"+id_post;
+		var vartable="table_jualBeli_"+id_post;
 		
 		var table = document.getElementById(vartable).value;
 		
@@ -298,7 +298,7 @@ function komentariEventPost(clicked_id) {
 					contentType: false,
 					processData: false
 				}).done(function(z){
-					mainView.router.loadPage('lomba.html');
+					mainView.router.loadPage('jualBeli.html');
 					getAllEventPost(id_post);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
