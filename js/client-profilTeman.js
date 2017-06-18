@@ -1,6 +1,4 @@
 function gotoProfilTeman(clickedId){
-	//eraseCookie("id_profilTeman");
-	//document.cookie = "id_profilTeman="+clickedId+";";
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
 	var id_user = getcookie("active_user_id");
@@ -240,7 +238,7 @@ function getProfilTeman(clickedId, statusTeman){
 				html += 			'<td rowspan="3">';
 				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
 				html += 			'</td>';
-				html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="" class="button" disabled style="width:100%;">Tambah teman</a></td>';
+				html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
 				html += 	'</tr>';
 				html += 		'<tr>';
 				html += 			'<td>';
@@ -424,4 +422,28 @@ function statusTemanPost() {
 		});
 		
 	}
+}
+
+function addFriend(clickedId){
+	var id_teman=clickedId;
+	var id_user = getcookie("active_user_id");
+	
+	var link=urlnya+'/api/user/addFriend?id_teman='+id_teman+'&id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			console.log(z.status);
+			if(z.status==true)
+			{
+				myApp.alert("Tambah teman berhasil", 'Perhatian!');
+				getAllTemanPost(id_teman);
+				getProfilTeman(id_teman,1);
+			}
+		}).fail(function(x){
+			myApp.alert("Tambah teman gagal", 'Perhatian!');
+		}); 
 }
