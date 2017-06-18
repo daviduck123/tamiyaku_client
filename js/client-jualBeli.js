@@ -80,7 +80,7 @@ function buatJualBarangPost() {
 							
 							console.log(formData);
 												
-							var link=urlnya+'/api/jualbeli/createEvent';
+							var link=urlnya+'/api/jualbeli/createJualBeli';
 							$.ajax({
 								url: link,
 								data: formData,
