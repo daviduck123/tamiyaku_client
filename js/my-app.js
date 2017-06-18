@@ -91,6 +91,10 @@ myApp.onPageInit('searchTemanGrup', function (page) {
 	myApp.closePanel();
 });
 
+myApp.onPageInit('buatJualBarang', function (page) {
+	getKotaBuatJualBarang();
+});
+
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
 	var username = getcookie("active_user_nama");
@@ -140,23 +144,3 @@ function setPullRefreshProfilTeman(){
             }, 2000);
         });
 }
-
-var fruits = ('Apple Apricot Avocado Banana Melon Orange Peach Pear Pineapple').split(' ');
-
-var autocompleteDropdownSimple = myApp.autocomplete({
-    input: '#autocomplete-dropdown',
-    openIn: 'dropdown',
-    source: function (autocomplete, query, render) {
-        var results = [];
-        if (query.length === 0) {
-            render(results);
-            return;
-        }
-        // Find matched items
-        for (var i = 0; i < fruits.length; i++) {
-            if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
-        }
-        // Render items by passing array with result items
-        render(results);
-    }
-});

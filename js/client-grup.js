@@ -459,7 +459,7 @@ function getAllGrup() {
 					var html =	'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" style="color:white;">';
 					html += 				'<li class="item-content">';
 					html += 					'<div class="item-media">';
-					html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 					'</div>';
 					html += 					'<div class="item-inner">';
 					html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
