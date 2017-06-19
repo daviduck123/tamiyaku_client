@@ -5,7 +5,7 @@ function gotoBuatJualBarang(){
 
 function gotoJualBeli(){
 	mainView.router.loadPage('jualBeli.html');
-	//getAllJualBeliPost();
+	getAllJualBeliPost();
 	myApp.closePanel();
 }
 
@@ -103,7 +103,22 @@ function buatJualBarangPost() {
 function getAllJualBeliPost() {
 	var id_user=getcookie("active_user_id");
 	var link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;
-
+	
+	var arrKota=[];
+	var link=urlnya+'/api/kota/';
+	$.ajax({
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(zz){
+		arrKota=zz;
+	}).fail(function(x){
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+	}); 
+			
+		link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;		
+		
 		$.ajax({
 		    url: link,
 		    type: 'GET',
@@ -117,10 +132,11 @@ function getAllJualBeliPost() {
 				dataLength++;
 			}
 			$("#isi_container_jualBeli").html("");
-			
 			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
 			{
+				var tempIdKota=z[i]['id_kota'];
+				tempIdKota -=1;
 					var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
@@ -133,43 +149,26 @@ function getAllJualBeliPost() {
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;" style="font-weight:bold;"><div style="width:100px;">Judul Lomba</div></td>';
-					html +=					'<td>: </td>';
-					html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Judul Lomba</div></td>';
+					//html +=					'<td>: </td>';
+					//html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
-					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">16/03/2016</td>';
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Rp.'+z[i]['harga']+',-</div></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Kota</div></td>';
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">'+arrKota[tempIdKota]['nama']+'</div></td>';
 					html +=					'<td>: </td>';
 					html +=					'<td colspan="2">Surabaya</td>';
 					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Hadiah</div> </td>';
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Deskripsi</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
+					html +=					'<td colspan="2">'+z[i]['deskripsi']+'</td>';
 					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
 					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">BTO. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html +=					'<td colspan="2">'+z[i]['email']+'</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
@@ -183,9 +182,7 @@ function getAllJualBeliPost() {
 					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
-					
 					$("#isi_container_jualBeli").append(html);
-					
 			}
 			
 		}).fail(function(x){
@@ -300,7 +297,6 @@ function komentariJualBeliPost(clicked_id) {
 				}).done(function(z){
 					mainView.router.loadPage('jualBeli.html');
 					getAllEventPost(id_post);
-					//myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
 				});
