@@ -142,13 +142,13 @@ function getAllJualBeliPost() {
 					html += 				"<td rowspan='2' width='10%'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
-					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Judul Lomba</div></td>';
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">'+z[i]['nama']+'</div></td>';
 					//html +=					'<td>: </td>';
 					//html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
 					html += 			"</tr>";

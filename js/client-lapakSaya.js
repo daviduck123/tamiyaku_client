@@ -142,13 +142,13 @@ function getAllLapakSayaPost() {
 					html += 				"<td rowspan='2' width='10%'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
-					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Judul Lomba</div></td>';
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">'+z[i]['nama']+'</div></td>';
 					//html +=					'<td>: </td>';
 					//html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
 					html += 			"</tr>";
@@ -177,7 +177,15 @@ function getAllLapakSayaPost() {
 					html += 		"</table>";
 					html += 		"<div id='kolom_komentar_jualBeli_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 		'<input type="hidden" name="hidden_id_lapakSaya_" value='+z[i]['id']+'>';
+					html += 		'<input type="hidden" name="hidden_nama_lapakSaya_" value='+z[i]['nama']+'>';
+					html += 		'<input type="hidden" name="hidden_deskripsi_lapakSaya_" value='+z[i]['deskripsi']+'>';
+					html += 		'<input type="hidden" name="hidden_deskripsi_lapakSaya_" value='+z[i]['harga']+'>';
+					html += 		'<input type="hidden" name="hidden_foto_lapakSaya_" value='+z[i]['foto']+'>';
+					html += 		'<input type="hidden" name="hidden_id_kota_lapakSaya_" value='+arrKota[tempIdKota]['id']+'>';
+					html += 		'<input type="hidden" name="hidden_email_lapakSaya_" value='+z[i]['email']+'>';
+					
+					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
@@ -302,4 +310,56 @@ function komentariJualBeliPost(clicked_id) {
 			}
 		}
 	});
+}
+
+function bukaPopUpEdit(latData, lngData){
+	myApp.popup('.popup-edit');
+	var popupHTML = '<div class="popup">'+
+                    '<div class="content-block">'+
+                      '<center>'+
+						'<table style="margin-top:-0px;">'+
+						'	<tr>'+
+						'		<td><p>Nama</p></td>'+
+						'		<td><input id="nama_editBuatJualBarang" type="text" required></td>'+
+						'	</tr>'+
+						'	<tr>'+
+						'		<td><p>Kelas</p></td>'+
+						'		<td>'+
+						'		<select name="kelas_editBuatJualBarang" id="kelas_editBuatJualBarang">'+
+						'		  <option value="0">Pilih Kelas</option>'+
+						'		  <option value="1">STB</option>'+
+						'		  <option value="2">STO</option>'+
+						'		  <option value="3">Speed</option>'+
+						'		</select>'+
+						'		</td>'+
+						'	</tr>'+
+						'	<tr>'+
+						'		<td><p>Harga</p></td>'+
+						'		<td>Rp.<input id="harga_editBuatJualBarang" type="number" required></td>'+
+						'	</tr>'+
+						'	<tr>'+
+						'		<td><p>Kota</p></td>'+
+						'		<td>'+
+						'		<select name="kota_editBuatJualBarang" id="kota_editBuatJualBarang">'+
+						'		  <option value="0">Pilih Kota</option>'+
+						'		</select>'+
+						'		</td>'+
+						'	</tr>'+
+						'	<tr>'+
+						'		<td><p>Foto</p></td>'+
+						'		<div style="height:0px;overflow:hidden">'+
+						'			<input type="file" id="file_editBuatJualBarang" accept="image/*"/>'+
+						'			</div>'+
+						'		<td><p><a href="#" class="button" onclick="chooseFile_editBuatJualBarang();" style="width:150px;">Pilih Gambar..</a></p></td>'+
+						'	</tr>'+
+						'	<tr>'+
+						'		<td><p>Deskripsi</p></td>'+
+						'		<td><textarea id="deskripsi_editBuatJualBarang" style="resize:none; margin-top:10px; height:60px;"></textarea></td>'+
+						'	</tr>'+
+						'</table><td><p><a href="#" class="button"  onclick="editJualBarangPost();" style="width:250px;">Simpan perubahan</a></p></td>'+
+					'</center>'+
+                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
+                    '</div>'+
+                  '</div>'
+	myApp.popup(popupHTML);
 }
