@@ -1,5 +1,10 @@
-  
-        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+	   <!-- Top Navbar-->
+	  
+	   <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
           <!-- Page, data-page contains page name-->
           <div data-page="buatJualBarang" class="page">
@@ -7,7 +12,7 @@
 			<div class="navbar">
           <div class="navbar-inner">
           <div class="left">
-              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="gotoJualBeli();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
             </div>
             <!-- We have home navbar without left link-->
             <div class="center sliding" style="font-weight:bold;">Jual Barang</div>
@@ -74,7 +79,6 @@
           </div>
         </div>
       </div>
-    </div>
 	
 	<!-- About Popup -->
   <div class="popup popup-about">

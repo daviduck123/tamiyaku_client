@@ -1,15 +1,15 @@
-function gotoBuatJualBarang(){
-	mainView.router.loadPage('buatJualBarang.html');
+function gotoEditLapakSaya(){
+	mainView.router.loadPage('editLapakSaya.html');
 	myApp.closePanel();
 }
 
-function gotoJualBeli(){
-	mainView.router.loadPage('jualBeli.html');
-	getAllJualBeliPost();
+function gotoLapakSaya(){
+	mainView.router.loadPage('lapakSaya.html');
+	getAllLapakSayaPost();
 	myApp.closePanel();
 }
 
-function getKotaBuatJualBarang() {
+function getKotaEditLapakSaya() {
 	var link=urlnya+'/api/kota/';
 		$.ajax({
 		    url: link,
@@ -21,7 +21,7 @@ function getKotaBuatJualBarang() {
 
 			$.each(myOptions, function(i, el) 
 			{ 
-			   $('#kota_buatJualBarang').append( new Option(el.nama,el.id) );
+			   $('#kota_editLapakSaya').append( new Option(el.nama,el.id) );
 			});
 			
 		}).fail(function(x){
@@ -29,16 +29,16 @@ function getKotaBuatJualBarang() {
 		}); 
 }
 
-function buatJualBarangPost() {
+function buatLapakSayaPost() {
 	var id_user=getcookie("active_user_id");
-	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
-	var kelas = $('#kelas_buatJualBarang').find(":selected").val();
-	var harga = document.getElementById("harga_buatJualBarang").value;
-	var kota = $('#kota_buatJualBarang').find(":selected").val();
-	var deskripsi = document.getElementById("deskripsi_buatJualBarang").value;
-	var fileinput = document.getElementById("file_buatJualBarang").value;
+	var namaLapakSaya = document.getElementById("nama_buatLapakSaya").value;
+	var kelas = $('#kelas_buatLapakSaya').find(":selected").val();
+	var harga = document.getElementById("harga_buatLapakSaya").value;
+	var kota = $('#kota_buatLapakSaya').find(":selected").val();
+	var deskripsi = document.getElementById("deskripsi_buatLapakSaya").value;
+	var fileinput = document.getElementById("file_buatLapakSaya").value;
 	
-	if(namaJualBarang=="")
+	if(namaLapakSaya=="")
 	{
 		myApp.alert('Silahkan isi nama barang', 'Perhatian!');
 	}
@@ -68,9 +68,9 @@ function buatJualBarangPost() {
 						}
 						else
 						{
-							var blob=$("#file_buatJualBarang")[0].files[0];
+							var blob=$("#file_buatLapakSaya")[0].files[0];
 							var formData = new FormData();
-							formData.append("nama", namaJualBarang);
+							formData.append("nama", namaLapakSaya);
 							formData.append("harga", harga);
 							formData.append("deskripsi", deskripsi);
 							formData.append("id_user", id_user);
@@ -100,7 +100,7 @@ function buatJualBarangPost() {
 	}
 }
 
-function getAllJualBeliPost() {
+function getAllLapakSayaPost() {
 	var id_user=getcookie("active_user_id");
 	
 	var arrKota=[];
@@ -113,10 +113,10 @@ function getAllJualBeliPost() {
 	}).done(function(zz){
 		arrKota=zz;
 	}).fail(function(x){
-		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1)');
 	}); 
 			
-		link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;		
+		link=urlnya+'/api/jualbeli/getUserLapak?id_user='+id_user;		
 		
 		$.ajax({
 		    url: link,
@@ -130,7 +130,7 @@ function getAllJualBeliPost() {
 				coba+=pair['id']+"|"; 
 				dataLength++;
 			}
-			$("#isi_container_jualBeli").html("");
+			$("#isi_container_lapakSaya").html("");
 			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
 			{
@@ -181,7 +181,7 @@ function getAllJualBeliPost() {
 					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
-					$("#isi_container_jualBeli").append(html);
+					$("#isi_container_lapakSaya").append(html);
 			}
 			
 		}).fail(function(x){
