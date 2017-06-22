@@ -134,7 +134,14 @@ function getAllLapakSayaPost() {
 			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
 			{
+				storeImage(z[i]['foto'], "editFotoLapakSaya_"+z[i]['id']);
 				var tempIdKota=z[i]['id_kota'];
+				document.cookie = "editNamaLapakSaya_"+z[i]['id']+"="+z[i]['nama']+";";
+				document.cookie = "editDeskripsiLapakSaya_"+z[i]['id']+"="+z[i]['deskripsi']+";";
+				document.cookie = "editHargaLapakSaya_"+z[i]['id']+"="+z[i]['harga']+";";
+				document.cookie = "editId_kotaLapakSaya_"+z[i]['id']+"="+arrKota[tempIdKota]['id']+";";
+				document.cookie = "editEmailLapakSaya_"+z[i]['id']+"="+z[i]['email']+";";
+				
 				tempIdKota -=1;
 					var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
@@ -156,37 +163,20 @@ function getAllLapakSayaPost() {
 					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Rp.'+z[i]['harga']+',-</div></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">'+arrKota[tempIdKota]['nama']+'</div></td>';
-					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">Surabaya</td>';
-					html += 			"</tr>";
-					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Deskripsi</div></td>';
-					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">'+z[i]['deskripsi']+'</td>';
-					html += 			"</tr>";
-					html += 			"</tr>";
-					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
-					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">'+z[i]['email']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
-					html += 		"<div id='kolom_komentar_jualBeli_"+z[i]['id']+"'>";
-					html += 		"</div>";
-					html += 		'<input type="hidden" name="hidden_id_lapakSaya_" value='+z[i]['id']+'>';
-					html += 		'<input type="hidden" name="hidden_nama_lapakSaya_" value='+z[i]['nama']+'>';
-					html += 		'<input type="hidden" name="hidden_deskripsi_lapakSaya_" value='+z[i]['deskripsi']+'>';
-					html += 		'<input type="hidden" name="hidden_deskripsi_lapakSaya_" value='+z[i]['harga']+'>';
-					html += 		'<input type="hidden" name="hidden_foto_lapakSaya_" value='+z[i]['foto']+'>';
-					html += 		'<input type="hidden" name="hidden_id_kota_lapakSaya_" value='+arrKota[tempIdKota]['id']+'>';
-					html += 		'<input type="hidden" name="hidden_email_lapakSaya_" value='+z[i]['email']+'>';
-					
-					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
-					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					//html += 		'<input type="hidden" name="hidden_id_lapakSaya_'+z[i]['id']+'" value='+z[i]['id']+'>';
+					//html += 		'<input type="hidden" name="hidden_nama_lapakSaya_'+z[i]['id']+'" value='+z[i]['nama']+'>';
+					//html += 		'<input type="hidden" name="hidden_deskripsi_lapakSaya_'+z[i]['id']+'" value='+z[i]['deskripsi']+'>';
+					//html += 		'<input type="hidden" name="hidden_harga_lapakSaya_'+z[i]['id']+'" value='+z[i]['harga']+'>';
+					//html += 		'<input type="hidden" name="hidden_foto_lapakSaya_'+z[i]['id']+'" value='+z[i]['foto']+'>';
+					//html += 		'<input type="hidden" name="hidden_id_kota_lapakSaya_'+z[i]['id']+'" value='+arrKota[tempIdKota]['id']+'>';
+					//html += 		'<input type="hidden" name="hidden_email_lapakSaya_'+z[i]['id']+'" value='+z[i]['email']+'>';
+					html += 			"<p><a href='#' class='button' onclick='editLapakSaya(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Edit</a></p>";
+					html += 			"<p><a href='#' class='button' onclick='hapuLapakSaya(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Hapus</a></p>";
 					html += 	"</div>";
 					
 					$("#isi_container_lapakSaya").append(html);
@@ -312,54 +302,171 @@ function komentariJualBeliPost(clicked_id) {
 	});
 }
 
-function bukaPopUpEdit(latData, lngData){
-	myApp.popup('.popup-edit');
-	var popupHTML = '<div class="popup">'+
-                    '<div class="content-block">'+
-                      '<center>'+
-						'<table style="margin-top:-0px;">'+
-						'	<tr>'+
-						'		<td><p>Nama</p></td>'+
-						'		<td><input id="nama_editBuatJualBarang" type="text" required></td>'+
-						'	</tr>'+
-						'	<tr>'+
-						'		<td><p>Kelas</p></td>'+
-						'		<td>'+
-						'		<select name="kelas_editBuatJualBarang" id="kelas_editBuatJualBarang">'+
-						'		  <option value="0">Pilih Kelas</option>'+
-						'		  <option value="1">STB</option>'+
-						'		  <option value="2">STO</option>'+
-						'		  <option value="3">Speed</option>'+
-						'		</select>'+
-						'		</td>'+
-						'	</tr>'+
-						'	<tr>'+
-						'		<td><p>Harga</p></td>'+
-						'		<td>Rp.<input id="harga_editBuatJualBarang" type="number" required></td>'+
-						'	</tr>'+
-						'	<tr>'+
-						'		<td><p>Kota</p></td>'+
-						'		<td>'+
-						'		<select name="kota_editBuatJualBarang" id="kota_editBuatJualBarang">'+
-						'		  <option value="0">Pilih Kota</option>'+
-						'		</select>'+
-						'		</td>'+
-						'	</tr>'+
-						'	<tr>'+
-						'		<td><p>Foto</p></td>'+
-						'		<div style="height:0px;overflow:hidden">'+
-						'			<input type="file" id="file_editBuatJualBarang" accept="image/*"/>'+
-						'			</div>'+
-						'		<td><p><a href="#" class="button" onclick="chooseFile_editBuatJualBarang();" style="width:150px;">Pilih Gambar..</a></p></td>'+
-						'	</tr>'+
-						'	<tr>'+
-						'		<td><p>Deskripsi</p></td>'+
-						'		<td><textarea id="deskripsi_editBuatJualBarang" style="resize:none; margin-top:10px; height:60px;"></textarea></td>'+
-						'	</tr>'+
-						'</table><td><p><a href="#" class="button"  onclick="editJualBarangPost();" style="width:250px;">Simpan perubahan</a></p></td>'+
-					'</center>'+
-                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
-                    '</div>'+
-                  '</div>'
-	myApp.popup(popupHTML);
+function editLapakSaya(clickedID){
+	var id_user= getcookie("active_user_id");
+	var id_lapak= clickedID;
+	var temp="editNamaLapakSaya_"+id_lapak;
+	console.log(temp);
+	var nama = getcookie(temp);
+	var deskripsi = getcookie("editDeskripsiLapakSaya_"+id_lapak);
+	var harga = getcookie("editHargaLapakSaya_"+id_lapak);
+	var foto = getImage("editFotoLapakSaya_"+id_lapak);
+	var id_kota = getcookie("editId_kotaLapakSaya_"+id_lapak);
+	var email = getcookie("editEmailLapakSaya_"+id_lapak);
+	
+	var arrKota=[];
+	var link=urlnya+'/api/kota/';
+	$.ajax({
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(zz){
+		arrKota=zz;
+		
+		myApp.popup('.popup-edit');
+		var popupHTML = '<div class="popup">'+
+						'<div class="content-block">'+
+						  '<center>'+
+							'<table style="margin-top:-0px;">'+
+							'<input type="hidden" name="hidden_id_editLapakSaya_'+id_lapak+'" value='+id_lapak+'>'+
+							'	<tr>'+
+							'		<td><p>Nama</p></td>'+
+							'		<td><input id="nama_editLapakSaya_'+id_lapak+'" type="text" value='+nama+' required></td>'+
+							'	</tr>'+
+							'	<tr>'+
+							'		<td><p>Kelas</p></td>'+
+							'		<td>'+
+							'		<select name="kelas_editLapakSaya_'+id_lapak+'" id="kelas_editLapakSaya_'+id_lapak+'">'+
+							'		  <option value="0">Pilih Kelas</option>'+
+							'		  <option value="1">STB</option>'+
+							'		  <option value="2">STO</option>'+
+							'		  <option value="3">Speed</option>'+
+							'		</select>'+
+							'		</td>'+
+							'	</tr>'+
+							'	<tr>'+
+							'		<td><p>Harga</p></td>'+
+							'		<td>Rp.<input id="harga_editLapakSaya_'+id_lapak+'" type="number" value='+harga+' required></td>'+
+							'	</tr>'+
+							'	<tr>'+
+							'		<td><p>Kota</p></td>'+
+							'		<td>'+
+							'		<select name="kota_editLapakSaya_'+id_lapak+'" id="kota_editLapakSaya">'+
+							'		  <option value="0">Pilih Kota</option>';
+							
+							for(var i=0;i<arrKota.length;i++)
+							{
+								if(arrKota[i]['id']==id_kota)
+								{
+									popupHTML+=	'<option value="'+arrKota[i]['id']+'" selected>'+arrKota[i]['nama']+'</option>';
+								}
+								else
+								{
+									popupHTML+=	'<option value="'+arrKota[i]['id']+'">'+arrKota[i]['nama']+'</option>';
+								}
+							}
+							
+		popupHTML+=			'		</select>'+
+							'		</td>'+
+							'	</tr>'+
+							'	<tr>'+
+							'		<td><p>Foto</p></td>'+
+							'		<div style="height:0px;overflow:hidden">'+
+							'			<input type="file" id="file_editLapakSaya" accept="image/*"/>'+
+							'			</div>'+
+							'		<td><p><a href="#" class="button" onclick="chooseFile_editLapakSaya();" style="width:150px;">Pilih Gambar..</a></p></td>'+
+							'	</tr>'+
+							'	<tr>'+
+							'		<td colspan="5" id="container_foto_editLapakSaya">'+
+							'			<img id="foto_editLapakSaya" src="data:image/jpeg;base64,'+foto+'" style="width:100%;">'+
+							'		</td>'+
+							'</tr>'+
+							'	<tr>'+
+							'		<td><p>Deskripsi</p></td>'+
+							'		<td><textarea id="deskripsi_editLapakSaya_'+id_lapak+'" style="resize:none; margin-top:10px; height:60px;">'+deskripsi+'</textarea></td>'+
+							'	</tr>'+
+							'</table><td><p><a href="#" class="button"  onclick="editLapakSayaPost('+id_lapak+');" style="width:250px;">Simpan perubahan</a></p></td>'+
+						'</center>'+
+						  '<p><a href="#" class="close-popup">Kembali</a></p>'+
+						'</div>'+
+					  '</div>';
+		myApp.popup(popupHTML);
+		
+	}).fail(function(x){
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1)');
+	});
+}
+
+function editLapakSayaPost() {
+	var id_user=getcookie("active_user_id");
+	var id_lapak = document.getElementById("hidden_id_editLapakSaya_"+clickedID).value;
+	var namaLapakSaya = document.getElementById("nama_editLapakSaya_"+clickedID).value;
+	var kelas = $('#kelas_editLapakSaya_'+clickedID).find(":selected").val();
+	var harga = document.getElementById("harga_editLapakSaya").value;
+	var kota = $('#kota_editLapakSay_'+clickedID).find(":selected").val();
+	var deskripsi = document.getElementById("deskripsi_editLapakSaya_"+clickedID).value;
+	var fileinput = document.getElementById("file_editLapakSaya_"+clickedID).value;
+	
+	if(namaLapakSaya=="")
+	{
+		myApp.alert('Silahkan isi nama barang', 'Perhatian!');
+	}
+	else
+	{
+		if(harga=="" || harga==0 || harga=="0")
+		{
+			myApp.alert('Silahkan isi harga barang', 'Perhatian!');
+		}
+		else
+		{
+			if(kota=="" || kota==0 || kota=="0")
+			{
+				myApp.alert('Silahkan pilih kota', 'Perhatian!');
+			}
+			else
+			{
+					if(deskripsi=="")
+					{
+						myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
+					}
+					else
+					{
+						if(fileinput=="")
+						{
+							myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
+						}
+						else
+						{
+							var blob=$("#file_editLapakSaya")[0].files[0];
+							var formData = new FormData();
+							formData.append("id_jualbeli", id_lapak);
+							formData.append("nama", namaLapakSaya);
+							formData.append("harga", harga);
+							formData.append("deskripsi", deskripsi);
+							formData.append("id_user", id_user);
+							formData.append("id_kota", kota);
+							formData.append("id_kelas", kelas);
+							formData.append("file", blob);
+							
+							console.log(formData);
+												
+							var link=urlnya+'/api/jualbeli/updateJualBeli';
+							$.ajax({
+								url: link,
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false
+							}).done(function(z){
+								//mainView.router.loadPage('home.html');
+								myApp.alert('Perubahan berhasil disimpan', 'Berhasil!');
+							}).fail(function(x){
+								myApp.alert(x.message+" "+x.error, 'Perhatian!');
+							});
+						}
+					}	
+			}
+		}
+	}
 }

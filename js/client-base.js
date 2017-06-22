@@ -48,6 +48,6 @@ function getImage(imageName) {
   }
   else 
   {
-	return "ksosong.png";
+	return "kosong.png";
   }
 }
