@@ -143,6 +143,7 @@ function getAllLapakSayaPost() {
 			{
 				storeImage(z[i]['foto'], "editFotoLapakSaya_"+z[i]['id']);
 				var tempIdKota=z[i]['id_kota'];
+				tempIdKota-=1;
 				document.cookie = "editNamaLapakSaya_"+z[i]['id']+"="+z[i]['nama']+";";
 				document.cookie = "editDeskripsiLapakSaya_"+z[i]['id']+"="+z[i]['deskripsi']+";";
 				document.cookie = "editHargaLapakSaya_"+z[i]['id']+"="+z[i]['harga']+";";
@@ -184,7 +185,7 @@ function getAllLapakSayaPost() {
 					//html += 		'<input type="hidden" name="hidden_id_kota_lapakSaya_'+z[i]['id']+'" value='+arrKota[tempIdKota]['id']+'>';
 					//html += 		'<input type="hidden" name="hidden_email_lapakSaya_'+z[i]['id']+'" value='+z[i]['email']+'>';
 					html += 			"<p><a href='#' class='button' onclick='editLapakSaya(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Edit</a></p>";
-					html += 			"<p><a href='#' class='button' onclick='hapuLapakSaya(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Hapus</a></p>";
+					html += 			"<p><a href='#' class='konfirmasiHapusJualan' onclick='hapusLapakSaya(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Hapus</a></p>";
 					html += 	"</div>";
 					
 					$("#isi_container_lapakSaya").append(html);
@@ -421,7 +422,7 @@ function editLapakSayaPost(clickedID) {
 	var namaLapakSaya = document.getElementById("nama_editLapakSaya_"+clickedID).value;
 	var kelas = $('#kelas_editLapakSaya_'+clickedID).find(":selected").val();
 	var harga = document.getElementById("harga_editLapakSaya_"+clickedID).value;
-	var kota = $('#kota_editLapakSay_'+clickedID).find(":selected").val();
+	var kota = $('#kota_editLapakSaya_'+clickedID).find(":selected").val();
 	var deskripsi = document.getElementById("deskripsi_editLapakSaya_"+clickedID).value;
 	var fileinput = document.getElementById("file_editLapakSaya").value;
 	
@@ -457,11 +458,6 @@ function editLapakSayaPost(clickedID) {
 					{
 						if(fileinput=="")
 						{
-							myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
-						}
-						else
-						{
-							var blob=$("#file_editLapakSaya")[0].files[0];
 							var formData = new FormData();
 							formData.append("id_jualbeli", id_lapak);
 							formData.append("nama", namaLapakSaya);
@@ -470,7 +466,6 @@ function editLapakSayaPost(clickedID) {
 							formData.append("id_user", id_user);
 							formData.append("id_kota", kota);
 							formData.append("id_kelas", kelas);
-							formData.append("file", blob);
 							
 							console.log(formData);
 												
@@ -484,13 +479,67 @@ function editLapakSayaPost(clickedID) {
 							}).done(function(z){
 								//mainView.router.loadPage('home.html');
 								myApp.alert('Perubahan berhasil disimpan', 'Berhasil!');
+								getAllLapakSayaPost();
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});
 						}
+						else
+						{
+							var blob=$("#file_editLapakSaya")[0].files[0];
+							var formData = new FormData();
+							formData.append("id_jualbeli", id_lapak);
+							formData.append("nama", namaLapakSaya);
+							formData.append("harga", harga);
+							formData.append("deskripsi", deskripsi);
+							formData.append("id_user", id_user);
+							formData.append("id_kota", kota);
+							formData.append("id_kelas", kelas);
+							formData.append("file", blob);
+																			
+							var link=urlnya+'/api/jualbeli/updateJualBeli';
+							$.ajax({
+								url: link,
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false
+							}).done(function(z){
+								//mainView.router.loadPage('home.html');
+								myApp.alert('Perubahan berhasil disimpan', 'Berhasil!');
+								getAllLapakSayaPost();
+							}).fail(function(x){
+								myApp.alert(x.message+" "+x.error, 'Perhatian!');
+							});
+						}
+						myApp.closeModal();
 					}	
 				}
 			}
 		}
 	}
+}
+
+
+function hapusLapakSaya(clickedId)
+{
+	myApp.confirm('Apakah anda yakin untuk menghapus jualan anda?', 'Hapus data', 
+      function () {
+        var link=urlnya+'/api/jualBeli/deleteJualBeli?id_jualbeli='+clickedId;
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			myApp.alert("Anda berhasil menghapus jualan)", 'Berhasil!');
+			getAllLapakSayaPost();
+		}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal (line 28)", 'Perhatian!');
+		}); 
+      },
+      function () {
+        //myApp.alert('You clicked Cancel button');
+      }
+    );
 }

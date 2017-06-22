@@ -95,6 +95,10 @@ myApp.onPageInit('buatJualBarang', function (page) {
 	getKotaBuatJualBarang();
 });
 
+myApp.onPageInit('lapakSaya', function (page) {
+
+});
+
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
 	var username = getcookie("active_user_nama");
