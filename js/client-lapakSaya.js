@@ -520,7 +520,6 @@ function editLapakSayaPost(clickedID) {
 	}
 }
 
-
 function hapusLapakSaya(clickedId)
 {
 	myApp.confirm('Apakah anda yakin untuk menghapus jualan anda?', 'Hapus data', 
