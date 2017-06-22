@@ -56,6 +56,12 @@ function buatLapakSayaPost() {
 			}
 			else
 			{
+				if(kelas=="" || kelas==0 || kelas=="0")
+				{
+					myApp.alert('Silahkan pilih kelas', 'Perhatian!');
+				}
+				else
+				{
 					if(deskripsi=="")
 					{
 						myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
@@ -95,6 +101,7 @@ function buatLapakSayaPost() {
 							});
 						}
 					}	
+				}
 			}
 		}
 	}
@@ -140,6 +147,7 @@ function getAllLapakSayaPost() {
 				document.cookie = "editDeskripsiLapakSaya_"+z[i]['id']+"="+z[i]['deskripsi']+";";
 				document.cookie = "editHargaLapakSaya_"+z[i]['id']+"="+z[i]['harga']+";";
 				document.cookie = "editId_kotaLapakSaya_"+z[i]['id']+"="+arrKota[tempIdKota]['id']+";";
+				document.cookie = "editKelasLapakSaya_"+z[i]['id']+"="+z[i]['id_kelas']+";";
 				document.cookie = "editEmailLapakSaya_"+z[i]['id']+"="+z[i]['email']+";";
 				
 				tempIdKota -=1;
@@ -306,11 +314,11 @@ function editLapakSaya(clickedID){
 	var id_user= getcookie("active_user_id");
 	var id_lapak= clickedID;
 	var temp="editNamaLapakSaya_"+id_lapak;
-	console.log(temp);
 	var nama = getcookie(temp);
 	var deskripsi = getcookie("editDeskripsiLapakSaya_"+id_lapak);
 	var harga = getcookie("editHargaLapakSaya_"+id_lapak);
 	var foto = getImage("editFotoLapakSaya_"+id_lapak);
+	var id_kelas = getcookie("editKelasLapakSaya_"+id_lapak);
 	var id_kota = getcookie("editId_kotaLapakSaya_"+id_lapak);
 	var email = getcookie("editEmailLapakSaya_"+id_lapak);
 	
@@ -329,7 +337,7 @@ function editLapakSaya(clickedID){
 						'<div class="content-block">'+
 						  '<center>'+
 							'<table style="margin-top:-0px;">'+
-							'<input type="hidden" name="hidden_id_editLapakSaya_'+id_lapak+'" value='+id_lapak+'>'+
+							'<input type="hidden" id="update_id_editLapakSaya_'+id_lapak+'" value='+id_lapak+'>'+
 							'	<tr>'+
 							'		<td><p>Nama</p></td>'+
 							'		<td><input id="nama_editLapakSaya_'+id_lapak+'" type="text" value='+nama+' required></td>'+
@@ -338,11 +346,20 @@ function editLapakSaya(clickedID){
 							'		<td><p>Kelas</p></td>'+
 							'		<td>'+
 							'		<select name="kelas_editLapakSaya_'+id_lapak+'" id="kelas_editLapakSaya_'+id_lapak+'">'+
-							'		  <option value="0">Pilih Kelas</option>'+
-							'		  <option value="1">STB</option>'+
-							'		  <option value="2">STO</option>'+
-							'		  <option value="3">Speed</option>'+
-							'		</select>'+
+							'		  <option value="0">Pilih Kelas</option>';
+		if(id_kelas==1)
+			popupHTML+=			'		  <option value="1" selected>STB</option>';
+		else
+			popupHTML+=			'		  <option value="1">STB</option>';
+		if(id_kelas==2)
+			popupHTML+=			'		  <option value="2" selected>STO</option>';
+		else
+			popupHTML+=			'		  <option value="2">STO</option>';
+		if(id_kelas==3)
+			popupHTML+=			'		  <option value="3" selected>SPEED</option>';
+		else
+			popupHTML+=			'		  <option value="3">SPEED</option>';
+		popupHTML+=			'		</select>'+
 							'		</td>'+
 							'	</tr>'+
 							'	<tr>'+
@@ -352,7 +369,7 @@ function editLapakSaya(clickedID){
 							'	<tr>'+
 							'		<td><p>Kota</p></td>'+
 							'		<td>'+
-							'		<select name="kota_editLapakSaya_'+id_lapak+'" id="kota_editLapakSaya">'+
+							'		<select id="kota_editLapakSaya_'+id_lapak+'">'+
 							'		  <option value="0">Pilih Kota</option>';
 							
 							for(var i=0;i<arrKota.length;i++)
@@ -398,15 +415,15 @@ function editLapakSaya(clickedID){
 	});
 }
 
-function editLapakSayaPost() {
+function editLapakSayaPost(clickedID) {
 	var id_user=getcookie("active_user_id");
-	var id_lapak = document.getElementById("hidden_id_editLapakSaya_"+clickedID).value;
+	var id_lapak = document.getElementById("update_id_editLapakSaya_"+clickedID).value;
 	var namaLapakSaya = document.getElementById("nama_editLapakSaya_"+clickedID).value;
 	var kelas = $('#kelas_editLapakSaya_'+clickedID).find(":selected").val();
-	var harga = document.getElementById("harga_editLapakSaya").value;
+	var harga = document.getElementById("harga_editLapakSaya_"+clickedID).value;
 	var kota = $('#kota_editLapakSay_'+clickedID).find(":selected").val();
 	var deskripsi = document.getElementById("deskripsi_editLapakSaya_"+clickedID).value;
-	var fileinput = document.getElementById("file_editLapakSaya_"+clickedID).value;
+	var fileinput = document.getElementById("file_editLapakSaya").value;
 	
 	if(namaLapakSaya=="")
 	{
@@ -426,6 +443,12 @@ function editLapakSayaPost() {
 			}
 			else
 			{
+				if(kelas=="" || kelas==0 || kelas=="0")
+				{
+					myApp.alert('Silahkan pilih kelas', 'Perhatian!');
+				}
+				else
+				{
 					if(deskripsi=="")
 					{
 						myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
@@ -466,6 +489,7 @@ function editLapakSayaPost() {
 							});
 						}
 					}	
+				}
 			}
 		}
 	}

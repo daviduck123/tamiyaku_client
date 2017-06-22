@@ -155,10 +155,20 @@ function getAllJualBeliPost() {
 					html += 			"<tr>";
 					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Rp.'+z[i]['harga']+',-</div></td>';
 					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">'+arrKota[tempIdKota]['nama']+'</div></td>';
+					html += 			"</tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">Surabaya</td>';
+					if(z[i]['id_kelas']==1)
+						html +=					'<td colspan="1" value="1">STB</td>';
+					else if(z[i]['id_kelas']==2)
+						html +=					'<td colspan="2" value="1">STO</td>';
+					else if(z[i]['id_kelas']==3)
+						html +=					'<td colspan="3" value="1">SPEED</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">'+arrKota[tempIdKota]['nama']+'</td>';
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Deskripsi</div></td>';
 					html +=					'<td>: </td>';
