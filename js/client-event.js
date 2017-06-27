@@ -303,23 +303,26 @@ function getAllEventPostVar(id_post) {
 					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
 					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
 					html += 			"</tr>";
+					if(z[i]['hadiah2'] !== 0 && z[i]['hadiah2'] !== "0"){
+						html += 			"<tr>";
+						html +=					'<td colspan="2" width="100px;" height="30px;"></td>';
+						html +=					'<td>: </td>';
+						html +=					'<td width="20px;" style="font-weight:bold;">2. </td>';
+						html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
+						html += 			"</tr>";
+					}
+					if(z[i]['hadiah3'] !== 0 && z[i]['hadiah3'] !== "0"){
+						html += 			"<tr>";
+						html +=					'<td colspan="2" width="100px;" height="30px;"></td>';
+						html +=					'<td>: </td>';
+						html +=					'<td width="20px;" style="font-weight:bold;">3. </td>';
+						html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+						html += 			"</tr>";
+					}
 					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td colspan="2" width="100px;" height="30px;"><div style="width:100px;font-weight:bold;">Tiket</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">BTO. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html +=					'<td colspan="2">'+z[i]['harga_tiket']+'</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
