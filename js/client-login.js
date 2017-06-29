@@ -43,6 +43,7 @@ function loginPost() {
 						processData: false
 					}).done(function(z){
 						
+							console.log(z);
 						if(z.status=="TRUE")
 						{
 							var d = new Date();
@@ -57,9 +58,9 @@ function loginPost() {
 							document.cookie = "active_user_nama="+z.user.nama+";";
 							document.cookie = "active_user_jenis_kelamin="+z.user.jenis_kelamin+";";
 							document.cookie = expires;
+							
 							myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 							storeImage(z.user.foto,'profilePic');
-							
 							 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 
 						}
