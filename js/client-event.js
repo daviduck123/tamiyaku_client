@@ -218,7 +218,7 @@ function getAllEventPost() {
 					html += 		"</table>";
 					html += 		"<div id='kolom_komentar_event_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<div id='btn_komentari_event_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 					html += 			"<p><a href='#' onclick='bacaEventKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
@@ -227,6 +227,99 @@ function getAllEventPost() {
 					
 			}
 			
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
+		}); 
+}
+
+function getAllEventPostVar(id_post) {
+	var id_user=getcookie("active_user_id");
+	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_container_event").html("");
+			
+			//munculkan semua post
+			for(var i=0;i<dataLength;i++)
+			{
+					var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2' width='10%'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;" style="font-weight:bold;"><div style="width:100px;">Judul Lomba</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Tanggal</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">16/03/2016</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Kota</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">Surabaya</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Hadiah</div> </td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+					html +=					'<td>: </td>';
+					html +=					'<td width="20px;" style="font-weight:bold;">BTO. </td>';
+					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				'<td colspan="5" class="q" >';
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_event_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<div id='btn_komentari_event_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+					html += 			"<p><a href='#' onclick='bacaEventKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					
+					$("#isi_container_event").append(html);
+					
+			}
+			bacaEventKomentar(id_post);
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
 		}); 
@@ -312,6 +405,12 @@ function komentariEventPost(clicked_id) {
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				
+				$("#btn_komentari_event_"+id_post).html("");
+				
+				var html = 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+				
+				$("#btn_komentari_event_"+id_post).append(html);
 		} 
 		else 
 		{
@@ -337,8 +436,8 @@ function komentariEventPost(clicked_id) {
 					contentType: false,
 					processData: false
 				}).done(function(z){
-					mainView.router.loadPage('lomba.html');
-					getAllEventPost(id_post);
+					//mainView.router.loadPage('lomba.html');
+					getAllEventPostVar(id_post);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
