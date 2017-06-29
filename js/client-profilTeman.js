@@ -1,4 +1,7 @@
 function gotoProfilTeman(clickedId){
+	eraseCookie("id_teman");
+	document.cookie = "id_teman="+clickedId+";";
+	//console.log(getcookie("id_teman"));
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
 	var id_user = getcookie("active_user_id");

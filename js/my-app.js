@@ -141,8 +141,9 @@ function setPullRefreshProfilTeman(){
     ptrContent.on('refresh', function (e) {
             // Emulate 2s loading
             setTimeout(function () {
-				var id_teman=document.getElementById('#id_teman_temp').value;
-				console.log(id_teman);
+				//var id_teman=document.getElementById('#id_teman_temp').value;
+				var id_teman = getcookie("id_teman");
+				console.log(id_teman+"aaa");
                 getAllTemanPost(id_teman);
                 myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
             }, 2000);
