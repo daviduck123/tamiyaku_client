@@ -704,7 +704,7 @@ function getAllGrupPost(clickedId, id_post) {
 				if(z[i]['foto']!="")
 				{
 					var html=	"<div id='posting_grup_"+z[i]['id']+"' style='margin-bottom:50px;'>";
-					html += 		"<table id='table__grup_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 		"<table id='table_grup_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2'>";
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
