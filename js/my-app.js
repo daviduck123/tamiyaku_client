@@ -148,3 +148,7 @@ function setPullRefreshProfilTeman(){
             }, 2000);
         });
 }
+
+function viewRouterBack(){
+mainView.router.back();
+}

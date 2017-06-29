@@ -90,6 +90,8 @@ function buatJualBarangPost() {
 							}).done(function(z){
 								//mainView.router.loadPage('home.html');
 								myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
+								viewRouterBack();
+								getAllJualBeliPost();
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});
