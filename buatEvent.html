@@ -7,7 +7,7 @@
 			<div class="navbar">
           <div class="navbar-inner">
           <div class="left">
-              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="viewRouterBack();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
             </div>
             <!-- We have home navbar without left link-->
             <div class="center sliding" style="font-weight:bold;">Buat Event</div>
@@ -58,8 +58,8 @@
 					</td>
                 </tr>
 				<tr>
-                    <td><p>Ticket</p></td>
-                    <td>Rp.<input id="ticket_buatEvent" type="number" required></td>
+                    <td><p>Harga Tiket</p></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Rp<input id="ticket_buatEvent" type="number" required></td>
                 </tr>
 				<tr>
                     <td><p>Kota</p></td>

@@ -186,29 +186,47 @@ function getAllEventPost() {
 					html +=					'<td>: </td>';
 					html +=					'<td colspan="2">Surabaya</td>';
 					html += 			"</tr>";
+					for (var indeks=0;indeks<3;indeks++)
+					{
+						var tempIndeks=indeks+1;
+						if(indeks==0)
+						{
+							html += 			"<tr>";
+							html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Hadiah</div> </td>';
+							html +=					'<td>: </td>';
+							html +=					'<td width="20px;" style="font-weight:bold;">'+tempIndeks+'. </td>';
+							html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
+							html += 			"</tr>";
+						}
+						else if(indeks==1)
+						{
+							if( z[i]['hadiah2']!=0)
+							{
+								html += 			"<tr>";
+								html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+								html +=					'<td>: </td>';
+								html +=					'<td width="20px;" style="font-weight:bold;">'+tempIndeks+'. </td>';
+								html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
+								html += 			"</tr>";
+							}
+						}
+						else
+						{
+							if( z[i]['hadiah3']!=0)
+							{
+								html += 			"<tr>";
+								html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
+								html +=					'<td>: </td>';
+								html +=					'<td width="20px;" style="font-weight:bold;">'+tempIndeks+'. </td>';
+								html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+								html += 			"</tr>";
+							}
+						}
+					}
 					html += 			"<tr>";
-					html +=					'<td colspan="2" height="30px;"style="font-weight:bold;"><div style="width:100px;">Hadiah</div> </td>';
+					html +=					'<td colspan="2" height="30px;" style="font-weight:bold;"><div style="width:100px;">Kelas Lomba</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah1']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah2']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">1. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
-					html += 			"</tr>";
-					html += 			"<tr>";
-					html +=					'<td colspan="2" width="100px;" height="30px;"</td>';
-					html +=					'<td>: </td>';
-					html +=					'<td width="20px;" style="font-weight:bold;">BTO. </td>';
-					html +=					'<td colspan="1">'+z[i]['hadiah3']+'</td>';
+					html +=					'<td colspan="2" style="font-weight:bold;">Speed '+z[i]['hadiah3']+'</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
