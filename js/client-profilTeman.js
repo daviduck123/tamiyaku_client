@@ -35,6 +35,7 @@ function gotoProfilTeman(clickedId){
 	//===========================
 	myApp.closePanel();
 }
+
 function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
@@ -103,7 +104,7 @@ function getAllTemanPost(clickedId) {
 					html += 		"</table>";
 					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<div id='btn_komentari_teman_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
@@ -129,7 +130,7 @@ function getAllTemanPost(clickedId) {
 					html += 		"</table>";
 					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<div id='btn_komentari_teman_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
@@ -141,6 +142,114 @@ function getAllTemanPost(clickedId) {
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
 }
+
+function getAllTemanPost(clickedId, id_post) {
+	var id_teman = clickedId;
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
+
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_postingan_teman").html("");
+			$("#isi_form_komentari_teman").html("");
+			
+			var html2= '<form action="/action_page.php">';
+			html2 +=	'<div class="item-content">';
+			html2 +=		'<div class="item-inner">';
+			html2 +=			'<div class="item-input">';
+			html2 +=				'<center><textarea id="status_teman" style="resize:none; margin-top:10px; width:90%; height:60px;" ';
+			html2 +=					'placeholder="Tulis apa yang ingin anda bahas.."></textarea>';
+			html2 +=				'</center>';
+			html2 +=			'</div>';
+			html2 +=		'</div>';
+			html2 +=	' </div>';
+			html2 +=	'<div class="item-content" style="margin-top:-10px;">';
+			html2 +=	'<div class="item-inner" >';
+			html2 +=	'<div style="height:0px;overflow:hidden">';
+			html2 +=	'<input type="file" id="file_teman" accept="image/*"/>';
+			html2 +=	'</div>';
+			html2 +=	'<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
+			html2 +=	'<p><a href="#" class="button"  onclick="chooseFile_teman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
+			html2 +=	'</form>';
+			
+			
+			$("#isi_form_komentari_teman").append(html2);
+			
+			//munculkan semua post
+			for(var i=0;i<dataLength;i++)
+			{
+				if(z[i]['foto']!="")
+				{
+					var html=	"<div id='posting_teman_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2' >";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<div id='btn_komentari_teman_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_teman").append(html);
+				}
+				else
+				{
+					
+					var html=	"<div id='posting_teman_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_teman_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<div id='btn_komentari_teman_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+					html += 			"<p><a href='#' onclick='bacaTemanKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_postingan_teman").append(html);
+				}
+			}
+			bacaTemanKomentar(id_post);
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
+		}); 
+}
+
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
@@ -334,6 +443,12 @@ function komentariTemanPost(clicked_id) {
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				
+				$("#btn_komentari_teman_"+id_post).html("");
+				
+				var html = 			"<p><a href='#' class='button' onclick='komentariTemanPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+				
+				$("#btn_komentari_teman_"+id_post).append(html);
 		} 
 		else 
 		{
@@ -361,7 +476,7 @@ function komentariTemanPost(clicked_id) {
 				}).done(function(z){
 					//mainView.router.loadPage('profilTeman.html');
 					var id_teman = document.getElementById("id_teman_temp").value;
-					getAllTemanPost(id_teman);
+					getAllTemanPost(id_teman,id_post);
 					//getAllTemanPost(id_teman);
 					//getProfilTeman(id_teman,1);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');

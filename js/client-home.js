@@ -19,6 +19,12 @@ function komentariPost(clicked_id) {
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				
+				$("#btn_komentari_"+id_post).html("");
+				
+				var html = 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+				
+				$("#btn_komentari_"+id_post).append(html);
 		} 
 		else 
 		{
@@ -46,7 +52,7 @@ function komentariPost(clicked_id) {
 				}).done(function(z){
 					mainView.router.loadPage('home.html');
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
-					getAllPost();
+					getAllPost(id_post);
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
@@ -118,6 +124,7 @@ function bacaKomentar(clicked_id) {
 	}
 	
 }
+
 function getAllPost() {
 	var id_user = getcookie("active_user_id");
 	var formData=JSON.stringify({
@@ -164,7 +171,7 @@ function getAllPost() {
 				html += 		"</table>";
 				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
 				html += 		"</div>";
-				html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+				html += 			"<div id='btn_komentari_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 				html += 	"</div>";
 				
@@ -190,7 +197,7 @@ function getAllPost() {
 				html += 		"</table>";
 				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
 				html += 		"</div>";
-				html += 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+				html += 			"<div id='btn_komentari_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 				html += 	"</div>";
 				
@@ -198,6 +205,91 @@ function getAllPost() {
 			}
 		}
 		
+	}).fail(function(x){
+		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+	}); 
+}
+
+function getAllPost(id_post) {
+	var id_user = getcookie("active_user_id");
+	var formData=JSON.stringify({
+						id_user:id_user,
+					});
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
+
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var coba="";
+		var dataLength=0;
+		for (var pair of z) {
+			coba+=pair['id']+"|"; 
+			dataLength++;
+		}
+		$("#isi_postingan").html("");
+		for(var i=0;i<dataLength;i++)
+		{
+			if(z[i]['foto']!="")
+			{
+				var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+				html += 			"<tr>";
+				html += 				"<td rowspan='2'>";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 				"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2' >";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+				html += 				"</td>";
+				html += 			"</tr>";
+				html += 		"</table>";
+				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+				html += 		"</div>";
+				html += 			"<div id='btn_komentari_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+				html += 	"</div>";
+				
+				$("#isi_postingan").append(html);
+			}
+			else
+			{
+				
+				var html=	"<div id='posting_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+				html += 		"<table id='table_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+				html += 			"<tr>";
+				html += 				"<td rowspan='2'>";
+				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+				html += 				"</td>";
+				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+				html += 			"</tr>";
+				html += 			"<tr>";
+				html += 				"<td colspan='2'>"+z[i]['deskripsi']+"</td>";
+				html += 			"</tr>";
+				html += 		"</table>";
+				html += 		"<div id='kolom_komentar_"+z[i]['id']+"'>";
+				html += 		"</div>";
+				html += 			"<div id='btn_komentari_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+				html += 			"<p><a href='#' onclick='bacaKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+				html += 	"</div>";
+				
+				$("#isi_postingan").append(html);
+			}
+		}
+		bacaKomentar(id_post);
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
