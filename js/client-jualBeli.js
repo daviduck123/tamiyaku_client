@@ -189,13 +189,112 @@ function getAllJualBeliPost() {
 					html += 		"</table>";
 					html += 		"<div id='kolom_komentar_jualBeli_"+z[i]['id']+"'>";
 					html += 		"</div>";
-					html += 			"<p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p>";
+					html += 			"<div id='btn_komentari_jualBeli_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
 					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
 					html += 	"</div>";
 					
 					$("#isi_container_jualBeli").append(html);
 			}
 			
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
+		}); 
+}
+
+function getAllJualBeliPostVar(id_post) {
+	var id_user=getcookie("active_user_id");
+	
+	var arrKota=[];
+	var link=urlnya+'/api/kota/';
+	$.ajax({
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(zz){
+		arrKota=zz;
+	}).fail(function(x){
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+	}); 
+			
+		link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;		
+		
+		$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var pair of z) {
+				coba+=pair['id']+"|"; 
+				dataLength++;
+			}
+			$("#isi_container_jualBeli").html("");
+			//munculkan semua post
+			for(var i=0;i<dataLength;i++)
+			{
+				var tempIdKota=z[i]['id_kota'];
+				tempIdKota -=1;
+					var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
+					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
+					html += 			"<tr>";
+					html += 				"<td rowspan='2' width='10%'>";
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 				"</td>";
+					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">'+z[i]['nama']+'</div></td>';
+					//html +=					'<td>: </td>';
+					//html +=					'<td colspan="2" style="font-weight:bold;">'+z[i]['deskripsi']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="5" height="30px;" style="font-weight:bold;"><div style="width:100px;">Rp.'+z[i]['harga']+',-</div></td>';
+					html += 			"</tr>";
+					html += 			"</tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
+					html +=					'<td>: </td>';
+					if(z[i]['id_kelas']==1)
+						html +=					'<td colspan="1" value="1">STB</td>';
+					else if(z[i]['id_kelas']==2)
+						html +=					'<td colspan="2" value="1">STO</td>';
+					else if(z[i]['id_kelas']==3)
+						html +=					'<td colspan="3" value="1">SPEED</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">'+arrKota[tempIdKota]['nama']+'</td>';
+					html += 			"</tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Deskripsi</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">'+z[i]['deskripsi']+'</td>';
+					html += 			"</tr>";
+					html += 			"</tr>";
+					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
+					html +=					'<td>: </td>';
+					html +=					'<td colspan="2">'+z[i]['email']+'</td>';
+					html += 			"</tr>";
+					html += 			"<tr>";
+					html += 				'<td colspan="5" class="q" >';
+					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+					html += 				"</td>";
+					html += 			"</tr>";
+					html += 		"</table>";
+					html += 		"<div id='kolom_komentar_jualBeli_"+z[i]['id']+"'>";
+					html += 		"</div>";
+					html += 			"<div id='btn_komentari_jualBeli_"+z[i]['id']+"'><p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+z[i]['id']+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Komentari</a></p></div>";
+					html += 			"<p><a href='#' onclick='bacaJualBeliKomentar(this.id);' id='"+z[i]['id']+"' style='margin-top:-5px; float:right; margin-right:10px;'>"+z[i]["count_komentar"]+" Komentar</a></p>";
+					html += 	"</div>";
+					
+					$("#isi_container_jualBeli").append(html);
+			}
+			bacaJualBeliKomentar(id_post);
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
@@ -209,8 +308,7 @@ function bacaJualBeliKomentar(clicked_id) {
 	{
 		
 			$(document).ready(function(){
-			var link=urlnya+'/api/komentar?id_jualBeli='+id_post;
-				
+			var link=urlnya+'/api/komentar?id_jualbeli='+id_post;
 			$.ajax({
 				url: link,
 				type: 'GET',
@@ -281,6 +379,12 @@ function komentariJualBeliPost(clicked_id) {
 		
 		if($("#" + vardeksripsi).length == 0) {
 				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+				
+				$("#btn_komentari_jualBeli_"+id_post).html("");
+				
+				var html = 			"<p><a href='#' class='button' onclick='komentariJualBeliPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+				
+				$("#btn_komentari_jualBeli_"+id_post).append(html);
 		} 
 		else 
 		{
@@ -294,7 +398,7 @@ function komentariJualBeliPost(clicked_id) {
 				var link=urlnya+'/api/komentar/';
 				var formData=JSON.stringify({
 					id_user:id_user,
-					id_event:id_post,
+					id_jualbeli:id_post,
 					deskripsi:deskripsi,
 				});
 				//myApp.alert(formData, 'Data Dikirim!');
@@ -306,8 +410,8 @@ function komentariJualBeliPost(clicked_id) {
 					contentType: false,
 					processData: false
 				}).done(function(z){
-					mainView.router.loadPage('jualBeli.html');
-					getAllEventPost(id_post);
+					//mainView.router.loadPage('jualBeli.html');
+					getAllJualBeliPostVar(id_post);
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
 				});
