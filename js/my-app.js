@@ -58,15 +58,42 @@ myApp.onPageInit('nearbyGrup', function (page) {
 
 myApp.onPageInit('buatGrup', function (page) {
 	getKotaBuatGrup();
+	$(".select-list-kelas").empty();
+	$.each(globalListKelas, function (id, text) {
+		var key = Object.keys(text);
+		var value = Object.values(text);
+	    $(".select-list-kelas").append($('<option>', { 
+	        value: key[0],
+	        text : value[0]
+	    }));
+	});
 });
 
 myApp.onPageInit('buatEvent', function (page) {
 	getKotaBuatEvent();
+	$(".select-list-kelas").empty();
+	$.each(globalListKelas, function (id, text) {
+		var key = Object.keys(text);
+		var value = Object.values(text);
+	    $(".select-list-kelas").append($('<option>', { 
+	        value: key[0],
+	        text : value[0]
+	    }));
+	});
 });
 
 myApp.onPageInit('home', function (page) {
 	getAllPost();
     setPullRefreshHome();
+    $(".select-list-kelas").empty();
+	$.each(globalListKelas, function (id, text) {
+		var key = Object.keys(text);
+		var value = Object.values(text);
+	    $(".select-list-kelas").append($('<option>', { 
+	        value: key[0],
+	        text : value[0]
+	    }));
+	});
 });
 
 myApp.onPageInit('daftar', function (page) {
@@ -93,6 +120,15 @@ myApp.onPageInit('searchTemanGrup', function (page) {
 
 myApp.onPageInit('buatJualBarang', function (page) {
 	getKotaBuatJualBarang();
+	$(".select-list-kelas").empty();
+	$.each(globalListKelas, function (id, text) {
+		var key = Object.keys(text);
+		var value = Object.values(text);
+	    $(".select-list-kelas").append($('<option>', { 
+	        value: key[0],
+	        text : value[0]
+	    }));
+	});
 });
 
 myApp.onPageInit('lapakSaya', function (page) {

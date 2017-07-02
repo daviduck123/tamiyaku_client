@@ -1,4 +1,5 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
+var list_id_kelas=getcookie("list_id_kelas");
 function getNearbyGrup(){
 	var id_user = getcookie("active_user_id");
 

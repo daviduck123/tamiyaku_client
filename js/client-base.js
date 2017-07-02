@@ -1,6 +1,6 @@
 var urlnya="http://localhost/tamiyaku-server";
 //var urlnya="http://server.domain.com";
-
+var globalListKelas = [];
 var globalCookie = [];
 
 function eraseCookie(name) {

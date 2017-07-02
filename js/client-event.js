@@ -1,3 +1,4 @@
+var list_id_kelas=getcookie("list_id_kelas");
 function gotoBuatEvent(){
 	mainView.router.loadPage('buatEvent.html');
 	myApp.closePanel();

@@ -58,6 +58,28 @@ function loginPost() {
 							document.cookie = "active_user_nama="+z.user.nama+";";
 							document.cookie = "active_user_jenis_kelamin="+z.user.jenis_kelamin+";";
 							document.cookie = expires;
+
+							globalListKelas = [];
+							$.ajax({
+								url: urlnya+'/api/kelas/getAllByUserId?id_user='+z.user.id,
+								type: 'GET',
+								contentType: false,
+								processData: false
+							}).done(function(data){
+								if(data.length > 0){
+									for(var zzz = 0 ; zzz < data.length ; zzz++){
+										if(data[zzz]['id_kelas'] === "1"){
+											globalListKelas.push({"1":"STB"});
+										}else if(data[zzz]['id_kelas'] === "2"){
+											globalListKelas.push({"2":"STO"});
+										}else if(data[zzz]['id_kelas'] === "3"){
+											globalListKelas.push({"3":"Speed"});
+										}
+									}
+								}else{
+									globalListKelas = [];
+								}
+							});
 							
 							myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 							storeImage(z.user.foto,'profilePic');
@@ -97,6 +119,29 @@ function cekLoginAktif() {
 		{
 			mainView.router.loadPage('home.html');
 			//myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+
+			globalListKelas = [];
+			$.ajax({
+				url: urlnya+'/api/kelas/getAllByUserId?id_user='+active_user_id,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(data){
+				if(data.length > 0){
+					for(var zzz = 0 ; zzz < data.length ; zzz++){
+						if(data[zzz]['id_kelas'] === "1"){
+							globalListKelas.push({"1":"STB"});
+						}else if(data[zzz]['id_kelas'] === "2"){
+							globalListKelas.push({"2":"STO"});
+						}else if(data[zzz]['id_kelas'] === "3"){
+							globalListKelas.push({"3":"Speed"});
+						}
+					}
+				}else{
+					globalListKelas = [];
+				}
+			});
+			
 			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 
 		}

@@ -1,6 +1,7 @@
 function gotoBuatJualBarang(){
 	mainView.router.loadPage('buatJualBarang.html');
 	myApp.closePanel();
+
 }
 
 function gotoJualBeli(){
