@@ -110,7 +110,7 @@ myApp.onPageInit('teman', function (page) {
 });
 
 myApp.onPageInit('createTrack', function (page) {
-	buat disini
+	bindDraggableTrack();
 });
 
 myApp.onPageInit('profilTeman', function (page) {

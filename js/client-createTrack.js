@@ -55,28 +55,16 @@ function gambar() {
     context.stroke();
 }
 
-$('.draggableItem').draggable({
-    stop: function() {
-        var $canvas = $('#myCanvas') ;
-        var ctx = $canvas.get(0).getContext('2d') ;
-        var $img = $('.draggableItem') ;
-        var imgpos = $img.offset() ;
-        var cpos = $canvas.offset() ;
-        ctx.drawImage($img.get(0),imgpos.left-cpos.left,
-                      imgpos.top-cpos.top) ;
-                     
-    }
-});
-
-$('#draggableItem').draggable({
-    stop: function() {
-        var $canvas = $('#myCanvas') ;
-        var ctx = $canvas.get(0).getContext('2d') ;
-        var $img = $('#draggableItem') ;
-        var imgpos = $img.offset() ;
-        var cpos = $canvas.offset() ;
-        ctx.drawImage($img.get(0),imgpos.left-cpos.left,
-                      imgpos.top-cpos.top) ;
-                     
-    }
-});
+function bindDraggableTrack(){
+    $('.draggableItem').draggable({
+        stop: function() {
+            var $canvas = $('#myCanvas') ;
+            var ctx = $canvas.get(0).getContext('2d') ;
+            var $img = $('.draggableItem') ;
+            var imgpos = $img.offset() ;
+            var cpos = $canvas.offset() ;
+            ctx.drawImage($img.get(0),imgpos.left-cpos.left,
+                          imgpos.top-cpos.top);
+        }
+    });
+}
