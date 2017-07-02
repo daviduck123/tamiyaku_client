@@ -49,11 +49,19 @@ function searchTeman(paramData){
 				var dataLengthUser=z['users'].length;
 				for(var i=0; i<dataLengthUser;i++)
 				{
-					availableTagsUser.push({
-						id: z['users'][i]['id'],
-						nama: z['users'][i]['nama'],
-						foto:  z['users'][i]['foto']
-					});
+					var activeUserId = getcookie("active_user_id");
+					if(activeUserId!=z['users'][i]['id'])
+					{
+						availableTagsUser.push({
+							id: z['users'][i]['id'],
+							nama: z['users'][i]['nama'],
+							foto:  z['users'][i]['foto']
+						});
+					}
+					else
+					{
+						dataLengthUser-=1;
+					}
 				}
 				
 				//ambil grup
