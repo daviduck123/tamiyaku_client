@@ -60,7 +60,7 @@ function bindDraggableTrack(){
         stop: function() {
             var $canvas = $('#myCanvas') ;
             var ctx = $canvas.get(0).getContext('2d') ;
-            var $img = $('.draggableItem') ;
+            var $img = $(this);
             var imgpos = $img.offset() ;
             var cpos = $canvas.offset() ;
             ctx.drawImage($img.get(0),imgpos.left-cpos.left,
