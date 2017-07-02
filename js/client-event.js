@@ -468,3 +468,32 @@ function komentariEventPost(clicked_id) {
 		}
 	});
 }
+
+function pilihanTrack(){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Anda bisa membuat track sendiri (Create) atau mengambil dari gambar yang sudah ada (Load).',
+    buttons: [
+      {
+        text: 'Cancel',
+        onClick: function() {
+          //myApp.alert('You clicked first button!')
+        }
+      },
+      {
+        text: 'Load',
+		bold: true,
+        onClick: function() {
+			chooseFile_buatEvent();
+        }
+      },
+      {
+        text: 'Create',
+        bold: true,
+        onClick: function() {
+          mainView.router.loadPage('createTrack.html');
+        }
+      },
+    ]
+  })
+}
