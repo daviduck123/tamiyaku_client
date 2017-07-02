@@ -1,5 +1,5 @@
 var cPushArray = new Array();
-var cStep = -1;
+var cStep = 0;
 var ctx;
 // ctx = document.getElementById('myCanvas').getContext("2d");
 	
@@ -12,9 +12,17 @@ function cPush() {
 function cUndo() {
     if (cStep > 0) {
         cStep--;
-        var canvasPic = new Image();
-        canvasPic.src = cPushArray[cStep];
-        canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
+        if(cStep > 0){
+            var canvasPic = new Image();
+            canvasPic.src = cPushArray[cStep];
+            canvasPic.onload = function () { 
+                cClear();
+                ctx.drawImage(canvasPic, 0, 0); 
+            }
+        }else{
+            cClear();
+        }
+        
     }
 }
 
@@ -23,7 +31,10 @@ function cRedo() {
         cStep++;
         var canvasPic = new Image();
         canvasPic.src = cPushArray[cStep];
-        canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
+        canvasPic.onload = function () { 
+             cClear();
+            ctx.drawImage(canvasPic, 0, 0); 
+        }
     }
 }
 
@@ -56,17 +67,21 @@ function gambar() {
 }
 
 function bindDraggableTrack(){
-    $('.draggableItem').draggable();
+    cPushArray = new Array();
+    cStep = 0;
+    ctx;
+    $('.draggableItem').draggable({ helper: "clone" });
 
     $('#myCanvas').droppable({
         drop: function( event, ui ) {
             var $canvas = $('#myCanvas') ;
-            var ctx = $canvas.get(0).getContext('2d') ;
-            var $img = $(ui.draggable) ;
+            ctx = $canvas.get(0).getContext('2d') ;
+            var $img = $(ui.helper) ;
             var imgpos = $img.offset() ;
             var cpos = $canvas.offset() ;
             ctx.drawImage($img.get(0),imgpos.left-cpos.left,
                           imgpos.top-cpos.top, $img.width(), $img.height()) ;
+            cPush();
         }
     });
 }
