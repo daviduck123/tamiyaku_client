@@ -111,6 +111,7 @@ myApp.onPageInit('teman', function (page) {
 
 myApp.onPageInit('createTrack', function (page) {
 	bindDraggableTrack();
+	myApp.closePanel();
 });
 
 myApp.onPageInit('profilTeman', function (page) {
