@@ -1,0 +1,47 @@
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Top Navbar-->
+        
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="teman" class="page">
+            <!-- Scrollable page content-->
+            <div class="navbar">
+          <div class="navbar-inner">
+          <div class="left">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="home.html" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
+            </div>
+            <!-- We have home navbar without left link-->
+            <div class="center sliding" style="font-weight:bold;">Erick Kresnamurti</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><!--<a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>-->
+            </div>
+          </div>
+        </div>
+            <div class="page-content">
+
+						<p><a href="#" class="button" onclick="cUndo()" style="margin-left:5%; margin-top:5px; margin-bottom:5px; float:left; width:100px;">Undo</a></p>
+						<p> <a href="#" class="button" onclick="cRedo()" style="margin-left:10px; margin-top:5px; margin-bottom:5px; float:left; width:100px;">Redo</a></p>
+                    <div style="margin-bottom:50px; margin-top:50px;">
+						<center>
+							<canvas id="myCanvas" style="height: 40vh; width: 90vw; display: block;"></canvas>
+						</center>
+						<div style="width: 90vw; height: 200px; overflow-x: scroll;">
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+									<a href="writeA.html"><img draggable="true" class="draggableItem" src="img/i-f7-material.png" /></a>
+						</div>
+						<p><a href="#" class="button" onclick="gambar()" style="margin-right:5%; margin-top:-10px; float:right; width:100px;">Save an Image</a></p>
+						<p> <a href="#" class="button" onclick="gambar()" style="margin-right:10px; margin-top:-10px; float:right; width:100px;">Cancel</a></p>
+						<p> <a href="#" class="button" onclick="cClear()" style="margin-right:10px; margin-top:-10px; float:right; width:100px;">Reset</a></p>
+                    </div>
+            </div>
+            </div>
+          </div>
+        </div>
