@@ -56,15 +56,17 @@ function gambar() {
 }
 
 function bindDraggableTrack(){
-    $('.draggableItem').draggable({
-        stop: function() {
+    $('.draggableItem').draggable();
+
+    $('#myCanvas').droppable({
+        drop: function( event, ui ) {
             var $canvas = $('#myCanvas') ;
             var ctx = $canvas.get(0).getContext('2d') ;
-            var $img = $(this);
+            var $img = $(ui.draggable) ;
             var imgpos = $img.offset() ;
             var cpos = $canvas.offset() ;
             ctx.drawImage($img.get(0),imgpos.left-cpos.left,
-                          imgpos.top-cpos.top);
+                          imgpos.top-cpos.top, $img.width(), $img.height()) ;
         }
     });
 }
