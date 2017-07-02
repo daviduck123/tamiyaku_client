@@ -109,6 +109,10 @@ myApp.onPageInit('teman', function (page) {
 	myApp.closePanel();
 });
 
+myApp.onPageInit('createTrack', function (page) {
+	buat disini
+});
+
 myApp.onPageInit('profilTeman', function (page) {
 	//var id_teman = getcookie("id_profilTeman");
 	//getProfilTeman(id_teman);
