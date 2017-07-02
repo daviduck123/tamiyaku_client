@@ -33,6 +33,7 @@ function getKotaBuatJualBarang() {
 function buatJualBarangPost() {
 	var id_user=getcookie("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
+	var emailJualBarang = document.getElementById("email_buatJualBarang").value;
 	var kelas = $('#kelas_buatJualBarang').find(":selected").val();
 	var harga = document.getElementById("harga_buatJualBarang").value;
 	var kota = $('#kota_buatJualBarang').find(":selected").val();
@@ -57,47 +58,54 @@ function buatJualBarangPost() {
 			}
 			else
 			{
-					if(deskripsi=="")
+				if(deskripsi=="")
+				{
+					myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
+				}
+				else
+				{
+					var cekEmail=validateEmail(emailJualBarang);
+					if(cekEmail==false)
 					{
-						myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
+						myApp.alert('Format E-Mail anda tidak benar', 'Perhatian!');
+					}else{
+						if(fileinput=="")
+					{
+						myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
 					}
 					else
 					{
-						if(fileinput=="")
-						{
-							myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
-						}
-						else
-						{
-							var blob=$("#file_buatJualBarang")[0].files[0];
-							var formData = new FormData();
-							formData.append("nama", namaJualBarang);
-							formData.append("harga", harga);
-							formData.append("deskripsi", deskripsi);
-							formData.append("id_user", id_user);
-							formData.append("id_kota", kota);
-							formData.append("id_kelas", kelas);
-							formData.append("file", blob);
-							
-							console.log(formData);
-												
-							var link=urlnya+'/api/jualbeli/createJualBeli';
-							$.ajax({
-								url: link,
-								data: formData,
-								type: 'POST',
-								contentType: false,
-								processData: false
-							}).done(function(z){
-								//mainView.router.loadPage('home.html');
-								myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
-								viewRouterBack();
-								getAllJualBeliPost();
-							}).fail(function(x){
-								myApp.alert(x.message+" "+x.error, 'Perhatian!');
-							});
-						}
-					}	
+						var blob=$("#file_buatJualBarang")[0].files[0];
+						var formData = new FormData();
+						formData.append("nama", namaJualBarang);
+						formData.append("email", emailJualBarang);
+						formData.append("harga", harga);
+						formData.append("deskripsi", deskripsi);
+						formData.append("id_user", id_user);
+						formData.append("id_kota", kota);
+						formData.append("id_kelas", kelas);
+						formData.append("file", blob);
+						
+						console.log(formData);
+											
+						var link=urlnya+'/api/jualbeli/createJualBeli';
+						$.ajax({
+							url: link,
+							data: formData,
+							type: 'POST',
+							contentType: false,
+							processData: false
+						}).done(function(z){
+							//mainView.router.loadPage('home.html');
+							myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
+							viewRouterBack();
+							getAllJualBeliPost();
+						}).fail(function(x){
+							myApp.alert(x.message+" "+x.error, 'Perhatian!');
+						});
+					}
+					}
+				}
 			}
 		}
 	}
