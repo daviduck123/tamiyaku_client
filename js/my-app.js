@@ -17,8 +17,8 @@ myApp.onPageInit('index', function (page) {
 
 myApp.onPageInit('grup', function (page) {
 	
-	var id_user = getcookie("active_user_id");
-	var id_grup = getcookie("id_grup");
+	var id_user = getData("active_user_id");
+	var id_grup = getData("id_grup");
 	
 	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
 	console.log(link);
@@ -115,7 +115,7 @@ myApp.onPageInit('createTrack', function (page) {
 });
 
 myApp.onPageInit('profilTeman', function (page) {
-	//var id_teman = getcookie("id_profilTeman");
+	//var id_teman = getData("id_profilTeman");
 	//getProfilTeman(id_teman);
 });
 
@@ -142,7 +142,7 @@ myApp.onPageInit('lapakSaya', function (page) {
 
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
-	var username = getcookie("active_user_nama");
+	var username = getData("active_user_nama");
 	$("#index_name").html("");
 	$("#index_name").append(username);
 	
@@ -150,7 +150,7 @@ $$('.panel-left').on('panel:opened', function () {
 });
 
 $$('.panel-right').on('panel:opened', function () {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	getAllNotif(id_user);
 });
 
@@ -170,7 +170,7 @@ function setPullRefreshGrup(){
     ptrContent.on('refresh', function (e) {
             // Emulate 2s loading
             setTimeout(function () {
-                var id_grup = getcookie("id_grup");
+                var id_grup = getData("id_grup");
                 getAllGrupPost(id_grup);
                 myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:
             }, 2000);
@@ -183,7 +183,7 @@ function setPullRefreshProfilTeman(){
             // Emulate 2s loading
             setTimeout(function () {
 				//var id_teman=document.getElementById('#id_teman_temp').value;
-				var id_teman = getcookie("id_teman");
+				var id_teman = getData("id_teman");
 				console.log(id_teman+"aaa");
                 getAllTemanPost(id_teman);
                 myApp.pullToRefreshDone(); // After we refreshed page content, we need to reset pull to refresh component to let user pull it again:

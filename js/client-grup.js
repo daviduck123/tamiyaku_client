@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
-var list_id_kelas=getcookie("list_id_kelas");
+var list_id_kelas=getData("list_id_kelas");
 function getNearbyGrup(){
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 
 	if ( navigator.geolocation )
 	{
@@ -108,8 +108,8 @@ function gotoGroup(clickedId){
 	mainView.router.loadPage('grup.html');
 	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
 	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
-	var id_user = getcookie("active_user_id");
-	var id_grup = getcookie("id_grup");
+	var id_user = getData("active_user_id");
+	var id_grup = getData("id_grup");
 	
 	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
 	console.log(link);
@@ -359,7 +359,7 @@ function buatGrupPost() {
 	var lokasi = document.getElementById("lokasi_buatGrup").value;
 	var lat = document.getElementById("lat_buatGrup").value;
 	var lng = document.getElementById("lng_buatGrup").value;
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var fileinput = document.getElementById("file_buatGrup").value;
 	
 	if(namaGrup=="")
@@ -436,7 +436,7 @@ function buatGrupPost() {
 }
 
 function getAllGrup() {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/grup?id_user='+id_user;
 		$.ajax({
 		    url: link,
@@ -504,7 +504,7 @@ function showButtonLeaveGrup(id){
 
 function leaveThisGrup(clickedId){
 	var id_grup=clickedId;
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/grup/leaveGrup?id_grup='+id_grup+'&id_user='+id_user;
 
@@ -529,7 +529,7 @@ function leaveThisGrup(clickedId){
 
 function joinThisGrup(clickedId){
 	var id_grup=clickedId;
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/grup/joinGrup?id_grup='+id_grup+'&id_user='+id_user;
 
@@ -836,9 +836,9 @@ function getInfoGrup(clickedId){
 
 function statusGrupPost() {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var status = document.getElementById("status_grup").value;
-	var id_grup = getcookie("id_grup");
+	var id_grup = getData("id_grup");
 	
 	var link=urlnya+'/api/post/createPost/';
 	
@@ -946,7 +946,7 @@ function bacaGrupKomentar(clicked_id) {
 
 function komentariGrupPost(clicked_id) {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		

@@ -31,7 +31,7 @@ function getKotaBuatEvent() {
 }
 
 function buatEventPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var namaEvent = document.getElementById("nama_buatEvent").value;
 	var tanggal = document.getElementById("tanggal_buatEvent").value;
 	var kelas = $('#kelas_buatEvent').find(":selected").val();
@@ -141,7 +141,7 @@ function buatEventPost() {
 }
 
 function getAllEventPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
 
 		$.ajax({
@@ -252,7 +252,7 @@ function getAllEventPost() {
 }
 
 function getAllEventPostVar(id_post) {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
 
 		$.ajax({
@@ -413,7 +413,7 @@ function bacaEventKomentar(clicked_id) {
 
 function komentariEventPost(clicked_id) {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		

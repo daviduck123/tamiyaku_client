@@ -31,7 +31,7 @@ function getKotaBuatJualBarang() {
 }
 
 function buatJualBarangPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
 	var emailJualBarang = document.getElementById("email_buatJualBarang").value;
 	var kelas = $('#kelas_buatJualBarang').find(":selected").val();
@@ -112,7 +112,7 @@ function buatJualBarangPost() {
 }
 
 function getAllJualBeliPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -137,7 +137,7 @@ function getAllJualBeliPost() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var ii = 0 ; ii < z.length; ii+) {
+			for (var ii = 0 ; ii < z.length; i++) {
 				coba+=z['id']+"|"; 
 				dataLength++;
 			}
@@ -211,7 +211,7 @@ function getAllJualBeliPost() {
 }
 
 function getAllJualBeliPostVar(id_post) {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -374,7 +374,7 @@ function bacaJualBeliKomentar(clicked_id) {
 
 function komentariJualBeliPost(clicked_id) {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		

@@ -30,7 +30,7 @@ function getKotaEditLapakSaya() {
 }
 
 function buatLapakSayaPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var namaLapakSaya = document.getElementById("nama_buatLapakSaya").value;
 	var kelas = $('#kelas_buatLapakSaya').find(":selected").val();
 	var harga = document.getElementById("harga_buatLapakSaya").value;
@@ -108,7 +108,7 @@ function buatLapakSayaPost() {
 }
 
 function getAllLapakSayaPost() {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -144,12 +144,12 @@ function getAllLapakSayaPost() {
 				storeImage(z[i]['foto'], "editFotoLapakSaya_"+z[i]['id']);
 				var tempIdKota=z[i]['id_kota'];
 				tempIdKota-=1;
-				document.cookie = "editNamaLapakSaya_"+z[i]['id']+"="+z[i]['nama']+";";
-				document.cookie = "editDeskripsiLapakSaya_"+z[i]['id']+"="+z[i]['deskripsi']+";";
-				document.cookie = "editHargaLapakSaya_"+z[i]['id']+"="+z[i]['harga']+";";
-				document.cookie = "editId_kotaLapakSaya_"+z[i]['id']+"="+arrKota[tempIdKota]['id']+";";
-				document.cookie = "editKelasLapakSaya_"+z[i]['id']+"="+z[i]['id_kelas']+";";
-				document.cookie = "editEmailLapakSaya_"+z[i]['id']+"="+z[i]['email']+";";
+				saveData( "editNamaLapakSaya_"+z[i]['id'],z[i]['nama']);
+				saveData( "editDeskripsiLapakSaya_"+z[i]['id'],z[i]['nama']);
+				saveData( "editHargaLapakSaya_"+z[i]['id'],z[i]['nama']);
+				saveData( "editId_kotaLapakSaya_"+z[i]['id'],z[i]['nama']);
+				saveData( "editKelasLapakSaya_"+z[i]['id'],z[i]['nama']);
+				saveData( "editEmailLapakSaya_"+z[i]['id'],z[i]['nama']);
 				
 				tempIdKota -=1;
 					var html=	"<div id='posting_lapakSaya_"+z[i]['id']+"' style='margin-bottom:50px;'>";
@@ -197,16 +197,16 @@ function getAllLapakSayaPost() {
 }
 
 function editLapakSaya(clickedID){
-	var id_user= getcookie("active_user_id");
+	var id_user= getData("active_user_id");
 	var id_lapak= clickedID;
 	var temp="editNamaLapakSaya_"+id_lapak;
-	var nama = getcookie(temp);
-	var deskripsi = getcookie("editDeskripsiLapakSaya_"+id_lapak);
-	var harga = getcookie("editHargaLapakSaya_"+id_lapak);
+	var nama = getData(temp);
+	var deskripsi = getData("editDeskripsiLapakSaya_"+id_lapak);
+	var harga = getData("editHargaLapakSaya_"+id_lapak);
 	var foto = getImage("editFotoLapakSaya_"+id_lapak);
-	var id_kelas = getcookie("editKelasLapakSaya_"+id_lapak);
-	var id_kota = getcookie("editId_kotaLapakSaya_"+id_lapak);
-	var email = getcookie("editEmailLapakSaya_"+id_lapak);
+	var id_kelas = getData("editKelasLapakSaya_"+id_lapak);
+	var id_kota = getData("editId_kotaLapakSaya_"+id_lapak);
+	var email = getData("editEmailLapakSaya_"+id_lapak);
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -302,7 +302,7 @@ function editLapakSaya(clickedID){
 }
 
 function editLapakSayaPost(clickedID) {
-	var id_user=getcookie("active_user_id");
+	var id_user=getData("active_user_id");
 	var id_lapak = document.getElementById("update_id_editLapakSaya_"+clickedID).value;
 	var namaLapakSaya = document.getElementById("nama_editLapakSaya_"+clickedID).value;
 	var kelas = $('#kelas_editLapakSaya_'+clickedID).find(":selected").val();

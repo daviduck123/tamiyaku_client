@@ -1,4 +1,4 @@
-z[ii]function getAllTeman() {
+function getAllTeman() {
 	var id_user = getcookie("active_user_id");
 	var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_user;
 

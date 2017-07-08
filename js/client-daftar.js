@@ -40,7 +40,6 @@ function setCookie(){
 		if (radios[i].checked) 
 		{
 			// do whatever you want with the checked radio
-			//document.cookie = "gender="+radios[i].value+";";
 			// only one radio can be logically checked, don't check the rest
 			gender =radios[i].value;
 			break;
@@ -123,12 +122,13 @@ function setCookie(){
 											formData.append("file", blob);
 												//pake variable ini tok ckup
 											globalCookie["formData"] = formData;
-												document.cookie = "username="+username+";";
-											document.cookie = "id_kota="+kota+";";
-											document.cookie = "email="+email+";";
-											document.cookie = "password="+password+";";		
-											document.cookie = "fileInput="+formData+";";
-											document.cookie = "gender="+gender+";";
+											
+											saveData( "username",username);
+											saveData( "id_kota",kota);
+											saveData( "email",email);
+											saveData( "password",password);
+											saveData( "fileInput",formData);
+											saveData( "gender",gender);
 											mainView.router.loadPage('pilihKelas.html');
 										}
 									}
@@ -149,51 +149,45 @@ function setCookie2(){
 	for (i = 0; i < kelas.length; i++) {
 		if (kelas[i].checked) 
 		{
-		if(i==0)
+			if(i==0)
 			{
-				document.cookie = "kelas1="+kelas[i].value+";";
+				saveData( "kelas1",kelas[i].value);
 			}
 			else if(i==1)
-		{
-				document.cookie = "kelas2="+kelas[i].value+";";
+			{
+				saveData( "kelas3",kelas[i].value);
 			}
 			else if(i==2)
 			{
-			document.cookie = "kelas3="+kelas[i].value+";";
+				saveData( "kelas3",kelas[i].value);
 			}
 		}
 	}
 }
-  
-function bacaCookie() {
-	setCookie2();
-	var x = document.cookie;
-	alert(x);
-}
  
 function registerPost() {
    setCookie2();
-	var username = getcookie("username");
+	var username = getData("username");
 	//alert(username);
-	var kota = getcookie("kota");
+	var kota = getData("kota");
 	//alert(kota);
-	var email = getcookie("email");
+	var email = getData("email");
 	//alert(email);
-	var password = getcookie("password");
+	var password = getData("password");
 	//alert(password);
-	var fileInput = getcookie("fileInput");
+	var fileInput = getData("fileInput");
 	//alert(fileInput);
-	var gender = getcookie("gender");
+	var gender = getData("gender");
 	if(gender=="male")
 		gender="Laki-laki";
 	else if(gender=="female")
 		gender="Perempuan";
 	//alert(gender);
-	var kelas1 = getcookie("kelas1");
+	var kelas1 = getData("kelas1");
 	//alert(kelas1);
-	var kelas2 = getcookie("kelas2");
+	var kelas2 = getData("kelas2");
 	//alert(kelas2);
-	var kelas3 = getcookie("kelas3");
+	var kelas3 = getData("kelas3");
 		var tempKelas=kelas1+kelas2+kelas3;
 	if(tempKelas==0)
 	{
@@ -229,27 +223,27 @@ function registerPost() {
 			mainView.router.loadPage('login.html');
 			myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
 			
-			eraseCookie("username");
-			eraseCookie("kota");
-			eraseCookie("email");
-			eraseCookie("password");
-			eraseCookie("fileInput");
-			eraseCookie("gender");
-			eraseCookie("kelas1");
-			eraseCookie("kelas2");
-			eraseCookie("kelas3");
+			eraseData("username");
+			eraseData("kota");
+			eraseData("email");
+			eraseData("password");
+			eraseData("fileInput");
+			eraseData("gender");
+			eraseData("kelas1");
+			eraseData("kelas2");
+			eraseData("kelas3");
 		}).fail(function(x){
 			myApp.alert(x.message+" "+x.error, 'Perhatian!');
 			
-			eraseCookie("username");
-			eraseCookie("kota");
-			eraseCookie("email");
-			eraseCookie("password");
-			eraseCookie("fileInput");
-			eraseCookie("gender");
-			eraseCookie("kelas1");
-			eraseCookie("kelas2");
-			eraseCookie("kelas3");
+			eraseData("username");
+			eraseData("kota");
+			eraseData("email");
+			eraseData("password");
+			eraseData("fileInput");
+			eraseData("gender");
+			eraseData("kelas1");
+			eraseData("kelas2");
+			eraseData("kelas3");
 			/*
 			for (var ii = 0; ii < formData.entries().length; ii++) {
 				console.log(formData.entries()[ii][0]+ ', ' + formData.entries()[ii][1]); 

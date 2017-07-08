@@ -18,6 +18,19 @@ function logout() {
 	eraseCookie("expires");
 }
 
+function saveData(dataName, dataValue) {
+
+    localStorage.setItem(dataName, dataValue);
+}
+
+function getData(dataName) {
+	return localStorage.getItem(dataName);
+}
+
+function eraseData(dataName){
+	localStorage.removeItem(dataName);
+}
+
 function getcookie(cookiename){
 	var cookiestring  = document.cookie;
 	var cookiearray = cookiestring.split(';');

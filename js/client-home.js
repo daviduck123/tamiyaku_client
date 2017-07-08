@@ -7,7 +7,7 @@ function gotoHome(){
 
 function komentariPost(clicked_id) {
 	
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		
@@ -126,7 +126,7 @@ function bacaKomentar(clicked_id) {
 }
 
 function getAllPost() {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
 					});
@@ -211,7 +211,7 @@ function getAllPost() {
 }
 
 function getAllPost(id_post) {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
 					});
@@ -297,7 +297,7 @@ function getAllPost(id_post) {
 
 function statusPost() {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var status = document.getElementById("status").value;
 	
 	var link=urlnya+'/api/post/createPost/';

@@ -53,11 +53,11 @@ function loginPost() {
 							var expires = "expires=" + d.toGMTString()+";";
 								
 							mainView.router.loadPage('home.html');
-							document.cookie = "active_user_id="+z.user.id+";";
-							document.cookie = "active_user_email="+z.user.email+";";
-							document.cookie = "active_user_nama="+z.user.nama+";";
-							document.cookie = "active_user_jenis_kelamin="+z.user.jenis_kelamin+";";
-							document.cookie = expires;
+							saveData( "active_user_id",z.user.id);
+							saveData( "active_user_email",z.user.email);
+							saveData( "active_user_nama",z.user.nama);
+							saveData( "active_user_jenis_kelamin",z.user.jenis_kelamin);
+							saveData( "expires",expires);
 
 							globalListKelas = [];
 							$.ajax({
@@ -108,8 +108,8 @@ function loginPost() {
 function cekLoginAktif() {
 	var active_user_id="";
 	var expires="";
-	active_user_id=getcookie("active_user_id");
-	expires=getcookie("expires");
+	active_user_id=getData("active_user_id");
+	expires=getData("expires");
 	
 	if(active_user_id!="" && active_user_id!=null)
 	{
@@ -118,7 +118,6 @@ function cekLoginAktif() {
 		if(d.getTime()<dexpires.getTime())
 		{
 			mainView.router.loadPage('home.html');
-			//myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
 
 			globalListKelas = [];
 			$.ajax({
@@ -149,14 +148,14 @@ function cekLoginAktif() {
 		{	
 			myApp.alert('Sesi waktu anda habis, silahkan lakukan login kembali!');
 			mainView.router.loadPage('login.html');
-			eraseCookie("active_user_id");
-			eraseCookie("expires");
+			eraseData("active_user_id");
+			eraseData("expires");
 		}
 	}
 	else
 	{
 		mainView.router.loadPage('login.html');
-		eraseCookie("active_user_id");
-		eraseCookie("expires");
+		eraseData("active_user_id");
+		eraseData("expires");
 	}
 }
