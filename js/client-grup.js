@@ -18,7 +18,7 @@ function getNearbyGrup(){
 		var lngKuSekarang = position.coords.longitude;
 		
 		var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang;
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -62,7 +62,7 @@ function getNearbyGrup(){
 			lng: lngKuSekarang,
 		});
 		
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -113,7 +113,7 @@ function gotoGroup(clickedId){
 	
 	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
 	console.log(link);
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,
@@ -333,7 +333,7 @@ function gotoGoogleMap(){
 
 function getKotaBuatGrup() {
 	var link=urlnya+'/api/kota/';
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -438,7 +438,7 @@ function buatGrupPost() {
 function getAllGrup() {
 	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/grup?id_user='+id_user;
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -508,7 +508,7 @@ function leaveThisGrup(clickedId){
 	
 	var link=urlnya+'/api/grup/leaveGrup?id_grup='+id_grup+'&id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -533,7 +533,7 @@ function joinThisGrup(clickedId){
 	
 	var link=urlnya+'/api/grup/joinGrup?id_grup='+id_grup+'&id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -555,7 +555,7 @@ function getAllGrupPost(clickedId) {
 	var id_grup = clickedId;
 	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -662,7 +662,7 @@ function getAllGrupPost(clickedId, id_post) {
 	var id_grup = clickedId;
 	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -769,7 +769,7 @@ function getInfoGrup(clickedId){
 	var id_grup = clickedId;
 	var link=urlnya+'/api/grup/getGrupInfo?id_grup='+id_grup;
 		
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -793,7 +793,7 @@ function getInfoGrup(clickedId){
 				id_kota-=1;
 				
 				var link=urlnya+'/api/kota/';
-				$.ajax({
+				$.ajax({ dataType: "jsonp",
 					url: link,
 					type: 'GET',
 					contentType: false,
@@ -890,7 +890,7 @@ function bacaGrupKomentar(clicked_id) {
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_post='+id_post;
 				
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
 				contentType: false,

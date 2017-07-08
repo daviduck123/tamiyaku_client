@@ -12,7 +12,8 @@ function gotoLomba(){
 
 function getKotaBuatEvent() {
 	var link=urlnya+'/api/kota/';
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
+			dataType: 'jsonp',
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -144,7 +145,7 @@ function getAllEventPost() {
 	var id_user=getData("active_user_id");
 	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -255,7 +256,7 @@ function getAllEventPostVar(id_post) {
 	var id_user=getData("active_user_id");
 	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -357,7 +358,7 @@ function bacaEventKomentar(clicked_id) {
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_event='+id_post;
 				
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
 				contentType: false,

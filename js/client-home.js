@@ -43,7 +43,7 @@ function komentariPost(clicked_id) {
 				});
 				//myApp.alert(formData, 'Data Dikirim!');
 				
-				$.ajax({
+				$.ajax({ 
 					url: link,
 					data: formData,
 					type: 'POST',
@@ -70,7 +70,7 @@ function bacaKomentar(clicked_id) {
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_post='+id_post;
 				
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
 				contentType: false,
@@ -132,7 +132,7 @@ function getAllPost() {
 					});
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
 
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,
@@ -217,7 +217,7 @@ function getAllPost(id_post) {
 					});
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
 
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,

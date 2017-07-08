@@ -2,7 +2,7 @@ function getAllTeman() {
 	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,

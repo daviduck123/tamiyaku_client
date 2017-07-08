@@ -5,7 +5,7 @@ function gotoRegister(){
 
 function getKota() {
 	var link=urlnya+'/api/kota/';
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -215,10 +215,11 @@ function registerPost() {
 		
 		$.ajax({
 		    url: link,
+		    type: "POST",
 		    data: formData,
-		    type: 'POST',
-		    contentType: false,
-		    processData: false
+		    mimeType: "multipart/form-data",
+		    processData: false,
+		    contentType: false
 		}).done(function(z){
 			mainView.router.loadPage('login.html');
 			myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');

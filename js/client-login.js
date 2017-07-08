@@ -42,8 +42,6 @@ function loginPost() {
 						contentType: false,
 						processData: false
 					}).done(function(z){
-						
-							console.log(z);
 						if(z.status=="TRUE")
 						{
 							var d = new Date();
@@ -60,7 +58,7 @@ function loginPost() {
 							saveData( "expires",expires);
 
 							globalListKelas = [];
-							$.ajax({
+							$.ajax({ dataType: "jsonp",
 								url: urlnya+'/api/kelas/getAllByUserId?id_user='+z.user.id,
 								type: 'GET',
 								contentType: false,
@@ -120,7 +118,7 @@ function cekLoginAktif() {
 			mainView.router.loadPage('home.html');
 
 			globalListKelas = [];
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: urlnya+'/api/kelas/getAllByUserId?id_user='+active_user_id,
 				type: 'GET',
 				contentType: false,

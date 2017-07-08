@@ -2,7 +2,7 @@ function autoCariTemanGrup() {
 	var param = document.getElementById("cariTemanGrup").value;
 	var link=urlnya+'/api/user/searchUser?param='+param;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -35,7 +35,7 @@ function searchTeman(paramData){
 	myApp.closePanel();
 	var param = paramData;
 		var link=urlnya+'/api/user/searchUser?param='+param;
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,

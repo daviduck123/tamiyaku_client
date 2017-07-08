@@ -22,7 +22,7 @@ myApp.onPageInit('grup', function (page) {
 	
 	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
 	console.log(link);
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,

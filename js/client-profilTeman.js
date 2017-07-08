@@ -7,7 +7,7 @@ function gotoProfilTeman(clickedId){
 	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/user/checkIsTeman?id_user='+id_user+'&id_teman='+id_teman;
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,
@@ -43,7 +43,7 @@ function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -150,7 +150,7 @@ function getAllTemanPost(clickedId, id_post) {
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -256,7 +256,7 @@ function getAllTemanPost(clickedId, id_post) {
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
 	    contentType: false,
@@ -378,7 +378,7 @@ function bacaTemanKomentar(clicked_id) {
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_post='+id_post;
 				
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
 				contentType: false,
@@ -470,7 +470,7 @@ function komentariTemanPost(clicked_id) {
 				});
 				//myApp.alert(formData, 'Data Dikirim!');
 				
-				$.ajax({
+				$.ajax({ 
 					url: link,
 					data: formData,
 					type: 'POST',
@@ -510,7 +510,7 @@ function statusTemanPost() {
 		formData.append("deskripsi", status);
 		formData.append("file", blob);
 
-		$.ajax({
+		$.ajax({ 
 		    url: link,
 		    data: formData,
 		    type: 'POST',
@@ -538,7 +538,7 @@ function addFriend(clickedId){
 	
 	var link=urlnya+'/api/user/addFriend?id_teman='+id_teman+'&id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,

@@ -11,7 +11,7 @@ function gotoLapakSaya(){
 
 function getKotaEditLapakSaya() {
 	var link=urlnya+'/api/kota/';
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -87,7 +87,7 @@ function buatLapakSayaPost() {
 							console.log(formData);
 												
 							var link=urlnya+'/api/jualbeli/createJualBeli';
-							$.ajax({
+							$.ajax({ 
 								url: link,
 								data: formData,
 								type: 'POST',
@@ -112,7 +112,7 @@ function getAllLapakSayaPost() {
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 		url: link,
 		type: 'GET',
 		contentType: false,
@@ -125,7 +125,7 @@ function getAllLapakSayaPost() {
 			
 		link=urlnya+'/api/jualbeli/getUserLapak?id_user='+id_user;		
 		
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -210,7 +210,7 @@ function editLapakSaya(clickedID){
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 		url: link,
 		type: 'GET',
 		contentType: false,
@@ -410,7 +410,7 @@ function hapusLapakSaya(clickedId)
 	myApp.confirm('Apakah anda yakin untuk menghapus jualan anda?', 'Hapus data', 
       function () {
         var link=urlnya+'/api/jualBeli/deleteJualBeli?id_jualbeli='+clickedId;
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,

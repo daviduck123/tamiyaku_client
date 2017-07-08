@@ -12,7 +12,7 @@ function gotoJualBeli(){
 
 function getKotaBuatJualBarang() {
 	var link=urlnya+'/api/kota/';
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -88,8 +88,8 @@ function buatJualBarangPost() {
 						
 						console.log(formData);
 											
-						var link=urlnya+'/api/jualbeli/createJualBeli';
-						$.ajax({
+						var link=urlnya+'/api/jualBeli/createJualBeli';
+						$.ajax({ 
 							url: link,
 							data: formData,
 							type: 'POST',
@@ -116,7 +116,7 @@ function getAllJualBeliPost() {
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 		url: link,
 		type: 'GET',
 		contentType: false,
@@ -127,9 +127,9 @@ function getAllJualBeliPost() {
 		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
 	}); 
 			
-		link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;		
-		
-		$.ajax({
+		link=urlnya+'/api/jualBeli/getAllJualBeli?id_user='+id_user;
+		$.ajax({ 
+			dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -215,7 +215,7 @@ function getAllJualBeliPostVar(id_post) {
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
-	$.ajax({
+	$.ajax({ dataType: "jsonp",
 		url: link,
 		type: 'GET',
 		contentType: false,
@@ -226,9 +226,9 @@ function getAllJualBeliPostVar(id_post) {
 		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
 	}); 
 			
-		link=urlnya+'/api/jualbeli/getAllJualBeli?id_user='+id_user;		
+		link=urlnya+'/api/jualBeli/getAllJualBeli?id_user='+id_user;		
 		
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -318,7 +318,7 @@ function bacaJualBeliKomentar(clicked_id) {
 		
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_jualbeli='+id_post;
-			$.ajax({
+			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
 				contentType: false,

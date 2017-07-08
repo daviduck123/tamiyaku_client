@@ -2,7 +2,7 @@ function getAllNotif() {
 	var id_user = getcookie("active_user_id");
 	var link=urlnya+'/api/notifikasi/getNotifikasiByIdUser?id_user='+id_user;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
@@ -42,7 +42,7 @@ function gotoFriendPost(id_teman,url) {
 	{
 		var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
 
-		$.ajax({
+		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
