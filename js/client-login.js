@@ -48,7 +48,7 @@ function loginPost() {
 							//exdays var lama harinya
 							var exdays=1;
 							d.setTime(d.getTime() + (exdays*24*60*60*1000));
-							var expires = "expires=" + d.toGMTString()+";";
+							var expires = d.toGMTString();
 								
 							mainView.router.loadPage('home.html');
 							saveData( "active_user_id",z.user.id);
@@ -79,7 +79,7 @@ function loginPost() {
 								}
 							});
 							
-							myApp.alert('Hi '+getcookie("active_user_nama")+', cookies berakhir pada='+getcookie("expires"), 'Selamat datang kembali!');
+							myApp.alert('Hi '+getData("active_user_nama")+', cookies berakhir pada='+getData("expires"), 'Selamat datang kembali!');
 							storeImage(z.user.foto,'profilePic');
 							 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 

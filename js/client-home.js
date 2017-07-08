@@ -90,7 +90,10 @@ function bacaKomentar(clicked_id) {
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
-							html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+							if(z[i]['nama']==getData("active_user_nama"))
+							{
+								html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+							}
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -550,7 +553,7 @@ function editKomentarKu(id_post,clicked_id)
 														'</center>'+
 													'<div style="height:0px;overflow:hidden">'+
 													'</div>'+
-													'<p><a href="#" class="button active close-popup" onclick="simpanKomentar(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+													'<p><a href="#" class="button active close-popup" onclick="simpanKomentar('+id_post+',this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
 										   ' </div>'+
 										   '<p><a href="#" class="close-popup">Kembali</a></p>'+
 									'</div>'+
@@ -570,16 +573,18 @@ function tutupModalKomentar(id_post) {
 	//getAllPost(id_post);
 }
 
-function simpanKomentar(clicked_id)
+function simpanKomentar(id_post, clicked_id)
 {
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarEdit").value;
 	
-	var formData = new FormData();
-		formData.append("id_user", id_user);
-		formData.append("deskripsi", deskripsi);
-		formData.append("id_komentar", id_komentar);
+	
+	var formData = JSON.stringify({
+					id_user:id_user,
+					id_komentar:id_komentar,
+					deskripsi:deskripsi
+				});
 	
 	var link=urlnya+'/api/komentar/updateKomentar/';
 	
@@ -592,12 +597,8 @@ function simpanKomentar(clicked_id)
 	}).done(function(z){
 		myApp.closeModal();
 		bacaKomentar(id_post);
+		bacaKomentar(id_post);
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
-		var coba="";
-		for (var ii = 0 ; ii < formData.entries().length; ii++) {
-			coba+=formData.entries()[ii][0]+ ', '; 
-		}
-		console.log(coba);
 	});
 }

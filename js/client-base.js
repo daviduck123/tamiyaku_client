@@ -7,18 +7,15 @@ var urlnya="http://server.neoalitcahya.com";
 var globalListKelas = [];
 var globalCookie = [];
 
-function eraseCookie(name) {
-    document.cookie = name + '=; Max-Age=0'
-}
 
 function logout() {
 	myApp.closePanel();
 	mainView.router.loadPage('login.html');
-	eraseCookie("active_user_id");
-	eraseCookie("active_user_nama");
-	eraseCookie("active_user_email");
-	eraseCookie("active_user_jenis_kelamin");
-	eraseCookie("expires");
+	eraseData("active_user_id");
+	eraseData("active_user_nama");
+	eraseData("active_user_email");
+	eraseData("active_user_jenis_kelamin");
+	eraseData("expires");
 }
 
 function saveData(dataName, dataValue) {
@@ -32,19 +29,6 @@ function getData(dataName) {
 
 function eraseData(dataName){
 	localStorage.removeItem(dataName);
-}
-
-function getcookie(cookiename){
-	var cookiestring  = document.cookie;
-	var cookiearray = cookiestring.split(';');
-	for(var i =0 ; i < cookiearray.length ; ++i)
-	{ 
-		if(cookiearray[i].trim().match(cookiename+'='))
-		{ 
-			var temparray = cookiearray[i].split('=');
-			return temparray[1];
-		}
-	} return null;
 }
 	
 function validateEmail(email) {
