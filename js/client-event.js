@@ -152,8 +152,8 @@ function getAllEventPost() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_event").html("");
@@ -263,8 +263,8 @@ function getAllEventPostVar(id_post) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_event").html("");

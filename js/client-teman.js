@@ -1,4 +1,4 @@
-function getAllTeman() {
+z[ii]function getAllTeman() {
 	var id_user = getcookie("active_user_id");
 	var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_user;
 
@@ -10,8 +10,8 @@ function getAllTeman() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#container_teman").html("");

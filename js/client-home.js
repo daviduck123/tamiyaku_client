@@ -140,8 +140,8 @@ function getAllPost() {
 	}).done(function(z){
 		var coba="";
 		var dataLength=0;
-		for (var pair of z) {
-			coba+=pair['id']+"|"; 
+		for (var ii = 0 ; ii < z.length ; ii++) {
+			coba+=z[ii]['id']+"|"; 
 			dataLength++;
 		}
 		$("#isi_postingan").html("");
@@ -225,8 +225,8 @@ function getAllPost(id_post) {
 	}).done(function(z){
 		var coba="";
 		var dataLength=0;
-		for (var pair of z) {
-			coba+=pair['id']+"|"; 
+		for (var ii = 0 ; ii < z.length ; ii++) {
+			coba+=z[ii]['id']+"|"; 
 			dataLength++;
 		}
 		$("#isi_postingan").html("");
@@ -327,8 +327,8 @@ function statusPost() {
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
-			for (var pair of formData.entries()) {
-				coba+=pair[0]+ ', '; 
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
 			}
 			console.log(coba);
 		});

@@ -25,7 +25,7 @@ function getNearbyGrup(){
 		    processData: false
 		}).done(function(z){
 			var dataLength=0;
-			for (var pair of z) {
+			for (var ii = 0 ; ii < z.length ; ii++) {
 				dataLength++;
 			}
 			
@@ -69,7 +69,7 @@ function getNearbyGrup(){
 		    processData: false
 		}).done(function(z){
 			var dataLength=0;
-			for (var pair of z) {
+			for (var ii = 0 ; ii < z.length ; ii++) {
 				dataLength++;
 			}
 			
@@ -120,7 +120,7 @@ function gotoGroup(clickedId){
 	    processData: false
 	}).done(function(z){
 		var dataLength=0;
-		for (var pair of z) {
+		for (var ii = 0 ; ii < z.length ; ii++) {
 			dataLength++;
 		}
 		
@@ -412,8 +412,8 @@ function buatGrupPost() {
 							var link=urlnya+'/api/grup/createGrup';
 							//console.log(formData);
 							
-							//for (var pair of formData.entries()) {
-							//	console.log(pair[0]+ ', ' + pair[1]); 
+							//for (var z[ii] of formData.entries()) {
+							//	console.log(z[ii][0]+ ', ' + z[ii][1]); 
 							//}
 							$.ajax({
 								url: link,
@@ -449,7 +449,7 @@ function getAllGrup() {
 			$("#kumpulan_grup").append('<div id="isi_kumpulan_grup"></div>');
 			
 			var dataLength=0;
-			for (var pair of z) {
+			for (var ii = 0 ; ii < z.length ; ii++) {
 							dataLength++;
 			}
 			
@@ -563,8 +563,8 @@ function getAllGrupPost(clickedId) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_postingan_grup").html("");
@@ -670,8 +670,8 @@ function getAllGrupPost(clickedId, id_post) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_postingan_grup").html("");
@@ -776,7 +776,7 @@ function getInfoGrup(clickedId){
 		    processData: false
 		}).done(function(z){
 			var dataLength=0;
-			for (var pair of z) {
+			for (var ii = 0 ; ii < z.length ; ii++) {
 				dataLength++;
 			}
 			var indeks=0;
@@ -871,8 +871,8 @@ function statusGrupPost() {
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
-			for (var pair of formData.entries()) {
-							coba+=pair[0]+ ', ' + pair[1]; 
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+							coba+=formData.entries()[ii][0]+ ', ' + formData.entries()[ii][1]; 
 			}
 			console.log(coba);
 		});

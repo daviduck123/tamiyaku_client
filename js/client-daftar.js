@@ -251,8 +251,8 @@ function registerPost() {
 			eraseCookie("kelas2");
 			eraseCookie("kelas3");
 			/*
-			for (var pair of formData.entries()) {
-				console.log(pair[0]+ ', ' + pair[1]); 
+			for (var ii = 0; ii < formData.entries().length; ii++) {
+				console.log(formData.entries()[ii][0]+ ', ' + formData.entries()[ii][1]); 
 			}*/
 		});
 	}

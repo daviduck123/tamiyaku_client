@@ -14,7 +14,7 @@ function gotoProfilTeman(clickedId){
 	    processData: false
 	}).done(function(z){
 		var dataLength=0;
-		for (var pair of z) {
+		for (var ii = 0 ; ii < z.length; ii++) {
 			dataLength++;
 		}
 		
@@ -51,8 +51,8 @@ function getAllTemanPost(clickedId) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_postingan_teman").html("");
@@ -158,8 +158,8 @@ function getAllTemanPost(clickedId, id_post) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_postingan_teman").html("");

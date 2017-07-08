@@ -29,7 +29,7 @@ myApp.onPageInit('grup', function (page) {
 	    processData: false
 	}).done(function(z){
 		var dataLength=0;
-		for (var pair of z) {
+		for (var ii = 0 ; ii < z.length ; ii++) {
 			dataLength++;
 		}
 		

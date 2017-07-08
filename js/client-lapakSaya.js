@@ -133,8 +133,8 @@ function getAllLapakSayaPost() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_lapakSaya").html("");

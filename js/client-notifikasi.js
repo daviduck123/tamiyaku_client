@@ -10,8 +10,8 @@ function getAllNotif() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; z++) {
+				coba+=z['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_notifikasi").html("");
@@ -50,8 +50,8 @@ function gotoFriendPost(id_teman,url) {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var pair of z) {
-				coba+=pair['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_postingan_teman").html("");
