@@ -241,8 +241,11 @@ function getAllPost(id_post) {
 				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
-				html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-				html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				if(z[i]['nama']==getData("active_user_nama"))
+				{
+					html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				}
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -274,8 +277,11 @@ function getAllPost(id_post) {
 				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
-				html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-				html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				if(z[i]['nama']==getData("active_user_nama"))
+				{
+					html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				}
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";

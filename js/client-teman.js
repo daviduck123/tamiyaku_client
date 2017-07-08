@@ -35,7 +35,7 @@ function getAllTeman() {
 					html +=		'<ul>';
 					html +=			'<li class="list-group-title" >'+hurufDepan+'</li>';
 					html +=	'';
-					S
+					
 					tambahTutupdiv=1;
 					tempHurufAwal=hurufDepan;
 				}
