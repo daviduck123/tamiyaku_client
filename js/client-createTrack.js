@@ -1,6 +1,5 @@
 var cPushArray = new Array();
 var cStep = 0;
-var ctx;
 // ctx = document.getElementById('myCanvas').getContext("2d");
 	
 function cPush() {

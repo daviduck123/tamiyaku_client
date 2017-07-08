@@ -1,4 +1,5 @@
 var list_id_kelas=getData("list_id_kelas");
+var ctx = null;
 function gotoBuatEvent(){
 	mainView.router.loadPage('buatEvent.html');
 	myApp.closePanel();
@@ -93,7 +94,7 @@ function buatEventPost() {
 										}
 										else
 										{
-											if(fileinput=="")
+											if(ctx === null && fileinput === "")
 											{
 												myApp.alert('Silahkan pilih foto track event lomba', 'Perhatian!');
 											}
@@ -112,9 +113,10 @@ function buatEventPost() {
 												formData.append("id_user", id_user);
 												formData.append("id_kota", kota);
 												formData.append("id_kelas", kelas);
-												formData.append("file", blob);
-												
-												console.log(formData);
+												formData.append('file',blob);
+												if(ctx !== null){
+													formData.append("canvas",ctx.canvas.toDataURL());
+												}
 												
 												var link=urlnya+'/api/event/createEvent';
 												
@@ -127,6 +129,7 @@ function buatEventPost() {
 												}).done(function(z){
 													//mainView.router.loadPage('home.html');
 													myApp.alert('Event berhasil dibuat', 'Berhasil!');
+													ctx = null;
 												}).fail(function(x){
 													myApp.alert(x.message+" "+x.error, 'Perhatian!');
 												});
