@@ -242,6 +242,7 @@ function getAllPost(id_post) {
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+				html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -274,6 +275,7 @@ function getAllPost(id_post) {
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+				html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -336,4 +338,61 @@ function statusPost() {
 		});
 		
 	}
+}
+
+function editKomentarKu(clicked_id)
+{
+	myApp.popup('.popup-edit-home');
+	var popupHTML = '<div class="popup">'+
+                    '<div class="content-block">'+
+                      '<p>Letak lokasi grup.</p>'+
+					  '<div id="petaLokasiGrup" style="width:330px; height:300px;"></div>'+
+                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
+                    '</div>'+
+                  '</div>'
+	myApp.popup(popupHTML);
+}
+
+function pilihanHapusData(clicked_id){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus kiriman ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+          //myApp.alert('You clicked first button!')
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusData(clicked_id);
+        }
+      },
+    ]
+  })
+}
+
+function hapusData(clicked_id)
+{
+	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
+	$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllPost();
+			$("#status").val("");
+			$("#file_home").val("");
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
+			}
+			console.log(coba);
+		});
 }

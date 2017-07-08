@@ -1,5 +1,5 @@
-//var urlnya="http://localhost/tamiyaku-server";
-var urlnya="http://166.62.28.99";
+var urlnya="http://localhost/tamiyaku-server";
+//var urlnya="http://server.domain.com";
 //var urlnya = "http://10.0.2.2/tamiyaku-server"
 var globalListKelas = [];
 var globalCookie = [];
