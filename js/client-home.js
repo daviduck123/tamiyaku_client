@@ -66,7 +66,6 @@ function bacaKomentar(clicked_id) {
 	
 	if($("#isi_komentar_"+id_post).length == 0) 
 	{
-		
 			$(document).ready(function(){
 			var link=urlnya+'/api/komentar?id_post='+id_post;
 				
@@ -91,6 +90,7 @@ function bacaKomentar(clicked_id) {
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -158,7 +158,7 @@ function getAllPost() {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -194,7 +194,7 @@ function getAllPost() {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -253,7 +253,7 @@ function getAllPost(id_post) {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -289,7 +289,7 @@ function getAllPost(id_post) {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -356,7 +356,7 @@ function statusPost() {
 	}
 }
 
-function editKomentarKu(clicked_id)
+function editPost(clicked_id)
 {
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
@@ -395,10 +395,10 @@ function editKomentarKu(clicked_id)
 										'<div style="height:0px;overflow:hidden">'+
 										'<input type="file" id="file_editHome" accept="image/*"/>'+
 										'</div>'+
-										'<p><a href="#" class="button active close-popup" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button active" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
 										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
 							   ' </div>'+
-							   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
 						'</div>'+
 					'</div>';
 					myApp.popup(popupHTML);
@@ -416,10 +416,10 @@ function editKomentarKu(clicked_id)
 										'<div style="height:0px;overflow:hidden">'+
 										'<input type="file" id="file_editHome" accept="image/*"/>'+
 										'</div>'+
-										'<p><a href="#" class="button active close-popup" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button active" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
 										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
 							   ' </div>'+
-							   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
 						'</div>'+
 					'</div>';
 					myApp.popup(popupHTML);
@@ -480,7 +480,7 @@ function statusEditPost(clicked_id) {
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("statusEdit").value;
 	
-	var link=urlnya+'/api/post/createPost/';
+	var link=urlnya+'/api/post/updatePost/';
 	
 	if(status=="")
 	{
@@ -502,9 +502,8 @@ function statusEditPost(clicked_id) {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			//getAllPost();
-			//$("#status").val("");
-			//$("#file_home").val("");
+			myApp.closeModal();
+			getAllPost();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -515,4 +514,90 @@ function statusEditPost(clicked_id) {
 		});
 		
 	}
+}
+
+function tutupModal() {
+	getAllPost();
+}
+
+function editKomentarKu(id_post,clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var id_komentar = clicked_id;
+	
+	$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_post='+id_post;
+				
+			$.ajax({ dataType: "jsonp",
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				if(z.length>0)
+				{
+					for(var i=0;i<z.length;i++)
+					{
+						if(clicked_id==z[i]['id'])
+						{
+							myApp.popup('.popup-edit-home');
+								var popupHTML=	'<div class="popup">'+
+											'<div class="content-block">'+
+											'<p>Edit Kiriman</p>'+
+														'<div class="page-content">'+
+														'<center><textarea id="komentarEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+														'placeholder="Tulis Komentar Anda..">'+z[i]['deskripsi']+'</textarea>'+
+														'</center>'+
+													'<div style="height:0px;overflow:hidden">'+
+													'</div>'+
+													'<p><a href="#" class="button active close-popup" onclick="simpanKomentar(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										   ' </div>'+
+										   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+									'</div>'+
+								'</div>';
+								myApp.popup(popupHTML);
+						}
+					}
+				}
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+}
+
+function tutupModalKomentar(id_post) {
+	//getAllPost(id_post);
+}
+
+function simpanKomentar(clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var id_komentar = clicked_id;
+	var deskripsi=document.getElementById("komentarEdit").value;
+	
+	var formData = new FormData();
+		formData.append("id_user", id_user);
+		formData.append("deskripsi", deskripsi);
+		formData.append("id_komentar", id_komentar);
+	
+	var link=urlnya+'/api/komentar/updateKomentar/';
+	
+	$.ajax({
+	    url: link,
+	    data: formData,
+	    type: 'POST',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		myApp.closeModal();
+		bacaKomentar(id_post);
+	}).fail(function(x){
+		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
+		var coba="";
+		for (var ii = 0 ; ii < formData.entries().length; ii++) {
+			coba+=formData.entries()[ii][0]+ ', '; 
+		}
+		console.log(coba);
+	});
 }
