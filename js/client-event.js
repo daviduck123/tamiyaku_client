@@ -283,6 +283,11 @@ function getAllEventPostVar(id_post) {
 					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+					if(z[i]['nama']==getData("active_user_nama"))
+					{
+						html += 				"<td style='font-weight:bold;'><i onclick='editEventPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusEventData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+					}
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -382,6 +387,10 @@ function bacaEventKomentar(clicked_id) {
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							if(z[i]['nama']==getData("active_user_nama"))
+							{
+								html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+							}
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -500,4 +509,274 @@ function pilihanTrack(){
       },
     ]
   })
+}
+
+function editEventPost(clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var formData=JSON.stringify({
+						id_user:id_user,
+					});
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
+
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var coba="";
+		var dataLength=0;
+		for (var ii = 0 ; ii < z.length ; ii++) {
+			coba+=z[ii]['id']+"|"; 
+			dataLength++;
+		}
+		$("#isi_postingan").html("");
+		for(var i=0;i<dataLength;i++)
+		{
+			if(clicked_id==z[i]['id'])
+			{
+				if(z[i]['foto']!="")
+				{
+					myApp.popup('.popup-edit-home');
+					var popupHTML=	'<div class="popup">'+
+								'<div class="content-block">'+
+								'<p>Edit Kiriman</p>'+
+											'<div class="page-content">'+
+											'<center><textarea id="statusEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+											'placeholder="Tulis Status Anda..">'+z[i]['deskripsi']+'</textarea>'+
+											"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+											'</center>'+
+										'<div style="height:0px;overflow:hidden">'+
+										'<input type="file" id="file_editHome" accept="image/*"/>'+
+										'</div>'+
+										'<p><a href="#" class="button active" onclick="saveEditEventPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
+							   ' </div>'+
+							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
+						'</div>'+
+					'</div>';
+					myApp.popup(popupHTML);
+				}
+				else
+				{
+					myApp.popup('.popup-edit-home');
+					var popupHTML=	'<div class="popup">'+
+								'<div class="content-block">'+
+								'<p>Edit Kiriman</p>'+
+											'<div class="page-content">'+
+											'<center><textarea id="statusEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+											'placeholder="Tulis Status Anda..">'+z[i]['deskripsi']+'</textarea>'+
+											'</center>'+
+										'<div style="height:0px;overflow:hidden">'+
+										'<input type="file" id="file_editHome" accept="image/*"/>'+
+										'</div>'+
+										'<p><a href="#" class="button active" onclick="saveEditEventPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
+							   ' </div>'+
+							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
+						'</div>'+
+					'</div>';
+					myApp.popup(popupHTML);
+				}
+			}
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+	}); 
+}
+
+function pilihanHapusEventData(clicked_id){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus kiriman ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+          //myApp.alert('You clicked first button!')
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusEventData(clicked_id);
+        }
+      },
+    ]
+  })
+}
+
+function hapusEventData(clicked_id)
+{
+	var link=urlnya+'/api/post/deleteEven?id_event='+clicked_id;
+	$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllPost();
+			$("#status").val("");
+			$("#file_home").val("");
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
+			}
+			console.log(coba);
+		});
+}
+
+function saveEditEventPost(clicked_id) {
+	//ON PROGRESS
+	var id_user = getData("active_user_id");
+	
+	var link=urlnya+'/api/post/updateEven/';
+	
+	var namaEvent = document.getElementById("nama_buatEventEdit").value;
+	var tanggal = document.getElementById("tanggal_buatEventEdit").value;
+	var kelas = $('#kelas_buatEventEdit').find(":selected").val();
+	var juara1 = document.getElementById("total_juara1EventEdit").value;
+	var juara2 = document.getElementById("total_juara2EventEdit").value;
+	var juara3 = document.getElementById("total_juara3EventEdit").value;
+	var ticket = document.getElementById("ticket_buatEventEdit").value;
+	var kota = $('#kota_buatEventEdit').find(":selected").val();
+	var lokasi = document.getElementById("lokasi_buatEventEdit").value;
+	var deskripsi = document.getElementById("deskripsi_buatEventEdit").value;
+	var fileinput = document.getElementById("file_buatEventEdit").value;
+	
+	if(namaEvent=="")
+	{
+		myApp.alert('Silahkan isi nama Event', 'Perhatian!');
+	}
+	else
+	{
+		if(tanggal=="")
+		{
+			myApp.alert('Silahkan isi tanggal Event', 'Perhatian!');
+		}
+		else
+		{
+			if(kelas=="" || kelas==0 || kelas=="0")
+			{
+				myApp.alert('Silahkan pilih kelas Event', 'Perhatian!');
+			}
+			else
+			{
+				if(juara1=="" || juara1==0 || juara1=="0")
+				{
+					myApp.alert('Silahkan isi total hadiah juara 1', 'Perhatian!');
+				}
+				else
+				{
+							if(ticket=="" || ticket==0 || ticket=="0")
+							{
+								myApp.alert('Silahkan isi biaya ticket masuk', 'Perhatian!');
+							}
+							else
+							{
+								if(kota=="" || kota==0 || kota=="0")
+								{
+									myApp.alert('Silahkan pilih kota Event', 'Perhatian!');
+								}
+								else
+								{
+									if(lokasi=="")
+									{
+										myApp.alert('Silahkan pilih lokasi Event', 'Perhatian!');
+									}
+									else
+									{
+										if(deskripsi=="")
+										{
+											myApp.alert('Silahkan isi deskripsi event lomba', 'Perhatian!');
+										}
+										else
+										{
+											if(fileinput=="")
+											{
+												myApp.alert('Silahkan pilih foto track event lomba', 'Perhatian!');
+											}
+											else
+											{
+												var blob=$("#file_buatEventEdit")[0].files[0];
+												var formData = new FormData();
+												formData.append("nama", namaEvent);
+												formData.append("tanggal", tanggal);
+												formData.append("tempat", lokasi);
+												formData.append("hadiah1", juara1);
+												formData.append("hadiah2", juara2);
+												formData.append("hadiah3", juara3);
+												formData.append("harga_tiket", ticket);
+												formData.append("deskripsi", deskripsi);
+												formData.append("id_user", id_user);
+												formData.append("id_kota", kota);
+												formData.append("id_kelas", kelas);
+												formData.append("file", blob);
+												
+												
+												
+												var link=urlnya+'/api/event/createEvent';
+												
+												$.ajax({
+													url: link,
+													data: formData,
+													type: 'POST',
+													contentType: false,
+													processData: false
+												}).done(function(z){
+													//mainView.router.loadPage('home.html');
+													myApp.alert('Event berhasil dibuat', 'Berhasil!');
+												}).fail(function(x){
+													myApp.alert(x.message+" "+x.error, 'Perhatian!');
+												});
+											}
+										}
+									}
+								}
+							}
+				}		
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	if(status=="")
+	{
+		myApp.alert('Status tidak boleh kosong', 'Perhatian!');
+	}
+	else
+	{
+		var blob=$("#file_editHome")[0].files[0];
+		var formData = new FormData();
+		formData.append("id_user", id_user);
+		formData.append("deskripsi", status);
+		formData.append("id_post", clicked_id);
+		formData.append("file", blob);
+
+		$.ajax({
+		    url: link,
+		    data: formData,
+		    type: 'POST',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			myApp.closeModal();
+			getAllPost();
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
+			}
+			console.log(coba);
+		});
+		
+	}
 }

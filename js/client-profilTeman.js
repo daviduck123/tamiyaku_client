@@ -41,7 +41,7 @@ function gotoProfilTeman(clickedId){
 
 function getAllTemanPost(clickedId) {
 	var id_teman = clickedId;
-	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
+	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
 
 		$.ajax({ dataType: "jsonp",
 		    url: link,
@@ -148,7 +148,7 @@ function getAllTemanPost(clickedId) {
 
 function getAllTemanPost(clickedId, id_post) {
 	var id_teman = clickedId;
-	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_teman;
+	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
 
 		$.ajax({ dataType: "jsonp",
 		    url: link,

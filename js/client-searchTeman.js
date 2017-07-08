@@ -35,7 +35,8 @@ function searchTeman(paramData){
 	myApp.closePanel();
 	var param = paramData;
 		var link=urlnya+'/api/user/searchUser?param='+param;
-		$.ajax({ dataType: "jsonp",
+		$.ajax({ 
+			dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
 		    contentType: false,
