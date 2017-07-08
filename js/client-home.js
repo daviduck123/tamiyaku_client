@@ -156,6 +156,11 @@ function getAllPost() {
 				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+				if(z[i]['nama']==getData("active_user_nama"))
+				{
+					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				}
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -187,6 +192,11 @@ function getAllPost() {
 				html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
+				if(z[i]['nama']==getData("active_user_nama"))
+				{
+					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+				}
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -243,7 +253,7 @@ function getAllPost(id_post) {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -279,7 +289,7 @@ function getAllPost(id_post) {
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 				"<td style='font-weight:bold;'><i class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+					html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKu(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 					html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 				}
 				html += 			"</tr>";
@@ -348,15 +358,77 @@ function statusPost() {
 
 function editKomentarKu(clicked_id)
 {
-	myApp.popup('.popup-edit-home');
-	var popupHTML = '<div class="popup">'+
-                    '<div class="content-block">'+
-                      '<p>Letak lokasi grup.</p>'+
-					  '<div id="petaLokasiGrup" style="width:330px; height:300px;"></div>'+
-                      '<p><a href="#" class="close-popup">Kembali</a></p>'+
-                    '</div>'+
-                  '</div>'
-	myApp.popup(popupHTML);
+	var id_user = getData("active_user_id");
+	var formData=JSON.stringify({
+						id_user:id_user,
+					});
+	var link=urlnya+'/api/post/getAllPostFriendByUser?id_user='+id_user;
+
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var coba="";
+		var dataLength=0;
+		for (var ii = 0 ; ii < z.length ; ii++) {
+			coba+=z[ii]['id']+"|"; 
+			dataLength++;
+		}
+		$("#isi_postingan").html("");
+		for(var i=0;i<dataLength;i++)
+		{
+			if(clicked_id==z[i]['id'])
+			{
+				if(z[i]['foto']!="")
+				{
+					myApp.popup('.popup-edit-home');
+					var popupHTML=	'<div class="popup">'+
+								'<div class="content-block">'+
+								'<p>Edit Kiriman</p>'+
+											'<div class="page-content">'+
+											'<center><textarea id="statusEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+											'placeholder="Tulis Status Anda..">'+z[i]['deskripsi']+'</textarea>'+
+											"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+											'</center>'+
+										'<div style="height:0px;overflow:hidden">'+
+										'<input type="file" id="file_editHome" accept="image/*"/>'+
+										'</div>'+
+										'<p><a href="#" class="button active close-popup" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
+							   ' </div>'+
+							   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+						'</div>'+
+					'</div>';
+					myApp.popup(popupHTML);
+				}
+				else
+				{
+					myApp.popup('.popup-edit-home');
+					var popupHTML=	'<div class="popup">'+
+								'<div class="content-block">'+
+								'<p>Edit Kiriman</p>'+
+											'<div class="page-content">'+
+											'<center><textarea id="statusEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+											'placeholder="Tulis Status Anda..">'+z[i]['deskripsi']+'</textarea>'+
+											'</center>'+
+										'<div style="height:0px;overflow:hidden">'+
+										'<input type="file" id="file_editHome" accept="image/*"/>'+
+										'</div>'+
+										'<p><a href="#" class="button active close-popup" onclick="statusEditPost(this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										'<p><a href="#" class="button"  onclick="chooseFile_editHome();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
+							   ' </div>'+
+							   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+						'</div>'+
+					'</div>';
+					myApp.popup(popupHTML);
+				}
+			}
+		}
+	}).fail(function(x){
+		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+	}); 
 }
 
 function pilihanHapusData(clicked_id){
@@ -401,4 +473,46 @@ function hapusData(clicked_id)
 			}
 			console.log(coba);
 		});
+}
+
+function statusEditPost(clicked_id) {
+	//ON PROGRESS
+	var id_user = getData("active_user_id");
+	var status = document.getElementById("statusEdit").value;
+	
+	var link=urlnya+'/api/post/createPost/';
+	
+	if(status=="")
+	{
+		myApp.alert('Status tidak boleh kosong', 'Perhatian!');
+	}
+	else
+	{
+		var blob=$("#file_editHome")[0].files[0];
+		var formData = new FormData();
+		formData.append("id_user", id_user);
+		formData.append("deskripsi", status);
+		formData.append("id_post", clicked_id);
+		formData.append("file", blob);
+
+		$.ajax({
+		    url: link,
+		    data: formData,
+		    type: 'POST',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			//getAllPost();
+			//$("#status").val("");
+			//$("#file_home").val("");
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
+			}
+			console.log(coba);
+		});
+		
+	}
 }

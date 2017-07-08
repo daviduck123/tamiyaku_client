@@ -1,6 +1,7 @@
 //var urlnya="http://localhost/tamiyaku-server";
 var urlnya="http://server.neoalitcahya.com";
 //var urlnya = "http://10.0.2.2/tamiyaku-server"
+
 //var urlnya="http://server.domain.com";
 //var urlnya = "http://10.0.2.2/tamiyaku-server"
 var globalListKelas = [];
