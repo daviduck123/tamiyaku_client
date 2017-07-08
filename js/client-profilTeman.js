@@ -1,10 +1,10 @@
 function gotoProfilTeman(clickedId){
 	eraseData("id_teman");
 	saveData( "id_teman",clickedId);
-	//console.log(getcookie("id_teman"));
+	//console.log(getData("id_teman"));
 	var id_teman = clickedId;
 	mainView.router.loadPage('profilTeman.html');
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/user/checkIsTeman?id_user='+id_user+'&id_teman='+id_teman;
 	$.ajax({
@@ -435,7 +435,7 @@ function bacaTemanKomentar(clicked_id) {
 
 function komentariTemanPost(clicked_id) {
 	//ON PROGRESS
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var id_post = "";
 	$(document).ready(function(){
 		
@@ -534,7 +534,7 @@ function statusTemanPost() {
 
 function addFriend(clickedId){
 	var id_teman=clickedId;
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/user/addFriend?id_teman='+id_teman+'&id_user='+id_user;
 
