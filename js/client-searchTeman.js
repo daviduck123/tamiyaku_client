@@ -49,7 +49,7 @@ function searchTeman(paramData){
 				var dataLengthUser=z['users'].length;
 				for(var i=0; i<dataLengthUser;i++)
 				{
-					var activeUserId = getcookie("active_user_id");
+					var activeUserId = getData("active_user_id");
 					if(activeUserId!=z['users'][i]['id'])
 					{
 						availableTagsUser.push({
