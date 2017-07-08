@@ -1,5 +1,5 @@
 function getAllTeman() {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_user;
 
 		$.ajax({
@@ -35,7 +35,7 @@ function getAllTeman() {
 					html +=		'<ul>';
 					html +=			'<li class="list-group-title" >'+hurufDepan+'</li>';
 					html +=	'';
-					
+					S
 					tambahTutupdiv=1;
 					tempHurufAwal=hurufDepan;
 				}
