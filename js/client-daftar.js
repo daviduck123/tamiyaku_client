@@ -217,7 +217,6 @@ function registerPost() {
 		    url: link,
 		    type: "POST",
 		    data: formData,
-		    mimeType: "multipart/form-data",
 		    processData: false,
 		    contentType: false
 		}).done(function(z){
