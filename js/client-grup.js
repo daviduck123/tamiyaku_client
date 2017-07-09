@@ -103,8 +103,8 @@ function gotoCreateGroup(){
 }
 
 function gotoGroup(clickedId){
-	eraseCookie("id_grup");
-	document.cookie = "id_grup="+clickedId+";";
+	eraseData("id_grup");
+	saveData("id_grup",clickedId);
 	mainView.router.loadPage('grup.html');
 	//getAllGroupPost dipanggil akan dipanggil jika saat ini user buka page grup dan ingin membuka grup yg lain karena element html terbuat dan dapat diakses
 	//jika mengakses grup pertama kali fungsi dibawah tidak akan berguna karena element belum dapat diakses, oleh karena itu butuh bantuan myApp.onPageInit pada my-app.js
