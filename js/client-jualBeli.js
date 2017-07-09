@@ -163,7 +163,7 @@ function getAllJualBeliPost() {
 					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 					if(z[i]['user_nama']==getData("active_user_nama"))
 					{
-						html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='editPostJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
@@ -274,7 +274,7 @@ function getAllJualBeliPostVar(id_post) {
 					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 					if(z[i]['user_nama']==getData("active_user_nama"))
 					{
-						html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='editPostJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
@@ -531,4 +531,219 @@ function simpanKomentarEditJualBeli(id_jualbeli, clicked_id)
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
+}
+
+function editPostJualBeli(clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var formData=JSON.stringify({
+						id_user:id_user,
+					});
+	var link=urlnya+'/api/jualBeli/getAllJualBeli?id_user='+id_user;
+
+	$.ajax({
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var link=urlnya+'/api/kota/';
+		$.ajax({ dataType: "jsonp",
+			dataType: 'jsonp',
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(dataKota){
+			var myOptions = dataKota;
+			var dataLengthKota=0;
+					for (var aaa = 0 ; aaa < dataKota.length ; aaa++) {
+						dataLengthKota++;
+					}
+			
+					var coba="";
+					var dataLength=0;
+					for (var ii = 0 ; ii < z.length ; ii++) {
+						coba+=z[ii]['id']+"|"; 
+						dataLength++;
+					}
+					for(var i=0;i<dataLength;i++)
+					{
+						if(clicked_id==z[i]['id'])
+						{
+								myApp.popup('.popup-editPostJualBeli');
+								var popupHTML=	'<div class="popup">'+
+											'<div class="content-block">'+
+											'<p>Edit Kiriman</p>'+
+														'<div class="page-content">'+
+														'<center>'+
+															'<table style="margin-top:-0px;">'+
+																'<tr>'+
+																	'<td><p>Nama</p></td>'+
+																	'<td><input id="nama_buatJualBarangEdit" type="text" required value="'+z[i]['nama']+'"></td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Kelas</p></td>'+
+																	'<td>'+
+																	'<select name="kelas_buatJualBarangEdit" id="kelas_buatJualBarangEdit"  class="select-list-kelas">'+
+																	'</select>'+
+																	'</td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Harga</p></td>'+
+																	'<td>Rp.<input id="harga_buatJualBarangEdit" type="number" required value="'+z[i]['harga']+'"></td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Kota</p></td>'+
+																	'<td>'+
+																	'<select name="kota_buatJualBarangEdit" id="kota_buatJualBarangEdit">'+
+																	  '<option value="0">Pilih Kota</option>';
+																		  for(var indeksKota=0;indeksKota<dataLengthKota;indeksKota++)
+																		  {
+																			var tempIdKota=dataKota[indeksKota]['id'];
+																			if(tempIdKota==z[i]['id_kota'])
+																			{
+																			  popupHTML+=	'<option value="'+dataKota[indeksKota]['id']+'" selected>'+dataKota[indeksKota]['nama']+'</option>';
+																			}
+																			else
+																			{
+																			  popupHTML+=	'<option value="'+dataKota[indeksKota]['id']+'">'+dataKota[indeksKota]['nama']+'</option>';
+																			}
+																		  }
+													popupHTML+=		'</select>'+
+																	'</td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Foto</p></td>'+
+																	'<div style="height:0px;overflow:hidden">'+
+																		'<input type="file" id="file_buatJualBarangEdit" accept="image/*"/>'+
+																		'</div>'+
+																	'<td>'+
+																	"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+																	'<p><a href="#" class="button" onclick="chooseFile_buatJualBarangEdit();" style="width:150px;">Pilih Gambar..</a></p>'+
+																	'</td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Email</p></td>'+
+																	'<td><input id="email_buatJualBarangEdit" type="text" required value="'+z[i]['email']+'"></td>'+
+																'</tr>'+
+																'<tr>'+
+																	'<td><p>Deskripsi</p></td>'+
+																	'<td><textarea id="deskripsi_buatJualBarangEdit" style="resize:none; margin-top:10px; height:60px;">'+z[i]['deskripsi']+'</textarea></td>'+
+																'</tr>'+
+																
+															'</table><td><p><a href="#" class="button"  onclick="simpanBuatJualBarang(this.id);" id='+clicked_id+' style="width:250px;">Selesai..</a></p></td>'+
+															'</center>'+
+													'<div style="height:0px;overflow:hidden">'+
+													'<input type="file" id="file_editHome" accept="image/*"/>'+
+													'</div>'+
+										   ' </div>'+
+										   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
+									'</div>'+
+								'</div>';
+								myApp.popup(popupHTML);
+								
+								//ubah kelas=========================
+								$(".select-list-kelas").empty();
+								$.each(globalListKelas, function (id, text) {
+									var key = Object.keys(text);
+									var value = Object.values(text);
+									$(".select-list-kelas").append($('<option>', { 
+										value: key[0],
+										text : value[0]
+									}));
+								});
+								//==============================================
+						}
+					}
+					
+			}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
+		}); 
+	}).fail(function(x){
+		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
+	}); 
+}
+
+function simpanBuatJualBarang(clicked_id) {
+	var id_user=getData("active_user_id");
+	var namaJualBarang = document.getElementById("nama_buatJualBarangEdit").value;
+	var emailJualBarang = document.getElementById("email_buatJualBarangEdit").value;
+	var kelas = $('#kelas_buatJualBarangEdit').find(":selected").val();
+	var harga = document.getElementById("harga_buatJualBarangEdit").value;
+	var kota = $('#kota_buatJualBarangEdit').find(":selected").val();
+	var deskripsi = document.getElementById("deskripsi_buatJualBarangEdit").value;
+	var fileinput = document.getElementById("file_buatJualBarangEdit").value;
+	var id_jualbeli= clicked_id;
+	if(namaJualBarang=="")
+	{
+		myApp.alert('Silahkan isi nama barang', 'Perhatian!');
+	}
+	else
+	{
+		if(harga=="" || harga==0 || harga=="0")
+		{
+			myApp.alert('Silahkan isi harga barang', 'Perhatian!');
+		}
+		else
+		{
+			if(kota=="" || kota==0 || kota=="0")
+			{
+				myApp.alert('Silahkan pilih kota', 'Perhatian!');
+			}
+			else
+			{
+				if(deskripsi=="")
+				{
+					myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
+				}
+				else
+				{
+					var cekEmail=validateEmail(emailJualBarang);
+					if(cekEmail==false)
+					{
+						myApp.alert('Format E-Mail anda tidak benar', 'Perhatian!');
+					}
+					else
+					{
+						//if(fileinput=="")
+						//{
+						//	myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
+						//}
+						//else
+						//{
+							var blob=$("#file_buatJualBarangEdit")[0].files[0];
+							var formData = new FormData();
+							formData.append("id_jualbeli", id_jualbeli);
+							formData.append("nama", namaJualBarang);
+							formData.append("email", emailJualBarang);
+							formData.append("harga", harga);
+							formData.append("deskripsi", deskripsi);
+							formData.append("id_user", id_user);
+							formData.append("id_kota", kota);
+							formData.append("id_kelas", kelas);
+							formData.append("file", blob);
+												
+							var link=urlnya+'/api/jualBeli/updateJualBeli';
+							$.ajax({ 
+								url: link,
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false
+							}).done(function(z){
+								myApp.closeModal();
+								//mainView.router.loadPage('home.html');
+								myApp.alert('Jual Barang berhasil diubah', 'Berhasil!');
+								//viewRouterBack();
+								getAllJualBeliPost();
+							}).fail(function(x){
+								myApp.alert(x.message+" "+x.error, 'Perhatian!');
+							});
+						//}
+					}
+				}
+			}
+		}
+	}
 }

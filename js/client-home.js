@@ -407,7 +407,6 @@ function editPost(clicked_id)
 			coba+=z[ii]['id']+"|"; 
 			dataLength++;
 		}
-		$("#isi_postingan").html("");
 		for(var i=0;i<dataLength;i++)
 		{
 			if(clicked_id==z[i]['id'])
