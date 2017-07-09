@@ -137,8 +137,8 @@ function getAllJualBeliPost() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var ii = 0 ; ii < z.length; i++) {
-				coba+=z['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_jualBeli").html("");
