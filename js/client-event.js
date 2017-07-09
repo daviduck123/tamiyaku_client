@@ -179,7 +179,14 @@ function getAllEventPost() {
 						html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 						html += 			"<tr>";
 						html += 				"<td rowspan='2' width='10%'>";
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						if(z[i]['user_nama']==getData("active_user_nama"))
+						{
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						}
+						else
+						{
+							html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						}
 						html += 				"</td>";
 						html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 						if(z[i]['user_nama']==getData("active_user_nama"))
@@ -313,7 +320,14 @@ function getAllEventPostVar(id_post) {
 							html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 							html += 			"<tr>";
 							html += 				"<td rowspan='2' width='10%'>";
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							if(z[i]['user_nama']==getData("active_user_nama"))
+							{
+								html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							}
+							else
+							{
+								html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							}
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 							if(z[i]['user_nama']==getData("active_user_nama"))
@@ -734,12 +748,10 @@ function editEventPost(clicked_id)
 									
 								'</table><center><td><p><a href="#" class="button"  onclick="saveEventEditPost('+z[i]['id']+');" style="width:250px;">Update</a></p></td></center>'+
 								'</div>';
-				//myApp.popup(popupHTML);
 				
 						}
 					}
 					
-							console.log(popupHTML);
 							$("#isiDataUpdateEvent").append(popupHTML);
 					//ubah kelas=========================
 					$(".select-list-kelas").empty();
@@ -930,14 +942,13 @@ function saveEventEditPost(clicked_id) {
 	}
 }
 
-function editKomentarKuEvent(id_post,clicked_id)
+function editKomentarKuEvent(id_event,clicked_id)
 {
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
 	$(document).ready(function(){
-			var link=urlnya+'/api/komentar?id_post='+id_post;
-				
+			var link=urlnya+'/api/komentar?id_event='+id_event;
 			$.ajax({ dataType: "jsonp",
 				url: link,
 				type: 'GET',
@@ -950,7 +961,7 @@ function editKomentarKuEvent(id_post,clicked_id)
 					{
 						if(clicked_id==z[i]['id'])
 						{
-							myApp.popup('.popup-edit-editEvent');
+							myApp.popup('.popup-editKomentarKuEvent');
 								var popupHTML=	'<div class="popup">'+
 											'<div class="content-block">'+
 											'<p>Edit Kiriman</p>'+
@@ -960,7 +971,7 @@ function editKomentarKuEvent(id_post,clicked_id)
 														'</center>'+
 													'<div style="height:0px;overflow:hidden">'+
 													'</div>'+
-													'<p><a href="#" class="button active close-popup" onclick="simpanKomentarEvent('+id_post+',this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+													'<p><a href="#" class="button active close-popup" onclick="simpanKomentarEvent('+id_event+',this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
 										   ' </div>'+
 										   '<p><a href="#" class="close-popup">Kembali</a></p>'+
 									'</div>'+
@@ -976,11 +987,11 @@ function editKomentarKuEvent(id_post,clicked_id)
 		});
 }
 
-function simpanKomentarEvent(id_post, clicked_id)
+function simpanKomentarEvent(id_event, clicked_id)
 {
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
-	var deskripsi=document.getElementById("komentarEdit").value;
+	var deskripsi=document.getElementById("komentarEventEdit").value;
 	
 	
 	var formData = JSON.stringify({
@@ -999,8 +1010,8 @@ function simpanKomentarEvent(id_post, clicked_id)
 	    processData: false
 	}).done(function(z){
 		myApp.closeModal();
-		bacaKomentar(id_post);
-		bacaKomentar(id_post);
+		bacaEventKomentar(id_event);
+		bacaEventKomentar(id_event);
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
