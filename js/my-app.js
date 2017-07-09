@@ -56,6 +56,11 @@ myApp.onPageInit('nearbyGrup', function (page) {
 	getNearbyGrup();
 });
 
+myApp.onPageInit('updateEvent', function (page) {
+	var tempIdPost=getData("idPostEvent");
+	editEventPost(tempIdPost);
+});
+
 myApp.onPageInit('buatGrup', function (page) {
 	getKotaBuatGrup();
 	$(".select-list-kelas").empty();

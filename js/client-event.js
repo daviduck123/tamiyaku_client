@@ -127,7 +127,6 @@ function buatEventPost() {
 													contentType: false,
 													processData: false
 												}).done(function(z){
-													//mainView.router.loadPage('home.html');
 													myApp.alert('Event berhasil dibuat', 'Berhasil!');
 													ctx = null;
 													viewRouterBack();
@@ -185,7 +184,7 @@ function getAllEventPost() {
 						html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 						if(z[i]['user_nama']==getData("active_user_nama"))
 						{
-							html += 				"<td style='font-weight:bold;'><i onclick='editEventPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+							html += 				"<td style='font-weight:bold;'><i onclick='gotoUpdateEvent(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 							html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusEventData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 						}
 						html += 			"</tr>";
@@ -319,7 +318,7 @@ function getAllEventPostVar(id_post) {
 							html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 							if(z[i]['user_nama']==getData("active_user_nama"))
 							{
-								html += 				"<td style='font-weight:bold;'><i onclick='editEventPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+								html += 				"<td style='font-weight:bold;'><i onclick='gotoUpdateEvent(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
 								html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusEventData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 							}
 							html += 			"</tr>";
@@ -588,7 +587,7 @@ function pilihanTrackEdit(){
         text: 'Load',
 		bold: true,
         onClick: function() {
-			chooseFile_buatEvent();
+			chooseFile_buatEventEdit();
         }
       },
       {
@@ -600,6 +599,12 @@ function pilihanTrackEdit(){
       },
     ]
   })
+}
+
+function gotoUpdateEvent(clicked_id)
+{
+	saveData("idPostEvent",clicked_id);
+	mainView.router.loadPage('updateEvent.html');
 }
 
 function editEventPost(clicked_id)
@@ -636,15 +641,15 @@ function editEventPost(clicked_id)
 						coba+=z[ii]['id']+"|"; 
 						dataLength++;
 					}
-					
+					var popupHTML="";
+					$("#isiDataUpdateEvent").append("");
 					for(var i=0;i<dataLength;i++)
 					{
 						if(clicked_id==z[i]['id'])
 						{
-								myApp.popup('.popup-edit-home');
-			var popupHTML=	'<div class="popup">'+
-								'<div class="content-block">'+
-								'<p>Edit Kiriman</p>'+
+							
+								//myApp.popup('.popup-editEvent');
+			popupHTML=	'<div class="content-block">'+
 								'<table style="margin-top:-0px;">'+
 									'<tr>'+
 										'<td><p>Nama Event Lomba</p></td>'+
@@ -727,14 +732,15 @@ function editEventPost(clicked_id)
 										'<td><textarea id="deskripsi_buatEventEdit" style="resize:none; margin-top:10px; height:60px;">'+z[i]['deskripsi']+'</textarea></td>'+
 									'</tr>'+
 									
-								'</table><center><td><p><a href="#" class="button"  onclick="saveEventEditPost();" style="width:250px;">Update</a></p></td></center>'+
-								'<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
-								'</div>'+
-							'</div>';
-				myApp.popup(popupHTML);;
+								'</table><center><td><p><a href="#" class="button"  onclick="saveEventEditPost('+z[i]['id']+');" style="width:250px;">Update</a></p></td></center>'+
+								'</div>';
+				//myApp.popup(popupHTML);
+				
 						}
 					}
 					
+							console.log(popupHTML);
+							$("#isiDataUpdateEvent").append(popupHTML);
 					//ubah kelas=========================
 					$(".select-list-kelas").empty();
 					$.each(globalListKelas, function (id, text) {
@@ -746,6 +752,8 @@ function editEventPost(clicked_id)
 						}));
 					});
 					//==============================================
+					
+					
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
 		}); 
@@ -875,7 +883,7 @@ function saveEventEditPost(clicked_id) {
 											//{
 												var blob=$("#file_buatEventEdit")[0].files[0];
 												
-												/*
+												
 												formData = new FormData();
 												formData.append("id_event", id_event);
 												formData.append("nama", namaEvent);
@@ -893,43 +901,6 @@ function saveEventEditPost(clicked_id) {
 												if(ctx !== null){
 													formData.append("canvas",ctx.canvas.toDataURL());
 												}
-												*/
-												if(ctx !== null){	
-												var formData = JSON.stringify({
-														id_event:id_event,
-														nama:namaEvent,
-														tanggal:tanggal,
-														tempat:lokasi,
-														hadiah1:juara1,
-														hadiah2:juara2,
-														hadiah3:juara3,
-														harga_tiket:ticket,
-														deskripsi:deskripsi,
-														id_user:id_user,
-														id_kota:kota,
-														id_kelas:kelas,
-														file:blob,
-														canvas:ctx.canvas.toDataURL()
-													});
-												}
-												else
-												{
-													var formData = JSON.stringify({
-														id_event:id_event,
-														nama:namaEvent,
-														tanggal:tanggal,
-														tempat:lokasi,
-														hadiah1:juara1,
-														hadiah2:juara2,
-														hadiah3:juara3,
-														harga_tiket:ticket,
-														deskripsi:deskripsi,
-														id_user:id_user,
-														id_kota:kota,
-														id_kelas:kelas,
-														file:blob,
-													});
-												}
 												console.log(formData);
 												var link=urlnya+'/api/event/updateEvent/';
 												
@@ -940,8 +911,9 @@ function saveEventEditPost(clicked_id) {
 													contentType: false,
 													processData: false
 												}).done(function(z){
-													//mainView.router.loadPage('home.html');
 													viewRouterBack();
+													//tutupModalEvent();
+													getAllEventPost();
 													myApp.alert('Event berhasil diubah!', 'Berhasil!');
 													ctx = null;
 												}).fail(function(x){
@@ -978,7 +950,7 @@ function editKomentarKuEvent(id_post,clicked_id)
 					{
 						if(clicked_id==z[i]['id'])
 						{
-							myApp.popup('.popup-edit-home');
+							myApp.popup('.popup-edit-editEvent');
 								var popupHTML=	'<div class="popup">'+
 											'<div class="content-block">'+
 											'<p>Edit Kiriman</p>'+
@@ -1032,4 +1004,9 @@ function simpanKomentarEvent(id_post, clicked_id)
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
+}
+
+function tutupModalEvent()
+{
+	myApp.closeModal();
 }
