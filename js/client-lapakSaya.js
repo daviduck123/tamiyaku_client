@@ -86,7 +86,7 @@ function buatLapakSayaPost() {
 							
 							console.log(formData);
 												
-							var link=urlnya+'/api/jualbeli/createJualBeli';
+							var link=urlnya+'/api/jualBeli/createJualBeli';
 							$.ajax({ 
 								url: link,
 								data: formData,
@@ -123,7 +123,7 @@ function getAllLapakSayaPost() {
 		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1)');
 	}); 
 			
-		link=urlnya+'/api/jualbeli/getUserLapak?id_user='+id_user;		
+		link=urlnya+'/api/jualBeli/getUserLapak?id_user='+id_user;		
 		
 		$.ajax({ dataType: "jsonp",
 		    url: link,
@@ -354,7 +354,7 @@ function editLapakSayaPost(clickedID) {
 							
 							console.log(formData);
 												
-							var link=urlnya+'/api/jualbeli/updateJualBeli';
+							var link=urlnya+'/api/jualBeli/updateJualBeli';
 							$.ajax({
 								url: link,
 								data: formData,
@@ -382,7 +382,7 @@ function editLapakSayaPost(clickedID) {
 							formData.append("id_kelas", kelas);
 							formData.append("file", blob);
 																			
-							var link=urlnya+'/api/jualbeli/updateJualBeli';
+							var link=urlnya+'/api/jualBeli/updateJualBeli';
 							$.ajax({
 								url: link,
 								data: formData,
