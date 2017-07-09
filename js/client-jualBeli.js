@@ -85,8 +85,6 @@ function buatJualBarangPost() {
 						formData.append("id_kota", kota);
 						formData.append("id_kelas", kelas);
 						formData.append("file", blob);
-						
-						console.log(formData);
 											
 						var link=urlnya+'/api/jualBeli/createJualBeli';
 						$.ajax({ 
@@ -135,12 +133,14 @@ function getAllJualBeliPost() {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
+			
 			var coba="";
 			var dataLength=0;
 			for (var ii = 0 ; ii < z.length; ii++) {
 				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
+			
 			$("#isi_container_jualBeli").html("");
 			//munculkan semua post
 			for(var i=0;i<dataLength;i++)
@@ -151,9 +151,21 @@ function getAllJualBeliPost() {
 					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2' width='10%'>";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					if(z[i]['user_foto']==getData("active_user_nama"))
+					{
+						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					}
+					else
+					{
+						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
+					if(z[i]['user_nama']==getData("active_user_nama"))
+					{
+						html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+					}
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -250,9 +262,21 @@ function getAllJualBeliPostVar(id_post) {
 					html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2' width='10%'>";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					if(z[i]['user_foto']==getData("active_user_nama"))
+					{
+						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					}
+					else
+					{
+						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
+					if(z[i]['user_nama']==getData("active_user_nama"))
+					{
+						html += 				"<td style='font-weight:bold;'><i onclick='editPost(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+					}
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -339,6 +363,10 @@ function bacaJualBeliKomentar(clicked_id) {
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
+							if(z[i]['nama']==getData("active_user_nama"))
+							{
+								html += 				"<td style='font-weight:bold;'><i onclick='editKomentarJualBeli("+clicked_id+", this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+							}
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['created_at']+"</td>";
@@ -426,5 +454,81 @@ function komentariJualBeliPost(clicked_id) {
 				});
 			}
 		}
+	});
+}
+
+function editKomentarJualBeli(id_jualbeli,clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var id_komentar = clicked_id;
+	
+	$(document).ready(function(){
+			var link=urlnya+'/api/komentar?id_jualbeli='+id_jualbeli;
+				
+			$.ajax({ dataType: "jsonp",
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				if(z.length>0)
+				{
+					for(var i=0;i<z.length;i++)
+					{
+						if(clicked_id==z[i]['id'])
+						{
+							myApp.popup('.popup-editKomentarJualBeli');
+								var popupHTML=	'<div class="popup">'+
+											'<div class="content-block">'+
+											'<p>Edit Kiriman</p>'+
+														'<div class="page-content">'+
+														'<center><textarea id="komentarEditJualBeli" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
+														'placeholder="Tulis Komentar Anda..">'+z[i]['deskripsi']+'</textarea>'+
+														'</center>'+
+													'<div style="height:0px;overflow:hidden">'+
+													'</div>'+
+													'<p><a href="#" class="button active close-popup" onclick="simpanKomentarEditJualBeli('+id_jualbeli+',this.id);" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
+										   ' </div>'+
+										   '<p><a href="#" class="close-popup">Kembali</a></p>'+
+									'</div>'+
+								'</div>';
+								myApp.popup(popupHTML);
+						}
+					}
+				}
+			}).fail(function(x){
+				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
+			});
+			
+		});
+}
+
+function simpanKomentarEditJualBeli(id_jualbeli, clicked_id)
+{
+	var id_user = getData("active_user_id");
+	var id_komentar = clicked_id;
+	var deskripsi=document.getElementById("komentarEditJualBeli").value;
+	
+	
+	var formData = JSON.stringify({
+					id_user:id_user,
+					id_komentar:id_komentar,
+					deskripsi:deskripsi
+				});
+	
+	var link=urlnya+'/api/komentar/updateKomentar/';
+	
+	$.ajax({
+	    url: link,
+	    data: formData,
+	    type: 'POST',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		myApp.closeModal();
+		bacaJualBeliKomentar(id_jualbeli);
+		bacaJualBeliKomentar(id_jualbeli);
+	}).fail(function(x){
+		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
 }

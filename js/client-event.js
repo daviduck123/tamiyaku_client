@@ -800,7 +800,7 @@ function pilihanHapusEventData(clicked_id){
 
 function hapusEventData(clicked_id)
 {
-	var link=urlnya+'/api/post/deleteEven?id_event='+clicked_id;
+	var link=urlnya+'/api/event/deleteEvent?id_event='+clicked_id;
 	$.ajax({
 		    url: link,
 		    type: 'GET',
@@ -812,11 +812,8 @@ function hapusEventData(clicked_id)
 			$("#file_home").val("");
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
-			var coba="";
-			for (var ii = 0 ; ii < formData.entries().length; ii++) {
-				coba+=formData.entries()[ii][0]+ ', '; 
-			}
-			console.log(coba);
+			
+			console.log(x);
 		});
 }
 
