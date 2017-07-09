@@ -164,7 +164,7 @@ function getAllJualBeliPost() {
 					if(z[i]['user_nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editPostJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -275,7 +275,7 @@ function getAllJualBeliPostVar(id_post) {
 					if(z[i]['user_nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editPostJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusJualBeli(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -746,4 +746,45 @@ function simpanBuatJualBarang(clicked_id) {
 			}
 		}
 	}
+}
+
+function pilihanHapusJualBeli(clicked_id){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus kiriman ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+          //myApp.alert('You clicked first button!')
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusJualBeliData(clicked_id);
+        }
+      },
+    ]
+  })
+}
+
+function hapusJualBeliData(clicked_id)
+{
+	var link=urlnya+'/api/jualBeli/deleteJualBeli?id_jualbeli='+clicked_id;
+	$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllJualBeliPost();
+			$("#status").val("");
+			$("#file_home").val("");
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
+			
+			console.log(x);
+		});
 }
