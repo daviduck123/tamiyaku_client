@@ -661,7 +661,6 @@ function editEventPost(clicked_id)
 					{
 						if(clicked_id==z[i]['id'])
 						{
-							
 								//myApp.popup('.popup-editEvent');
 			popupHTML=	'<div class="content-block">'+
 								'<table style="margin-top:-0px;">'+
@@ -751,7 +750,6 @@ function editEventPost(clicked_id)
 				
 						}
 					}
-					
 							$("#isiDataUpdateEvent").append(popupHTML);
 					//ubah kelas=========================
 					$(".select-list-kelas").empty();
@@ -764,8 +762,6 @@ function editEventPost(clicked_id)
 						}));
 					});
 					//==============================================
-					
-					
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
 		}); 
