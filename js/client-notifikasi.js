@@ -1,5 +1,5 @@
 function getAllNotif() {
-	var id_user = getcookie("active_user_id");
+	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/notifikasi/getNotifikasiByIdUser?id_user='+id_user;
 
 		$.ajax({ dataType: "jsonp",
@@ -10,8 +10,8 @@ function getAllNotif() {
 		}).done(function(z){
 			var coba="";
 			var dataLength=0;
-			for (var ii = 0 ; ii < z.length; z++) {
-				coba+=z['id']+"|"; 
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z[ii]['id']+"|"; 
 				dataLength++;
 			}
 			$("#isi_container_notifikasi").html("");
