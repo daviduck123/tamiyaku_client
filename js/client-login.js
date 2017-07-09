@@ -115,8 +115,6 @@ function cekLoginAktif() {
 		var dexpires = new Date(expires);
 		if(d.getTime()<dexpires.getTime())
 		{
-			mainView.router.loadPage('home.html');
-
 			globalListKelas = [];
 			$.ajax({ dataType: "jsonp",
 				url: urlnya+'/api/kelas/getAllByUserId?id_user='+active_user_id,
@@ -137,10 +135,9 @@ function cekLoginAktif() {
 				}else{
 					globalListKelas = [];
 				}
+				mainView.router.loadPage('home.html');
+				$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 			});
-			
-			 $(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
-
 		}
 		else
 		{	
