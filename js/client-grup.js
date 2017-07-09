@@ -614,7 +614,7 @@ function getAllGrupPost(clickedId) {
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editGrupPost(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -657,7 +657,7 @@ function getAllGrupPost(clickedId) {
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editGrupPost(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -745,7 +745,7 @@ function getAllGrupPost(clickedId, id_post) {
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editGrupPost(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -788,7 +788,7 @@ function getAllGrupPost(clickedId, id_post) {
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
 						html += 				"<td style='font-weight:bold;'><i onclick='editGrupPost(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
-						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
+						html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusGrupData(this.id,"+id_grup+")' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 					}
 					html += 			"</tr>";
 					html += 			"<tr>";
@@ -1244,4 +1244,46 @@ function simpanEditPost(clicked_id, id_grup) {
 		});
 		
 	}
+}
+
+function pilihanHapusGrupData(clicked_id, id_grup){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus kiriman ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+          //myApp.alert('You clicked first button!')
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusGrupData(clicked_id, id_grup);
+        }
+      },
+    ]
+  })
+}
+
+function hapusGrupData(clicked_id, id_grup)
+{
+	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
+	$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllGrupPost(id_grup);
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
+			var coba="";
+			for (var ii = 0 ; ii < formData.entries().length; ii++) {
+				coba+=formData.entries()[ii][0]+ ', '; 
+			}
+			console.log(coba);
+		});
 }
