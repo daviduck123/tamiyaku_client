@@ -1,0 +1,112 @@
+  
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="editGrup" class="page">
+            <!-- Scrollable page content-->
+			<div class="navbar">
+          <div class="navbar-inner">
+          <div class="left">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="viewRouterBack();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
+            </div>
+            <!-- We have home navbar without left link-->
+            <div class="center sliding" style="font-weight:bold;">Edit Grup</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
+            </div>
+          </div>
+        </div>
+            <div class="page-content">
+             <form action="/action_page.php">
+            <center>
+            <img src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
+            </center>
+            <br>
+            <br>
+            <br>
+            <center>
+            <table style="margin-top:-30px;">
+                <tr>
+                    <td><p>Nama Grup</p></td>
+                    <td><input id="nama_editGrup" type="text" required></td>
+                </tr>
+                <!--<tr>
+                    <td><p>Alamat</p></td>
+                    <td><textarea style="resize:none; margin-top:10px; height:60px;"></textarea></td>
+                </tr>-->
+				<tr>
+                    <td><p>Kelas</p></td>
+					<td>
+					<select name="kelas_editGrup" id="kelas_editGrup"  class="select-list-kelas">
+					  <option value="0">Pilih Kelas</option>
+					  <option value="1">STB</option>
+					  <option value="2">STO</option>
+					  <option value="3">Speed</option>
+					</select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Kota</p></td>
+					<td>
+					<select name="kota_editGrup" id="kota_editGrup">
+					  <option value="0">Pilih Kota</option>
+					</select>
+                    </td>
+                </tr>
+				<tr>
+                    <td><p>Detil Lokasi</p></td>
+                    <td><input id="lokasi_editGrup" type="text" required></td>
+                </tr>
+                <tr>
+                    <td><p>Lokasi Peta</p></td>
+					<td><p><a href="#" class="button"  onclick="gotoGoogleMap();" style="width:150px;">Pilih Lokasi..</a></p></td>
+                </tr>
+				<tr>
+					<td></td>
+					<td>
+						<div id="latlng_editGrup">
+							<div id="isi_latlng_editGrup">Lokasi belum ditentukan..</div>
+						</div>
+					</td>
+				</tr>
+                <tr>
+                    <td><p>Foto Profile</p></td>
+                    <div style="height:0px;overflow:hidden">
+                        <input type="file" id="file_editGrup" accept="image/*"/>
+                        </div>
+					<td><p><a href="#" class="button"  onclick="chooseFile_editGrup();" style="width:150px;">Pilih Gambar..</a></p></td>
+                </tr>
+            </table><td><p><a href="#" class="button"  onclick="editGrupPost();" style="width:250px;">Selesai..</a></p></td>
+            </center>
+              </div>
+              </form>
+              <div class="content-block-title">Side panels</div>
+              <div class="content-block">
+                <div class="row">
+                  <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
+                  <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<!-- About Popup -->
+  <div class="popup popup-editGrupMap">
+    <div class="content-block">
+      <p>About</p>
+      <p><a href="#" class="close-popup">Close popup</a></p>
+      <p>Lorem ipsum dolor ...</p>
+    </div>
+  </div>
+	
+	<div class="popup popup-editGrupKomentar">
+    <div class="content-block">
+      <p>About</p>
+      <p><a href="#" class="close-popup">Close popup</a></p>
+      <p>Lorem ipsum dolor ...</p>
+    </div>
+  </div>
+	
