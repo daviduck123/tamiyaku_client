@@ -280,6 +280,27 @@ function getAllTemanPost(clickedId, id_post) {
 		}); 
 }
 
+function countMyPost(clickedId, id_post) {
+	var id_teman = clickedId;
+	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
+		$.ajax({ dataType: "jsonp",
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var coba="";
+			var dataLength=0;
+			for (var ii = 0 ; ii < z.length; ii++) {
+				coba+=z['id']+"|"; 
+				dataLength++;
+			}
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
+		}); 
+}
+
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
@@ -295,112 +316,140 @@ function getProfilTeman(clickedId, statusTeman){
 		$("#nama_profilTeman").html("");
 		$("#isi_container_info_teman").html("");
 		$("#isi_form_komentari_teman").html("");
-		//$("#isi_container_info_teman").remove();
-		//$("#container_info_teman").append('<div id="isi_container_info_teman"></div>');
-		//$("#isi_form_komentari_teman").remove();
-		//$("#isi_postingan_teman").append('<div id="isi_form_komentari_teman"></div>');
-		
-		//$("#container_info_teman").remove();
+
 		for(var i=0;i<dataLength;i++)
 		{
-			/*
-			var nama=z[i]['nama'];
-			var foto=z[i]['foto'];
-			var email=z[i]['email'];
-			var telepon=z[i]['telepon'];
-			*/
 			var id=z.id;
 			var nama=z.nama;
 			var foto=z.foto;
 			var email=z.email;
 			var telepon=z.telepon;
 			
-			if(id_teman != getData("active_user_id"))
-			{
-				
-				if(statusTeman==1)
+			var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
+			$.ajax({ dataType: "jsonp",
+				url: link,
+				type: 'GET',
+				contentType: false,
+				processData: false
+			}).done(function(z){
+				var coba="";
+				var banyakPost=0;
+				for (var ii = 0 ; ii < z.length; ii++) 
 				{
-					var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
-					html +=	'<center>';
-					html +=	'<table id="infoProfile" style="margin-top:20px;">';
-					html += 		'<tr>';
-					html += 			'<td rowspan="3">';
-					html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-					html += 			'<td style="font-weight:bold;"><center>10</center></td>';
-					html +=				'<td style="font-weight:bold;"><center>20</center></td>';
-					html += 	'</tr>';
-					html +=			'<tr>';
-					html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
-					html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
-					html +=			'</tr>';
-					html += 		'<tr>';
-					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-					html += 		'</tr>';
-					html += 	'</table>';
-					html +='						<br>';
-					html +='						<br>';
-					
-					html +='						</div> ';
-					html +='						</center> ';
-					html +='					  </div>';
-				}
-				else
-				{
-					var html=	'<table id="infoProfile" style="margin-top:20px;">';
-					html += 		'<tr>';
-					html += 			'<td rowspan="3">';
-					html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-					html += 			'</td>';
-					html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
-					html += 	'</tr>';
-					html += 		'<tr>';
-					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-					html += 		'</tr>';
-					html += 	'</table>';
-				}
+					coba+=z['id']+"|"; 
+					banyakPost++;
+				}		
 				
-				//jika sudah ada tidak perlu bikin lagi
-				if($("#infoProfile").length == 0) {
-					$("#isi_container_info_teman").append(html);
-				}
-				$("#nama_profilTeman").append(nama);
+				var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_teman;
+
+				$.ajax({ 
+					url: link,
+					type: 'GET',
+					dataType: "jsonp",
+					contentType: false,
+					processData: false
+				}).done(function(z){
+					var coba="";
+					var banyakTeman=0;
+					for (var iii = 0 ; iii < z.length ; iii++) {
+						coba+=z[iii]['id']+"|"; 
+						banyakTeman++;
+					}
+					
+					if(id_teman != getData("active_user_id"))
+					{
+						
+						if(statusTeman==1)
+						{
+							var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+							html +=	'<center>';
+							html +=	'<table id="infoProfile" style="margin-top:20px;">';
+							html += 		'<tr>';
+							html += 			'<td rowspan="3">';
+							html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+							html += 			'<td style="font-weight:bold;"><center>'+banyakPost+'</center></td>';
+							html +=				'<td style="font-weight:bold;"><center>'+banyakTeman+'</center></td>';
+							html += 	'</tr>';
+							html +=			'<tr>';
+							html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
+							html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
+							html +=			'</tr>';
+							html += 		'<tr>';
+							html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+							html += 		'</tr>';
+							html += 	'</table>';
+							html +='						<br>';
+							html +='						<br>';
+							
+							html +='						</div> ';
+							html +='						</center> ';
+							html +='					  </div>';
+						}
+						else
+						{
+							var html=	'<table id="infoProfile" style="margin-top:20px;">';
+							html += 		'<tr>';
+							html += 			'<td rowspan="3">';
+							html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+							html += 			'</td>';
+							html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
+							html += 	'</tr>';
+							html += 		'<tr>';
+							html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+							html += 		'</tr>';
+							html += 	'</table>';
+						}
+						
+						//jika sudah ada tidak perlu bikin lagi
+						if($("#infoProfile").length == 0) {
+							$("#isi_container_info_teman").append(html);
+						}
+						$("#nama_profilTeman").append(nama);
+						
+					}
+					else
+					{
+						//buka profile disi sendiri
+						var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+							html +=	'<center>';
+							html +=	'<table id="infoProfile" style="margin-top:20px;">';
+							html += 		'<tr>';
+							html += 			'<td rowspan="3">';
+							html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+							html += 			'</td>';
+							html +=				'<td style="font-weight:bold;"><center>'+banyakPost+'</center></td>';
+							html +=				'<td style="font-weight:bold;"><center>'+banyakTeman+'</center></td>';
+							html += 	'</tr>';
+							html +=			'<tr>';
+							html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
+							html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
+							html +=			'</tr>';
+							html += 		'<tr>';
+							html += 			'<td colspan="4"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+							html += 		'</tr>';
+							html += 	'</table>';
+							html +='						<br>';
+							html +='						<br>';
+							
+							html +='						</div> ';
+							html +='						</center> ';
+							html +='					  </div>';
+							
+							
+						//jika sudah ada tidak perlu bikin lagi
+						if($("#infoProfile").length == 0) {
+							$("#isi_container_info_teman").append(html);
+						}
+						$("#nama_profilTeman").append(nama);
+					}
+					
+				}).fail(function(x){
+					myApp.alert("Pengambilan jumlah teman gagal", 'Perhatian!');
+				});
 				
-			}
-			else
-			{
-				//buka profile disi sendiri
-				var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
-					html +=	'<center>';
-					html +=	'<table id="infoProfile" style="margin-top:20px;">';
-					html += 		'<tr>';
-					html += 			'<td rowspan="3">';
-					html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-					html += 			'</td>';
-					html +=				'<td style="font-weight:bold;"><center>10</center></td>';
-					html +=				'<td style="font-weight:bold;"><center>20</center></td>';
-					html += 	'</tr>';
-					html +=			'<tr>';
-					html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
-					html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
-					html +=			'</tr>';
-					html += 		'<tr>';
-					html += 			'<td colspan="4"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-					html += 		'</tr>';
-					html += 	'</table>';
-					html +='						<br>';
-					html +='						<br>';
-					
-					html +='						</div> ';
-					html +='						</center> ';
-					html +='					  </div>';
-					
-					
-				//jika sudah ada tidak perlu bikin lagi
-				if($("#infoProfile").length == 0) {
-					$("#isi_container_info_teman").append(html);
-				}
-				$("#nama_profilTeman").append(nama);
-			}				
+			}).fail(function(x){
+					myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
+			});			
 		}		
 	}).fail(function(x){
 		myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
