@@ -116,6 +116,7 @@ function bacaKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -130,6 +131,7 @@ function bacaKomentar(clicked_id) {
 }
 
 function getAllPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -232,13 +234,14 @@ function getAllPost() {
 				$("#isi_postingan").append(html);
 			}
 		}
-		
+	myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
 }
 
 function getAllPost(id_post) {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -341,13 +344,17 @@ function getAllPost(id_post) {
 				$("#isi_postingan").append(html);
 			}
 		}
+
 		bacaKomentar(id_post);
+	myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
 }
 
 function statusPost() {
+	myApp.showPreloader('Mengambil data...');
+	myApp.closeModal();
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("status").value;
@@ -376,6 +383,7 @@ function statusPost() {
 			getAllPost();
 			$("#status").val("");
 			$("#file_home").val("");
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -390,6 +398,7 @@ function statusPost() {
 
 function editPost(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -457,6 +466,7 @@ function editPost(clicked_id)
 				}
 			}
 		}
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
@@ -486,6 +496,7 @@ function pilihanHapusData(clicked_id){
 
 function hapusData(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
 	$.ajax({
 		    url: link,
@@ -496,6 +507,7 @@ function hapusData(clicked_id)
 			getAllPost();
 			$("#status").val("");
 			$("#file_home").val("");
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -507,6 +519,7 @@ function hapusData(clicked_id)
 }
 
 function statusEditPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("statusEdit").value;
@@ -533,8 +546,8 @@ function statusEditPost(clicked_id) {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			myApp.closeModal();
 			getAllPost();
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -553,6 +566,7 @@ function tutupModal() {
 
 function editKomentarKu(id_post,clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -590,6 +604,7 @@ function editKomentarKu(id_post,clicked_id)
 						}
 					}
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -603,6 +618,7 @@ function tutupModalKomentar(id_post) {
 
 function simpanKomentar(id_post, clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarEdit").value;
@@ -626,6 +642,7 @@ function simpanKomentar(id_post, clicked_id)
 		myApp.closeModal();
 		bacaKomentar(id_post);
 		bacaKomentar(id_post);
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
@@ -654,6 +671,7 @@ function pilihanHapusKomentarHome(clicked_id, id_komentar){
 
 function hapusKomentarHomeTrue(clicked_id, id_komentar)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/komentar/deleteKomentar?id_komentar='+id_komentar;
 	$.ajax({
 		    url: link,
@@ -662,6 +680,7 @@ function hapusKomentarHomeTrue(clicked_id, id_komentar)
 		    processData: false
 		}).done(function(z){
 			getAllPost(clicked_id);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus komentar, silahkan coba lagi', 'Perhatian!');
 			console.log(x);

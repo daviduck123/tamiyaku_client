@@ -11,6 +11,7 @@ function gotoJualBeli(){
 }
 
 function getKotaBuatJualBarang() {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/kota/';
 		$.ajax({ dataType: "jsonp",
 		    url: link,
@@ -24,13 +25,14 @@ function getKotaBuatJualBarang() {
 			{ 
 			   $('#kota_buatJualBarang').append( new Option(el.nama,el.id) );
 			});
-			
+		myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 28)", 'Perhatian!');
 		}); 
 }
 
 function buatJualBarangPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
 	var emailJualBarang = document.getElementById("email_buatJualBarang").value;
@@ -110,6 +112,7 @@ function buatJualBarangPost() {
 }
 
 function getAllJualBeliPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
@@ -216,13 +219,14 @@ function getAllJualBeliPost() {
 					
 					$("#isi_container_jualBeli").append(html);
 			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
 }
 
 function getAllJualBeliPostVar(id_post) {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
@@ -334,6 +338,7 @@ function getAllJualBeliPostVar(id_post) {
 }
 
 function bacaJualBeliKomentar(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -389,6 +394,7 @@ function bacaJualBeliKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -402,6 +408,7 @@ function bacaJualBeliKomentar(clicked_id) {
 }
 
 function komentariJualBeliPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -460,6 +467,7 @@ function komentariJualBeliPost(clicked_id) {
 
 function editKomentarJualBeli(id_jualbeli,clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -497,6 +505,7 @@ function editKomentarJualBeli(id_jualbeli,clicked_id)
 						}
 					}
 				}
+			myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -506,6 +515,7 @@ function editKomentarJualBeli(id_jualbeli,clicked_id)
 
 function simpanKomentarEditJualBeli(id_jualbeli, clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarEditJualBeli").value;
@@ -529,6 +539,7 @@ function simpanKomentarEditJualBeli(id_jualbeli, clicked_id)
 		myApp.closeModal();
 		bacaJualBeliKomentar(id_jualbeli);
 		bacaJualBeliKomentar(id_jualbeli);
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
@@ -536,6 +547,7 @@ function simpanKomentarEditJualBeli(id_jualbeli, clicked_id)
 
 function editPostJualBeli(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -657,7 +669,7 @@ function editPostJualBeli(clicked_id)
 								//==============================================
 						}
 					}
-					
+					myApp.closeModal();
 			}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
 		}); 
@@ -667,6 +679,7 @@ function editPostJualBeli(clicked_id)
 }
 
 function simpanBuatJualBarang(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarangEdit").value;
 	var emailJualBarang = document.getElementById("email_buatJualBarangEdit").value;
@@ -821,6 +834,7 @@ function hapusKomentarJualBeliTrue(clicked_id, id_komentar)
 		    processData: false
 		}).done(function(z){
 			getAllJualBeliPostVar(clicked_id);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus komentar, silahkan coba lagi', 'Perhatian!');
 			console.log(x);

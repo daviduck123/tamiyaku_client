@@ -1,6 +1,7 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
 var list_id_kelas=getData("list_id_kelas");
 function getNearbyGrup(){
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 
 	if ( navigator.geolocation )
@@ -50,45 +51,11 @@ function getNearbyGrup(){
 					
 					$("#isi_list_grup_disekitar").append(html);
 			}
+			myApp.closeModal();
 			
 		}).fail(function(x){
 			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
 		});
-		/*
-		//kalau pake map dibawah ini nyalakan
-		var map = new GMaps({
-			div: '#mapNearByGrup',
-			lat: latKuSekarang,
-			lng: lngKuSekarang,
-		});
-		
-		$.ajax({ dataType: "jsonp",
-		    url: link,
-		    type: 'GET',
-		    contentType: false,
-		    processData: false
-		}).done(function(z){
-			var dataLength=0;
-			for (var ii = 0 ; ii < z.length ; ii++) {
-				dataLength++;
-			}
-			
-			for(var i=0;i<dataLength;i++)
-			{
-				map.addMarker({
-					lat: z[i]['lat'],
-					lng: z[i]['lng'],
-					draggable: false,
-					infoWindow: {
-					  content: '<p>'+z[i]['nama']+', jarak '+ z[i]['distance']+' km'
-					}
-				});
-			}
-			
-		}).fail(function(x){
-			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
-		});
-		*/
 	}
 }
 
@@ -332,6 +299,7 @@ function gotoGoogleMap(){
 }
 
 function getKotaBuatGrup() {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/kota/';
 		$.ajax({ dataType: "jsonp",
 		    url: link,
@@ -352,7 +320,7 @@ function getKotaBuatGrup() {
 }
 
 function buatGrupPost() {
-	
+	myApp.showPreloader('Mengambil data...');
 	var namaGrup = document.getElementById("nama_buatGrup").value;
 	var kota = $('#kota_buatGrup').find(":selected").val();
 	var kelas = $('#kelas_buatGrup').find(":selected").val();
@@ -424,6 +392,7 @@ function buatGrupPost() {
 							}).done(function(z){
 								mainView.router.loadPage('home.html');
 								myApp.alert('Grup berhasil dibuat', 'Berhasil!');
+								myApp.closeModal();
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});
@@ -436,6 +405,7 @@ function buatGrupPost() {
 }
 
 function getAllGrup() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/grup?id_user='+id_user;
 		$.ajax({ dataType: "jsonp",
@@ -471,7 +441,7 @@ function getAllGrup() {
 					$("#isi_kumpulan_grup").append(html);
 				}
 			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
 		}); 
@@ -503,6 +473,7 @@ function showButtonLeaveGrup(id){
 }
 
 function leaveThisGrup(clickedId){
+	myApp.showPreloader('Mengambil data...');
 	var id_grup=clickedId;
 	var id_user = getData("active_user_id");
 	
@@ -522,6 +493,7 @@ function leaveThisGrup(clickedId){
 				myApp.alert("Anda telah keluar dari grup", 'Perhatian!');
 				showButtonJoinGrup(clickedId);
 			}
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
 		}); 
@@ -552,6 +524,7 @@ function joinThisGrup(clickedId){
 }
 
 function getAllGrupPost(clickedId) {
+	myApp.showPreloader('Mengambil data...');
 	var id_grup = clickedId;
 	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 
@@ -676,13 +649,14 @@ function getAllGrupPost(clickedId) {
 					$("#isi_postingan_grup").append(html);
 				}
 			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
 		}); 
 }
 
 function getAllGrupPost(clickedId, id_post) {
+	myApp.showPreloader('Mengambil data...');
 	var id_grup = clickedId;
 	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
 
@@ -808,12 +782,14 @@ function getAllGrupPost(clickedId, id_post) {
 				}
 			}
 			bacaGrupKomentar(id_post);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
 		}); 
 }
 
 function getInfoGrup(clickedId){
+	myApp.showPreloader('Mengambil data...');
 	var id_grup = clickedId;
 	var link=urlnya+'/api/grup/getGrupInfo?id_grup='+id_grup;
 		
@@ -872,6 +848,7 @@ function getInfoGrup(clickedId){
 							$("#isi_detil_grup").append(html);
 						}
 					}
+					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
 				}); 	
@@ -883,6 +860,7 @@ function getInfoGrup(clickedId){
 }
 
 function statusGrupPost() {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("status_grup").value;
@@ -929,6 +907,7 @@ function statusGrupPost() {
 }
 
 function bacaGrupKomentar(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -985,6 +964,7 @@ function bacaGrupKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -998,6 +978,7 @@ function bacaGrupKomentar(clicked_id) {
 }
 
 function komentariGrupPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -1058,6 +1039,7 @@ function komentariGrupPost(clicked_id) {
 
 function editKomentarGrup(id_grup,clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -1095,6 +1077,7 @@ function editKomentarGrup(id_grup,clicked_id)
 						}
 					}
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf update komentar gagal, coba lagi!', 'Perhatian!');
 			});
@@ -1104,6 +1087,7 @@ function editKomentarGrup(id_grup,clicked_id)
 
 function simpanKomentarGrup(id_grup, clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarGrupEdit").value;
@@ -1134,6 +1118,7 @@ function simpanKomentarGrup(id_grup, clicked_id)
 
 function editGrupPost(clicked_id, id_grup)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_grup=id_grup;
 	
@@ -1200,12 +1185,14 @@ function editGrupPost(clicked_id, id_grup)
 				}
 			}
 		}
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan data kiriman grup gagal", 'Perhatian!');
 	});  
 }
 
 function simpanEditPost(clicked_id, id_grup) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("statusGrupEdit").value;
@@ -1271,6 +1258,7 @@ function pilihanHapusGrupData(clicked_id, id_grup){
 
 function hapusGrupData(clicked_id, id_grup)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
 	$.ajax({
 		    url: link,
@@ -1312,6 +1300,7 @@ function pilihanHapusKomentarGrup(clicked_id, id_komentar){
 
 function hapusKomentarGrupTrue(clicked_id, id_komentar)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/komentar/deleteKomentar?id_komentar='+id_komentar;
 	$.ajax({
 		    url: link,

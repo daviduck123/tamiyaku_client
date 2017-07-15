@@ -12,6 +12,7 @@ function gotoLomba(){
 }
 
 function getKotaBuatEvent() {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/kota/';
 		$.ajax({ dataType: "jsonp",
 			dataType: 'jsonp',
@@ -26,13 +27,14 @@ function getKotaBuatEvent() {
 			{ 
 			   $('#kota_buatEvent').append( new Option(el.nama,el.id) );
 			});
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
 		}); 
 }
 
 function buatEventPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var namaEvent = document.getElementById("nama_buatEvent").value;
 	var tanggal = document.getElementById("tanggal_buatEvent").value;
@@ -131,6 +133,7 @@ function buatEventPost() {
 													ctx = null;
 													viewRouterBack();
 													getAllEventPost();
+													myApp.closeModal();
 												}).fail(function(x){
 													myApp.alert(x.message+" "+x.error, 'Perhatian!');
 												});
@@ -146,6 +149,7 @@ function buatEventPost() {
 }
 
 function getAllEventPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	
 	var link=urlnya+'/api/kota/';
@@ -273,7 +277,7 @@ function getAllEventPost() {
 						
 						
 						$("#isi_container_event").append(html);
-						
+					myApp.closeModal();
 				}
 				
 			}).fail(function(x){
@@ -286,6 +290,7 @@ function getAllEventPost() {
 }
 
 function getAllEventPostVar(id_post) {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	
 	var link=urlnya+'/api/kota/';
@@ -422,6 +427,7 @@ function getAllEventPostVar(id_post) {
 							
 					}
 					bacaEventKomentar(id_post);
+					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
 				}); 
@@ -432,6 +438,7 @@ function getAllEventPostVar(id_post) {
 }
 
 function bacaEventKomentar(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -488,6 +495,7 @@ function bacaEventKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -501,6 +509,7 @@ function bacaEventKomentar(clicked_id) {
 }
 
 function komentariEventPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -550,6 +559,7 @@ function komentariEventPost(clicked_id) {
 					//mainView.router.loadPage('lomba.html');
 					getAllEventPostVar(id_post);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
+					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
 				});
@@ -624,6 +634,7 @@ function gotoUpdateEvent(clicked_id)
 
 function editEventPost(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	
 	var link=urlnya+'/api/event/getAllEvent?id_user='+id_user;
@@ -763,6 +774,7 @@ function editEventPost(clicked_id)
 						}));
 					});
 					//==============================================
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');
 		}); 
@@ -797,6 +809,7 @@ function pilihanHapusEventData(clicked_id){
 
 function hapusEventData(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/event/deleteEvent?id_event='+clicked_id;
 	$.ajax({
 		    url: link,
@@ -807,6 +820,7 @@ function hapusEventData(clicked_id)
 			getAllPost();
 			$("#status").val("");
 			$("#file_home").val("");
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
 			
@@ -815,6 +829,7 @@ function hapusEventData(clicked_id)
 }
 
 function saveEventEditPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	
@@ -922,6 +937,7 @@ function saveEventEditPost(clicked_id) {
 													getAllEventPost();
 													myApp.alert('Event berhasil diubah!', 'Berhasil!');
 													ctx = null;
+													myApp.closeModal();
 												}).fail(function(x){
 													myApp.alert(x.message+" "+x.error, 'Perhatian!');
 												});
@@ -938,6 +954,7 @@ function saveEventEditPost(clicked_id) {
 
 function editKomentarKuEvent(id_event,clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -974,6 +991,7 @@ function editKomentarKuEvent(id_event,clicked_id)
 						}
 					}
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf update komentar gaga, coba lagi!', 'Perhatian!');
 			});
@@ -983,6 +1001,7 @@ function editKomentarKuEvent(id_event,clicked_id)
 
 function simpanKomentarEvent(id_event, clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarEventEdit").value;
@@ -1006,6 +1025,7 @@ function simpanKomentarEvent(id_event, clicked_id)
 		myApp.closeModal();
 		bacaEventKomentar(id_event);
 		bacaEventKomentar(id_event);
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
@@ -1039,6 +1059,7 @@ function pilihanHapusKomentarEvent(clicked_id, id_komentar){
 
 function hapusKomentarEventTrue(clicked_id, id_komentar)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/komentar/deleteKomentar?id_komentar='+id_komentar;
 	$.ajax({
 		    url: link,
@@ -1047,6 +1068,7 @@ function hapusKomentarEventTrue(clicked_id, id_komentar)
 		    processData: false
 		}).done(function(z){
 			getAllEventPostVar(clicked_id);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus komentar, silahkan coba lagi', 'Perhatian!');
 			console.log(x);
