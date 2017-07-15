@@ -39,7 +39,7 @@ function getNearbyGrup(){
 					var html =			'<li>';
 					html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
 					html += 					'<div class="item-content">';
-					html += 						'<div class="item-media"><img src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
+					html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
 					html += 						'<div class="item-inner">';
 					html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
 					html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
@@ -460,7 +460,7 @@ function getAllGrup() {
 					var html =	'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" style="color:white;">';
 					html += 				'<li class="item-content">';
 					html += 					'<div class="item-media">';
-					html += 						"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 						"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='padding:0px; margin-right:10px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 					'</div>';
 					html += 					'<div class="item-inner">';
 					html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
@@ -603,11 +603,11 @@ function getAllGrupPost(clickedId) {
 					html += 				"<td rowspan='2'>";
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					else
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -625,7 +625,7 @@ function getAllGrupPost(clickedId) {
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td colspan='2' >";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
@@ -646,11 +646,11 @@ function getAllGrupPost(clickedId) {
 					html += 				"<td rowspan='2'>";
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					else
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -734,11 +734,11 @@ function getAllGrupPost(clickedId, id_post) {
 					html += 				"<td rowspan='2'>";
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					else
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -756,7 +756,7 @@ function getAllGrupPost(clickedId, id_post) {
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td colspan='2' >";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
@@ -777,11 +777,11 @@ function getAllGrupPost(clickedId, id_post) {
 					html += 				"<td rowspan='2'>";
 					if(z[i]['nama']==getData("active_user_nama"))
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					else
 					{
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					}
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -853,7 +853,7 @@ function getInfoGrup(clickedId){
 						var html=	'<input type="hidden" id="id_grup_temp" value="'+id_grup+'">';
 						html +=	'<table id="detil_grup" style="margin-top:20px;">';
 						html += 		'<tr>';
-						html += 			'<td rowspan="4"><img src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
+						html += 			'<td rowspan="4"><img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
 						html += 			'<td style="font-weight:bold;"><a id="nama_grup">'+nama+'</a></td>';
 						html += 		'</tr>';
 						html += 		'<tr>';
@@ -955,7 +955,7 @@ function bacaGrupKomentar(clicked_id) {
 							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
 							html += 			"<tr>";
 							html += 				"<td rowspan='2' width='10%'>";
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
@@ -1163,7 +1163,7 @@ function editGrupPost(clicked_id, id_grup)
 											'<div class="page-content">'+
 											'<center><textarea id="statusGrupEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
 											'placeholder="Tulis Kiriman Anda..">'+z[i]['deskripsi']+'</textarea>'+
-											"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+											"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
 											'</center>'+
 										'<div style="height:0px;overflow:hidden">'+
 										'<input type="file" id="file_editGrup" accept="image/*"/>'+

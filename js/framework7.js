@@ -5708,7 +5708,7 @@
                                 '{{#if hasMedia}}' +
                                 '<div class="item-media">' +
                                     '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
-                                    '{{#if image}}<img src="{{image}}">{{/if}}' +
+                                    '{{#if image}}<img class="lazy" src="{{image}}">{{/if}}' +
                                 '</div>' +
                                 '<div class="item-inner">' +
                                     '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
@@ -5729,7 +5729,7 @@
                                 '<div class="item-media">' +
                                     '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
                                     '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
-                                    '{{#if image}}<img src="{{image}}">{{/if}}' +
+                                    '{{#if image}}<img class="lazy" src="{{image}}">{{/if}}' +
                                 '</div>' +
                                 '{{/if}}' +
                                 '<div class="item-inner">' +
@@ -8637,7 +8637,7 @@
             var photoTemplate = pb.params.photoTemplate ||
                 '<div class="photo-browser-slide swiper-slide">' +
                     '<span class="swiper-zoom-container">' +
-                        '<img src="{{js "this.url || this"}}">' +
+                        '<img class="lazy" src="{{js "this.url || this"}}">' +
                     '</span>' +
                 '</div>';
             var photoLazyTemplate = pb.params.lazyPhotoTemplate ||

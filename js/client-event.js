@@ -181,11 +181,11 @@ function getAllEventPost() {
 						html += 				"<td rowspan='2' width='10%'>";
 						if(z[i]['user_nama']==getData("active_user_nama"))
 						{
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 						}
 						else
 						{
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 						}
 						html += 				"</td>";
 						html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
@@ -261,7 +261,7 @@ function getAllEventPost() {
 						html += 			"</tr>";
 						html += 			"<tr>";
 						html += 				'<td colspan="5" class="q" >';
-						html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+						html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
 						html += 				"</td>";
 						html += 			"</tr>";
 						html += 		"</table>";
@@ -322,11 +322,11 @@ function getAllEventPostVar(id_post) {
 							html += 				"<td rowspan='2' width='10%'>";
 							if(z[i]['user_nama']==getData("active_user_nama"))
 							{
-								html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+								html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							}
 							else
 							{
-								html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+								html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							}
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
@@ -407,7 +407,7 @@ function getAllEventPostVar(id_post) {
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html += 				'<td colspan="5" class="q" >';
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
 							html += 				"</td>";
 							html += 			"</tr>";
 							html += 		"</table>";
@@ -458,7 +458,7 @@ function bacaEventKomentar(clicked_id) {
 							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
 							html += 			"<tr>";
 							html += 				"<td rowspan='2' width='10%'>";
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
@@ -735,7 +735,7 @@ function editEventPost(clicked_id)
 											'<input type="file" id="file_buatEventEdit" accept="image/*"/>'+
 											'</div>'+
 										'<td>'+
-											"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+											"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
 											
 											'<p><a href="#" class="button" onclick="pilihanTrackEdit();" style="width:150px;">Pilih Track..</a></p>'+
 										'</td>'+

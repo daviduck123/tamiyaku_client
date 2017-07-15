@@ -96,7 +96,7 @@ function searchTeman(paramData){
 					html +=			'<li>';
 					html += 				'<a href="#" onclick="gotoProfilTeman('+availableTagsUser[i]['id']+');" id="grup_'+availableTagsUser[i]['id']+'" class="item-link">';
 					html += 					'<div class="item-content">';
-					html += 						'<div class="item-media"><img src="data:image/jpeg;base64,'+availableTagsUser[i]['foto']+'" style="width:35px; height:35px;"></div>';
+					html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+availableTagsUser[i]['foto']+'" style="width:35px; height:35px;"></div>';
 					html += 						'<div class="item-inner">';
 					html += 							'<div class="item-title">'+availableTagsUser[i]['nama']+'</div>';
 					html += 						'</div>';
@@ -115,7 +115,7 @@ function searchTeman(paramData){
 					html +=			'<li>';
 					html += 				'<a href="#" onclick="gotoGroup('+availableTagsGrup[i]['id']+');" id="grup_'+availableTagsGrup[i]['id']+'" class="item-link">';
 					html += 					'<div class="item-content">';
-					html += 						'<div class="item-media"><img src="data:image/jpeg;base64,'+availableTagsGrup[i]['foto']+'" style="width:35px; height:35px;"></div>';
+					html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+availableTagsGrup[i]['foto']+'" style="width:35px; height:35px;"></div>';
 					html += 						'<div class="item-inner">';
 					html += 							'<div class="item-title">'+availableTagsGrup[i]['nama']+'</div>';
 					html += 						'</div>';

@@ -86,7 +86,7 @@ function bacaKomentar(clicked_id) {
 							html += 		"<table style='background-color:#e6e6e6;'  width='100%;'>";
 							html += 			"<tr>";
 							html += 				"<td rowspan='2' width='10%'>";
-							html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+							html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 							html += 				"</td>";
 							html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 							html += 				"<td style='font-size:10px;'>"+z[i]['deskripsi']+"</td>";
@@ -158,11 +158,11 @@ function getAllPost() {
 				html += 				"<td rowspan='2'>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				else
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -180,7 +180,7 @@ function getAllPost() {
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td colspan='2' >";
-				html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+				html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
 				html += 				"</td>";
 				html += 			"</tr>";
 				html += 		"</table>";
@@ -201,11 +201,11 @@ function getAllPost() {
 				html += 				"<td rowspan='2'>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				else
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -267,11 +267,11 @@ function getAllPost(id_post) {
 				html += 				"<td rowspan='2'>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				else
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -289,7 +289,7 @@ function getAllPost(id_post) {
 				html += 			"</tr>";
 				html += 			"<tr>";
 				html += 				"<td colspan='2' >";
-				html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+				html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
 				html += 				"</td>";
 				html += 			"</tr>";
 				html += 		"</table>";
@@ -310,11 +310,11 @@ function getAllPost(id_post) {
 				html += 				"<td rowspan='2'>";
 				if(z[i]['nama']==getData("active_user_nama"))
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				else
 				{
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 				}
 				html += 				"</td>";
 				html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
@@ -420,7 +420,7 @@ function editPost(clicked_id)
 											'<div class="page-content">'+
 											'<center><textarea id="statusEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
 											'placeholder="Tulis Status Anda..">'+z[i]['deskripsi']+'</textarea>'+
-											"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
+											"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
 											'</center>'+
 										'<div style="height:0px;overflow:hidden">'+
 										'<input type="file" id="file_editHome" accept="image/*"/>'+

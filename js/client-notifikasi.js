@@ -88,7 +88,7 @@ function gotoFriendPost(id_teman,url) {
 					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2'>";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 					html += 			"</tr>";
@@ -100,7 +100,7 @@ function gotoFriendPost(id_teman,url) {
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				"<td colspan='2' >";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>";
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
@@ -119,7 +119,7 @@ function gotoFriendPost(id_teman,url) {
 					html += 		"<table id='table_teman_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2'>";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['nama']+"</td>";
 					html += 			"</tr>";

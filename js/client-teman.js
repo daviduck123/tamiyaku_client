@@ -43,7 +43,7 @@ function getAllTeman() {
 					html +=		'<li>';
 					html +=			'<a href="#" onclick="gotoProfilTeman('+z[i]['id']+');" class="item-link">';
 					html += 			'<div class="item-content">';
-					html += 				'<div class="item-media"><img src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:30px; height:30px;"></div>';
+					html += 				'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:30px; height:30px;"></div>';
 					html += 				'<div class="item-inner">';
 					html += 					'<div class="item-title">'+z[i]['nama']+'</div>';
 					html += 				'</div>';

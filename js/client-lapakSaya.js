@@ -156,7 +156,7 @@ function getAllLapakSayaPost() {
 					html += 		"<table id='table_lapakSaya_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 					html += 			"<tr>";
 					html += 				"<td rowspan='2' width='10%'>";
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['user_foto']+"' class='profilePicture' style='padding:0px; margin-right:-20px; margin-bottom:-10px; position:relative; top:-5px;' width='30'>";
 					html += 				"</td>";
 					html += 				"<td style='font-weight:bold;'>"+z[i]['user_nama']+"</td>";
 					html += 			"</tr>";
@@ -173,7 +173,7 @@ function getAllLapakSayaPost() {
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
-					html += 					"<img src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
+					html += 					"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%;'>";
 					html += 				"</td>";
 					html += 			"</tr>";
 					html += 		"</table>";
@@ -282,7 +282,7 @@ function editLapakSaya(clickedID){
 							'	</tr>'+
 							'	<tr>'+
 							'		<td colspan="5" id="container_foto_editLapakSaya">'+
-							'			<img id="foto_editLapakSaya" src="data:image/jpeg;base64,'+foto+'" style="width:100%;">'+
+							'			<img id="foto_editLapakSaya" class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:100%;">'+
 							'		</td>'+
 							'</tr>'+
 							'	<tr>'+
