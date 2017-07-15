@@ -1,115 +1,132 @@
-  
-        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
-        <div class="pages navbar-through toolbar-through">
-          <!-- Page, data-page contains page name-->
-          <div data-page="buatEvent" class="page">
-            <!-- Scrollable page content-->
-			<div class="navbar">
-          <div class="navbar-inner">
-          <div class="left">
-              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="viewRouterBack();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
-            </div>
-            <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Buat Event</div>
-            <div class="right">
-              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
-            </div>
-          </div>
+<!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+<div class="pages navbar-through toolbar-through">
+  <!-- Page, data-page contains page name-->
+  <div data-page="buatEvent" class="page">
+    <!-- Scrollable page content-->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="viewRouterBack();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
         </div>
-            <div class="page-content">
-            <br>
-            <center>
-            <table style="margin-top:-0px;">
-                <tr>
-                    <td><p>Nama Event Lomba</p></td>
-                    <td><input id="nama_buatEvent" type="text" required></td>
-                </tr>
-				<tr>
-                    <td><p>Tanggal</p></td>
-                    <td><input type="date" id="tanggal_buatEvent" name="tanggal_buatEvent"></td>
-                </tr>
-				<tr>
-                    <td><p>Kelas</p></td>
-					<td>
-					<select name="kelas_buatEvent" id="kelas_buatEvent"  class="select-list-kelas">
-					  <option value="0">Pilih Kelas</option>
-					  <option value="1">STB</option>
-					  <option value="2">STO</option>
-					  <option value="3">Speed</option>
-					</select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>Hadiah</p></td>
-                    <td>
-						1. Rp<input id="total_juara1Event" type="number" required></td>
-					</td>
-                </tr>
-				<tr>
-                    <td height="48"></td>
-                    <td>
-						2. Rp<input id="total_juara2Event" type="number" required></td>
-					</td>
-                </tr>
-				<tr>
-                    <td height="48"></td>
-                    <td>
-						3. Rp<input id="total_juara3Event" type="number" required></td>
-					</td>
-                </tr>
-				<tr>
-                    <td><p>Harga Tiket</p></td>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Rp<input id="ticket_buatEvent" type="number" required></td>
-                </tr>
-				<tr>
-                    <td><p>Kota</p></td>
-					<td>
-					<select name="kota_buatEvent" id="kota_buatEvent">
-					  <option value="0">Pilih Kota</option>
-					</select>
-                    </td>
-                </tr>
-				<tr>
-                    <td><p>Detil Lokasi</p></td>
-                    <td><input id="lokasi_buatEvent" type="text" required></td>
-                </tr>
-				<tr>
-                    <td><p>Track</p></td>
-                    <div style="height:0px;overflow:hidden">
-                        <input type="file" id="file_buatEvent" accept="image/*"/>
-                        </div>
-					<td><p><a href="#" class="button" onclick="pilihanTrack();" style="width:150px;">Pilih Track..</a></p></td>
-                </tr>
-				<tr>
-                    <td><p>Deskripsi</p></td>
-                    <td><textarea id="deskripsi_buatEvent" style="resize:none; margin-top:10px; height:60px;"></textarea></td>
-                </tr>
-                
-            </table><td><p><a href="#" class="button"  onclick="buatEventPost();" style="width:250px;">Selesai..</a></p></td>
-            </center>
-              </div>
-              </form>
-              <div class="content-block-title">Side panels</div>
-              <div class="content-block">
-                <div class="row">
-                  <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
-                  <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- We have home navbar without left link-->
+        <div class="center sliding" style="font-weight:bold;">Buat Event</div>
+        <div class="right">
+          <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
         </div>
       </div>
     </div>
-	
-	<!-- About Popup -->
-  <div class="popup popup-about">
+    <div class="page-content">
+      <br>
+      <center>
+        <table style="margin-top:-0px;">
+          <tr>
+            <td>
+              <p>Nama Event Lomba</p>
+            </td>
+            <td><input id="nama_buatEvent" type="text" required></td>
+          </tr>
+          <tr>
+            <td>
+              <p>Tanggal</p>
+            </td>
+            <td><input type="date" id="tanggal_buatEvent" name="tanggal_buatEvent"></td>
+          </tr>
+          <tr>
+            <td>
+              <p>Kelas</p>
+            </td>
+            <td>
+              <select name="kelas_buatEvent" id="kelas_buatEvent"  class="select-list-kelas">
+                <option value="0">Pilih Kelas</option>
+                <option value="1">STB</option>
+                <option value="2">STO</option>
+                <option value="3">Speed</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Hadiah</p>
+            </td>
+            <td>
+              1. Rp<input id="total_juara1Event" type="number" required>
+            </td>
+          </tr>
+          <tr>
+            <td height="48"></td>
+            <td>
+              2. Rp<input id="total_juara2Event" type="number" required>
+            </td>
+          </tr>
+          <tr>
+            <td height="48"></td>
+            <td>
+              3. Rp<input id="total_juara3Event" type="number" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Harga Tiket</p>
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Rp<input id="ticket_buatEvent" type="number" required></td>
+          </tr>
+          <tr>
+            <td>
+              <p>Kota</p>
+            </td>
+            <td>
+              <select name="kota_buatEvent" id="kota_buatEvent">
+                <option value="0">Pilih Kota</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Detil Lokasi</p>
+            </td>
+            <td><input id="lokasi_buatEvent" type="text" required></td>
+          </tr>
+          <tr>
+            <td>
+              <p>Track</p>
+            </td>
+            <div style="height:0px;overflow:hidden">
+              <input type="file" id="file_buatEvent" accept="image/*"/>
+            </div>
+            <td>
+              <p><a href="#" class="button" onclick="pilihanTrack();" style="width:150px;">Pilih Track..</a></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p>Deskripsi</p>
+            </td>
+            <td><textarea id="deskripsi_buatEvent" style="resize:none; margin-top:10px; height:60px;"></textarea></td>
+          </tr>
+        </table>
+        <td>
+          <p><a href="#" class="button"  onclick="buatEventPost();" style="width:250px;">Selesai..</a></p>
+        </td>
+      </center>
+    </div>
+    </form>
+    <div class="content-block-title">Side panels</div>
     <div class="content-block">
-      <p>About</p>
-      <p><a href="#" class="close-popup">Close popup</a></p>
-      <p>Lorem ipsum dolor ...</p>
+      <div class="row">
+        <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
+        <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
+      </div>
     </div>
   </div>
-	
-	
-	
+</div>
+</div>
+</div>
+</div>
+<!-- About Popup -->
+<div class="popup popup-about">
+  <div class="content-block">
+    <p>About</p>
+    <p><a href="#" class="close-popup">Close popup</a></p>
+    <p>Lorem ipsum dolor ...</p>
+  </div>
+</div>

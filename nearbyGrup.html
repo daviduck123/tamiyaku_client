@@ -1,45 +1,41 @@
-    <!-- Views-->
-    <div class="views">
-      <!-- Your main view, should have "view-main" class-->
-      <div class="view view-main">
-        <!-- Top Navbar-->
-        
-        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
-        <div class="pages navbar-through toolbar-through">
-          <!-- Page, data-page contains page name-->
-          <div data-page="nearbyGrup" class="page">
-            <!-- Scrollable page content-->
-            <div class="navbar">
+<!-- Views-->
+<div class="views">
+  <!-- Your main view, should have "view-main" class-->
+  <div class="view view-main">
+    <!-- Top Navbar-->
+    <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+    <div class="pages navbar-through toolbar-through">
+      <!-- Page, data-page contains page name-->
+      <div data-page="lomba" class="page">
+        <!-- Scrollable page content-->
+        <div class="navbar">
           <div class="navbar-inner">
-          <div class="left">
+            <div class="left">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bars"></i></a>
             </div>
             <!-- We have home navbar without left link-->
-            <div class="center sliding" style="font-weight:bold;">Disekitar Saya</div>
+            <div class="center sliding" style="font-weight:bold;"><i class="icon fa fa-flag-checkered" style="margin-right:10px;"></i> Lomba</div>
             <div class="right">
               <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
             </div>
           </div>
         </div>
-            <div class="page-content">
-            <div  style="margin-top:0px;">
-            <div class="content-block searchbar-not-found">
-            <div class="content-block-inner">Nothing found</div>
-            </div>
-             <div class="list-block list-block-search searchbar-found">
-                     <div class="list-block contacts-block">
-                        <div class="list-group" style="margin-bottom:20px; margin-top:-30px;">
-                          <ul>
-                          <li class="list-group-title">List Grup Disekitar</li>
-							<div id="list_grup_disekitar" >
-								<div id="isi_list_grup_disekitar"></div>
-							</div>
-                            </ul>
-                        </div>
-                     </div>
-               </div>
-               </div>
-              </div>
-            </div>
+        <div class="page-content">
+          <center><a href="#" onclick="gotoBuatEvent();" class="button" style="width:90%; height:50px; margin-top:10px; padding-top:10px;">Buat Event Lomba</a></center>
+          <br>
+          <div id="container_event">
+            <div id="isi_container_event"></div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Path to Framework7 Library JS-->
+<div class="popup editKomentarKuEvent">
+  <div class="content-block">
+    <p>About</p>
+    <p><a href="#" class="close-popup">Close popup</a></p>
+    <p>Lorem ipsum dolor ...</p>
+  </div>
+</div>
