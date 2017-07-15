@@ -130,7 +130,7 @@ function buatEventPost() {
 													myApp.alert('Event berhasil dibuat', 'Berhasil!');
 													ctx = null;
 													viewRouterBack();
-													getAllEvent();
+													getAllEventPost();
 												}).fail(function(x){
 													myApp.alert(x.message+" "+x.error, 'Perhatian!');
 												});
