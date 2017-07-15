@@ -1,4 +1,5 @@
 function gotoProfilTeman(clickedId){
+	myApp.showPreloader('Mengambil data...');
 	eraseData("id_teman");
 	saveData( "id_teman",clickedId);
 	//console.log(getData("id_teman"));
@@ -40,6 +41,7 @@ function gotoProfilTeman(clickedId){
 				getProfilTeman(id_teman,1);
 			}
 		}
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan data profil teman gagal", 'Perhatian!');
 	});
@@ -49,6 +51,7 @@ function gotoProfilTeman(clickedId){
 }
 
 function getAllTemanPost(clickedId) {
+	myApp.showPreloader('Mengambil data...');
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
 		$.ajax({ dataType: "jsonp",
@@ -158,13 +161,14 @@ function getAllTemanPost(clickedId) {
 					$("#isi_postingan_teman").append(html);
 				}
 			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
 }
 
 function getAllTemanPost(clickedId, id_post) {
+	myApp.showPreloader('Mengambil data...');
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
 		$.ajax({ dataType: "jsonp",
@@ -275,27 +279,7 @@ function getAllTemanPost(clickedId, id_post) {
 				}
 			}
 			bacaTemanKomentar(id_post);
-		}).fail(function(x){
-			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
-		}); 
-}
-
-function countMyPost(clickedId, id_post) {
-	var id_teman = clickedId;
-	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
-		$.ajax({ dataType: "jsonp",
-		    url: link,
-		    type: 'GET',
-		    contentType: false,
-		    processData: false
-		}).done(function(z){
-			var coba="";
-			var dataLength=0;
-			for (var ii = 0 ; ii < z.length; ii++) {
-				coba+=z['id']+"|"; 
-				dataLength++;
-			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
@@ -442,7 +426,7 @@ function getProfilTeman(clickedId, statusTeman){
 						}
 						$("#nama_profilTeman").append(nama);
 					}
-					
+					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert("Pengambilan jumlah teman gagal", 'Perhatian!');
 				});
@@ -457,6 +441,7 @@ function getProfilTeman(clickedId, statusTeman){
 }
 
 function bacaTemanKomentar(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -513,6 +498,7 @@ function bacaTemanKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -527,6 +513,7 @@ function bacaTemanKomentar(clicked_id) {
 }
 
 function komentariTemanPost(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -576,6 +563,7 @@ function komentariTemanPost(clicked_id) {
 					//getAllTemanPost(id_teman);
 					//getProfilTeman(id_teman,1);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
+					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
@@ -585,6 +573,7 @@ function komentariTemanPost(clicked_id) {
 }
 
 function statusTemanPost() {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_teman = document.getElementById("id_teman_temp").value;
 	var status = document.getElementById("status").value;
@@ -613,6 +602,7 @@ function statusTemanPost() {
 			getAllTemanPost(id_teman);
 			$("#status").val("");
 			$("#file_profilTeman").val("");
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat mengirim status pada teman, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -626,6 +616,7 @@ function statusTemanPost() {
 }
 
 function addFriend(clickedId){
+	myApp.showPreloader('Mengambil data...');
 	var id_teman=clickedId;
 	var id_user = getData("active_user_id");
 	
@@ -644,6 +635,7 @@ function addFriend(clickedId){
 				getAllTemanPost(id_teman);
 				getProfilTeman(id_teman,1);
 			}
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Tambah teman gagal", 'Perhatian!');
 		}); 
@@ -651,6 +643,7 @@ function addFriend(clickedId){
 
 function editPostProfile(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -718,6 +711,7 @@ function editPostProfile(clicked_id)
 				}
 			}
 		}
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
@@ -747,6 +741,7 @@ function pilihanHapusDataProfile(clicked_id){
 
 function hapusDataProfile(clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
 	$.ajax({
@@ -756,6 +751,7 @@ function hapusDataProfile(clicked_id)
 		    processData: false
 		}).done(function(z){
 			getAllTemanPost(id_user);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -767,6 +763,7 @@ function hapusDataProfile(clicked_id)
 }
 
 function statusEditPostProfile(clicked_id) {
+	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("statusEdit").value;
@@ -795,6 +792,7 @@ function statusEditPostProfile(clicked_id) {
 		}).done(function(z){
 			myApp.closeModal();
 			getAllTemanPost(id_user,null);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -813,6 +811,7 @@ function tutupModalProfile() {
 
 function editKomentarKuProfile(id_post,clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -850,6 +849,7 @@ function editKomentarKuProfile(id_post,clicked_id)
 						}
 					}
 				}
+				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -859,6 +859,7 @@ function editKomentarKuProfile(id_post,clicked_id)
 
 function simpanKomentarProfile(id_post, clicked_id)
 {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	var deskripsi=document.getElementById("komentarEdit").value;
@@ -882,6 +883,7 @@ function simpanKomentarProfile(id_post, clicked_id)
 		myApp.closeModal();
 		bacaTemanKomentar(id_post);
 		bacaTemanKomentar(id_post);
+		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
@@ -911,6 +913,7 @@ function pilihanHapusKomentarProfile(clicked_id, id_komentar){
 
 function hapusKomentarProfileTrue(clicked_id, id_komentar)
 {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/komentar/deleteKomentar?id_komentar='+id_komentar;
 	$.ajax({
 		    url: link,
@@ -920,6 +923,7 @@ function hapusKomentarProfileTrue(clicked_id, id_komentar)
 		}).done(function(z){
 			var id_teman = getData("id_teman");
 			getAllTemanPost(id_teman, clicked_id);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus komentar, silahkan coba lagi', 'Perhatian!');
 			console.log(x);
