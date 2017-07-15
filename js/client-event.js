@@ -465,6 +465,7 @@ function bacaEventKomentar(clicked_id) {
 							if(z[i]['nama']==getData("active_user_nama"))
 							{
 								html += 				"<td style='font-weight:bold;'><i onclick='editKomentarKuEvent("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-caret-square-o-down' aria-hidden='true'></i></td>";
+								html += 				"<td style='font-weight:bold;'><i onclick='pilihanHapusKomentarEvent("+clicked_id+",this.id)' id='"+z[i]['id']+"' class='fa fa-minus' aria-hidden='true'></i></td>";
 							}
 							html += 			"</tr>";
 							html += 			"<tr>";
@@ -1013,4 +1014,41 @@ function simpanKomentarEvent(id_event, clicked_id)
 function tutupModalEvent()
 {
 	myApp.closeModal();
+}
+
+function pilihanHapusKomentarEvent(clicked_id, id_komentar){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus komentar ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusKomentarEventTrue(clicked_id, id_komentar);
+        }
+      },
+    ]
+  })
+}
+
+function hapusKomentarEventTrue(clicked_id, id_komentar)
+{
+	var link=urlnya+'/api/komentar/deleteKomentar?id_komentar='+id_komentar;
+	$.ajax({
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			getAllEventPostVar(clicked_id);
+		}).fail(function(x){
+			myApp.alert('Maaf tidak dapat menghapus komentar, silahkan coba lagi', 'Perhatian!');
+			console.log(x);
+		});
 }
