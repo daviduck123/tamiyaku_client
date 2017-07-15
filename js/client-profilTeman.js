@@ -706,6 +706,7 @@ function pilihanHapusDataProfile(clicked_id){
 
 function hapusDataProfile(clicked_id)
 {
+	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/post/deletePost?id_post='+clicked_id;
 	$.ajax({
 		    url: link,
@@ -713,7 +714,7 @@ function hapusDataProfile(clicked_id)
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			getAllTemanPost(clicked_id);
+			getAllTemanPost(id_user);
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menghapus kiriman, silahkan coba lagi', 'Perhatian!');
 			var coba="";
