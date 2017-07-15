@@ -49,8 +49,6 @@ function gotoProfilTeman(clickedId){
 }
 
 function getAllTemanPost(clickedId) {
-	
-	console.log("masuk1");
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
 		$.ajax({ dataType: "jsonp",
@@ -169,7 +167,6 @@ function getAllTemanPost(clickedId) {
 function getAllTemanPost(clickedId, id_post) {
 	var id_teman = clickedId;
 	var link=urlnya+'/api/post/getAllPostByUser?id_user='+id_teman;
-	console.log(link);
 		$.ajax({ dataType: "jsonp",
 		    url: link,
 		    type: 'GET',
@@ -286,6 +283,7 @@ function getAllTemanPost(clickedId, id_post) {
 function getProfilTeman(clickedId, statusTeman){
 	var id_teman = clickedId;
 	var link=urlnya+'/api/user/getUserByIdUser?id_user='+id_teman;
+	console.log(link);
 	$.ajax({ dataType: "jsonp",
 	    url: link,
 	    type: 'GET',
@@ -323,19 +321,18 @@ function getProfilTeman(clickedId, statusTeman){
 				if(statusTeman==1)
 				{
 					var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+					html +=	'<center>';
 					html +=	'<table id="infoProfile" style="margin-top:20px;">';
 					html += 		'<tr>';
 					html += 			'<td rowspan="3">';
 					html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-					html += 			'</td>';
-					html += 	'</tr>';
-					html += 		'<tr>';
-					html += 			'<td>';
-					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
-					html += 			'</td>';
-					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
-					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
-					html += 		'</tr>';
+					html += 			'<td style="font-weight:bold;"><center>10</center></td>';
+					html +=				'<td style="font-weight:bold;"><center>20</center></td>';
+					html += 	'</tr>';s
+					html +=			'<tr>';
+					html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
+					html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
+					html +=			'</tr>';
 					html += 		'<tr>';
 					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
 					html += 		'</tr>';
@@ -344,6 +341,7 @@ function getProfilTeman(clickedId, statusTeman){
 					html +='						<br>';
 					
 					html +='						</div> ';
+					html +='						</center> ';
 					html +='					  </div>';
 				}
 				else
@@ -356,11 +354,6 @@ function getProfilTeman(clickedId, statusTeman){
 					html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
 					html += 	'</tr>';
 					html += 		'<tr>';
-					html += 			'<td>';
-					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
-					html += 			'</td>';
-					
-					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
 					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
 					html += 		'</tr>';
 					html += 		'<tr>';
@@ -380,27 +373,28 @@ function getProfilTeman(clickedId, statusTeman){
 			{
 				//buka profile disi sendiri
 				var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+					html +=	'<center>';
 					html +=	'<table id="infoProfile" style="margin-top:20px;">';
 					html += 		'<tr>';
 					html += 			'<td rowspan="3">';
 					html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
 					html += 			'</td>';
+					html +=				'<td style="font-weight:bold;"><center>10</center></td>';
+					html +=				'<td style="font-weight:bold;"><center>20</center></td>';
 					html += 	'</tr>';
+					html +=			'<tr>';
+					html +=				'<td style="font-weight:bold;"><center>Post</center></td>';
+					html +=				'<td style="font-weight:bold;"><center>Teman</center></td>';
+					html +=			'</tr>';
 					html += 		'<tr>';
-					html += 			'<td>';
-					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
-					html += 			'</td>';
-					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
-					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
-					html += 		'</tr>';
-					html += 		'<tr>';
-					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+					html += 			'<td colspan="4"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
 					html += 		'</tr>';
 					html += 	'</table>';
 					html +='						<br>';
 					html +='						<br>';
 					
 					html +='						</div> ';
+					html +='						</center> ';
 					html +='					  </div>';
 					
 					
