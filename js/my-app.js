@@ -148,10 +148,13 @@ myApp.onPageInit('lapakSaya', function (page) {
 $$('.panel-left').on('panel:opened', function () {
 	getAllGrup();
 	var username = getData("active_user_nama");
+	var idUser=getData("active_user_id");
 	$("#index_name").html("");
 	$("#index_name").append(username);
 	
 	$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
+	
+	document.getElementById("masukProfileKu").setAttribute("onclick", "gotoProfilTeman("+idUser+");");
 });
 
 $$('.panel-right').on('panel:opened', function () {

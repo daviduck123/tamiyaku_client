@@ -28,8 +28,17 @@ function gotoProfilTeman(clickedId){
 		}
 		else
 		{
-			//console.log("belumteman");
-			getProfilTeman(id_teman,0);
+			if(id_teman != getData("active_user_id"))
+			{
+				//console.log("belumteman");
+				getProfilTeman(id_teman,0);
+			}
+			else
+			{
+				getAllTemanPost(id_teman);
+				//console.log("teman");
+				getProfilTeman(id_teman,1);
+			}
 		}
 	}).fail(function(x){
 		myApp.alert("Pengambilan data profil teman gagal", 'Perhatian!');
@@ -287,81 +296,99 @@ function getProfilTeman(clickedId, statusTeman){
 			var email=z.email;
 			var telepon=z.telepon;
 			
-			if(statusTeman==1)
+			if(id_teman != getData("active_user_id"))
 			{
-				var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
-				html +=	'<table id="infoProfile" style="margin-top:20px;">';
-				html += 		'<tr>';
-				html += 			'<td rowspan="3">';
-				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-				html += 			'</td>';
-				html += 	'</tr>';
-				html += 		'<tr>';
-				html += 			'<td>';
-				html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
-				html += 			'</td>';
-				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
-				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
-				html += 		'</tr>';
-				html += 		'<tr>';
-				html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-				html += 		'</tr>';
-				html += 	'</table>';
-				/*//buat post status
-				html +='					<form action="/action_page.php">';
-				html +='						  <div class="item-content">';
-				html +='							<div class="item-inner">';
-				html +='								<div class="item-input">';
-				html +='								<center><textarea id="status" style="resize:none; margin-top:10px; width:90%; height:60px;" ';
-				html +='								placeholder="Tulis pesan anda..."></textarea>';
-				html +='								</center>';
-				html +='								</div>';
-				html +='							</div>';
-				html +='						</div>';
-				html +='						<div class="item-content" style="margin-top:-10px;">';
-				html +='						<div class="item-inner" >';
-				html +='							<div style="height:0px;overflow:hidden">';
-				html +='							<input type="file" id="file_profilTeman" accept="image/*"/>';
-				html +='							</div>';
-				html +='							<p><a href="#" class="button active" onclick="statusTemanPost();" type="submit" style="width:70px; float:right; margin-right:5%;">Kirim</a></p>';
-				html +='							<p><a href="#" class="button"  onclick="chooseFile_profilTeman();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>';
-				html +='				</form>';
-				*/
-				html +='						<br>';
-				html +='						<br>';
 				
-				html +='						</div> ';
-				html +='					  </div>';
+				if(statusTeman==1)
+				{
+					var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+					html +=	'<table id="infoProfile" style="margin-top:20px;">';
+					html += 		'<tr>';
+					html += 			'<td rowspan="3">';
+					html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+					html += 			'</td>';
+					html += 	'</tr>';
+					html += 		'<tr>';
+					html += 			'<td>';
+					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
+					html += 			'</td>';
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+					html += 		'</tr>';
+					html += 		'<tr>';
+					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+					html += 		'</tr>';
+					html += 	'</table>';
+					html +='						<br>';
+					html +='						<br>';
+					
+					html +='						</div> ';
+					html +='					  </div>';
+				}
+				else
+				{
+					var html=	'<table id="infoProfile" style="margin-top:20px;">';
+					html += 		'<tr>';
+					html += 			'<td rowspan="3">';
+					html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+					html += 			'</td>';
+					html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
+					html += 	'</tr>';
+					html += 		'<tr>';
+					html += 			'<td>';
+					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
+					html += 			'</td>';
+					
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+					html += 		'</tr>';
+					html += 		'<tr>';
+					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+					html += 		'</tr>';
+					html += 	'</table>';
+				}
+				
+				//jika sudah ada tidak perlu bikin lagi
+				if($("#infoProfile").length == 0) {
+					$("#isi_container_info_teman").append(html);
+				}
+				$("#nama_profilTeman").append(nama);
+				
 			}
 			else
 			{
-				var html=	'<table id="infoProfile" style="margin-top:20px;">';
-				html += 		'<tr>';
-				html += 			'<td rowspan="3">';
-				html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
-				html += 			'</td>';
-				html +=				'<td colspan="3" style="width:300px;"><a href="#" onclick="addFriend('+id+')" class="button" style="width:100%;">Tambah teman</a></td>';
-				html += 	'</tr>';
-				html += 		'<tr>';
-				html += 			'<td>';
-				html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
-				html += 			'</td>';
-				
-				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
-				html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
-				html += 		'</tr>';
-				html += 		'<tr>';
-				html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
-				html += 		'</tr>';
-				html += 	'</table>';
-			}
-			
-			//jika sudah ada tidak perlu bikin lagi
-			if($("#infoProfile").length == 0) {
-				$("#isi_container_info_teman").append(html);
-			}
-			$("#nama_profilTeman").append(nama);
+				//buka profile disi sendiri
+				var html=	'<input type="hidden" id="id_teman_temp" value="'+id+'">';
+					html +=	'<table id="infoProfile" style="margin-top:20px;">';
+					html += 		'<tr>';
+					html += 			'<td rowspan="3">';
+					html += 				'<img src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+					html += 			'</td>';
+					html += 	'</tr>';
+					html += 		'<tr>';
+					html += 			'<td>';
+					html += 				'<a><i class="icon fa fa-phone-square"></i><span style="margin:10px;">'+telepon+'</span></a>';
+					html += 			'</td>';
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-phone"></i></a></td>';
+					html += 			'<td><a href="#" class="button" style="margin-right:0%; border:none; margin-top:0px; width:30px;"><i class="icon fa fa-commenting-o"></i></a></td>';
+					html += 		'</tr>';
+					html += 		'<tr>';
+					html += 			'<td colspan="3"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
+					html += 		'</tr>';
+					html += 	'</table>';
+					html +='						<br>';
+					html +='						<br>';
 					
+					html +='						</div> ';
+					html +='					  </div>';
+					
+					
+				//jika sudah ada tidak perlu bikin lagi
+				if($("#infoProfile").length == 0) {
+					$("#isi_container_info_teman").append(html);
+				}
+				$("#nama_profilTeman").append(nama);
+			}				
 		}		
 	}).fail(function(x){
 		myApp.alert("Pengambilan informasi teman gagal", 'Perhatian!');
