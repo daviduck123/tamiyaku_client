@@ -1,4 +1,5 @@
 function autoCariTemanGrup() {
+	myApp.showPreloader('Mengambil data...');
 	var param = document.getElementById("cariTemanGrup").value;
 	var link=urlnya+'/api/user/searchUser?param='+param;
 
@@ -16,6 +17,7 @@ function autoCariTemanGrup() {
 					nama: z['users'][i]['nama'],
 					foto:  z['users'][i]['foto']
 				});
+				myApp.closeModal();
 			}
 			//console.log(availableTags[2]['nama']);
 			//$( "#cariTemanGrup" ).autocomplete({
@@ -31,6 +33,7 @@ function autoCariTemanGrup() {
 //});
 
 function searchTeman(paramData){
+	myApp.showPreloader('Mengambil data...');
 	mainView.router.loadPage('searchTemanGrup.html');
 	myApp.closePanel();
 	var param = paramData;
@@ -132,7 +135,10 @@ function searchTeman(paramData){
 			{
 				$("#isi_container_searchTemanGrup").append("<center><p>Tidak ditemukan</p></center>");
 			}
+			myApp.closeModal();
 		}).fail(function(x){
+			myApp.showPreloader('Mengambil data...');
+			myApp.closeModal();
 			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
 		});
 }

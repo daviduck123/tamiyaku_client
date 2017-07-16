@@ -1,5 +1,6 @@
 //---------------------------------------------------------------------------------------------------------------------------------------LOGIN
 function loginPost() {
+	myApp.showPreloader('Mengambil data...');
 	var email = document.getElementById("email_login").value;
 	var password = document.getElementById("password_login").value;
 	
@@ -88,7 +89,7 @@ function loginPost() {
 						{
 							myApp.alert('Maaf Email dan Password yang anda masukkan tidak sesuai dengan data kami!','Perhatian!');
 						}
-						
+						myApp.closeModal();
 					}).fail(function(x){
 						myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
 						console.log(formData);
@@ -104,6 +105,7 @@ function loginPost() {
 }
 	
 function cekLoginAktif() {
+	myApp.showPreloader('Mengambil data...');
 	var active_user_id="";
 	var expires="";
 	active_user_id=getData("active_user_id");
@@ -137,6 +139,7 @@ function cekLoginAktif() {
 				}
 				mainView.router.loadPage('home.html');
 				$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
+				myApp.closeModal();
 			});
 		}
 		else

@@ -10,6 +10,7 @@ function gotoLapakSaya(){
 }
 
 function getKotaEditLapakSaya() {
+	myApp.showPreloader('Mengambil data...');
 	var link=urlnya+'/api/kota/';
 		$.ajax({ dataType: "jsonp",
 		    url: link,
@@ -23,13 +24,14 @@ function getKotaEditLapakSaya() {
 			{ 
 			   $('#kota_editLapakSaya').append( new Option(el.nama,el.id) );
 			});
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 28)", 'Perhatian!');
 		}); 
 }
 
 function buatLapakSayaPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var namaLapakSaya = document.getElementById("nama_buatLapakSaya").value;
 	var kelas = $('#kelas_buatLapakSaya').find(":selected").val();
@@ -94,7 +96,7 @@ function buatLapakSayaPost() {
 								contentType: false,
 								processData: false
 							}).done(function(z){
-								//mainView.router.loadPage('home.html');
+								myApp.closeModal();
 								myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
@@ -108,6 +110,7 @@ function buatLapakSayaPost() {
 }
 
 function getAllLapakSayaPost() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	
 	var arrKota=[];
@@ -190,13 +193,14 @@ function getAllLapakSayaPost() {
 					
 					$("#isi_container_lapakSaya").append(html);
 			}
-			
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
 }
 
 function editLapakSaya(clickedID){
+	myApp.showPreloader('Mengambil data...');
 	var id_user= getData("active_user_id");
 	var id_lapak= clickedID;
 	var temp="editNamaLapakSaya_"+id_lapak;
@@ -295,13 +299,14 @@ function editLapakSaya(clickedID){
 						'</div>'+
 					  '</div>';
 		myApp.popup(popupHTML);
-		
+			myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1)');
 	});
 }
 
 function editLapakSayaPost(clickedID) {
+	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var id_lapak = document.getElementById("update_id_editLapakSaya_"+clickedID).value;
 	var namaLapakSaya = document.getElementById("nama_editLapakSaya_"+clickedID).value;
@@ -365,6 +370,7 @@ function editLapakSayaPost(clickedID) {
 								//mainView.router.loadPage('home.html');
 								myApp.alert('Perubahan berhasil disimpan', 'Berhasil!');
 								getAllLapakSayaPost();
+								myApp.closeModal();
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});
@@ -393,6 +399,7 @@ function editLapakSayaPost(clickedID) {
 								//mainView.router.loadPage('home.html');
 								myApp.alert('Perubahan berhasil disimpan', 'Berhasil!');
 								getAllLapakSayaPost();
+								myApp.closeModal();
 							}).fail(function(x){
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});

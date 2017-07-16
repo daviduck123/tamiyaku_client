@@ -1,4 +1,5 @@
 function getAllTeman() {
+	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var link=urlnya+'/api/user/getTemanByIdUser?id_user='+id_user;
 
@@ -55,7 +56,9 @@ function getAllTeman() {
 			html +=		'</ul>';
 			html +=	'</div>';
 			$("#container_teman").append(html);
+			myApp.closeModal();
 		}).fail(function(x){
+			myApp.closeModal();
 			myApp.alert("Pengambilan postingan teman gagal", 'Perhatian!');
 		}); 
 }
