@@ -426,7 +426,6 @@ function getProfilTeman(clickedId, statusTeman){
 						}
 						$("#nama_profilTeman").append(nama);
 					}
-					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert("Pengambilan jumlah teman gagal", 'Perhatian!');
 				});
@@ -441,7 +440,6 @@ function getProfilTeman(clickedId, statusTeman){
 }
 
 function bacaTemanKomentar(clicked_id) {
-	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -498,7 +496,6 @@ function bacaTemanKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
-				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -513,7 +510,6 @@ function bacaTemanKomentar(clicked_id) {
 }
 
 function komentariTemanPost(clicked_id) {
-	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -560,10 +556,6 @@ function komentariTemanPost(clicked_id) {
 					//mainView.router.loadPage('profilTeman.html');
 					var id_teman = document.getElementById("id_teman_temp").value;
 					getAllTemanPost(id_teman,id_post);
-					//getAllTemanPost(id_teman);
-					//getProfilTeman(id_teman,1);
-					//myApp.alert('Komentar dibuat', 'Berhasil!');
-					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 				});
@@ -643,7 +635,6 @@ function addFriend(clickedId){
 
 function editPostProfile(clicked_id)
 {
-	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,
@@ -711,7 +702,6 @@ function editPostProfile(clicked_id)
 				}
 			}
 		}
-		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
@@ -791,8 +781,10 @@ function statusEditPostProfile(clicked_id) {
 		    processData: false
 		}).done(function(z){
 			myApp.closeModal();
+			$(".popup-overlay").remove();
+			$(".modal-overlay").remove();
 			getAllTemanPost(id_user,null);
-			myApp.closeModal();
+			
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
@@ -824,6 +816,7 @@ function editKomentarKuProfile(id_post,clicked_id)
 				contentType: false,
 				processData: false
 			}).done(function(z){
+				myApp.closeModal();
 				if(z.length>0)
 				{
 					for(var i=0;i<z.length;i++)
@@ -849,7 +842,6 @@ function editKomentarKuProfile(id_post,clicked_id)
 						}
 					}
 				}
-				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -883,7 +875,6 @@ function simpanKomentarProfile(id_post, clicked_id)
 		myApp.closeModal();
 		bacaTemanKomentar(id_post);
 		bacaTemanKomentar(id_post);
-		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});

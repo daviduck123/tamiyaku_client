@@ -338,7 +338,6 @@ function getAllJualBeliPostVar(id_post) {
 }
 
 function bacaJualBeliKomentar(clicked_id) {
-	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_post = clicked_id;
 	
@@ -394,7 +393,6 @@ function bacaJualBeliKomentar(clicked_id) {
 				{
 					//nggak ada yang komentar
 				}
-				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
@@ -408,7 +406,6 @@ function bacaJualBeliKomentar(clicked_id) {
 }
 
 function komentariJualBeliPost(clicked_id) {
-	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -480,6 +477,7 @@ function editKomentarJualBeli(id_jualbeli,clicked_id)
 				contentType: false,
 				processData: false
 			}).done(function(z){
+				myApp.closeModal();
 				if(z.length>0)
 				{
 					for(var i=0;i<z.length;i++)
@@ -505,7 +503,6 @@ function editKomentarJualBeli(id_jualbeli,clicked_id)
 						}
 					}
 				}
-			myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});

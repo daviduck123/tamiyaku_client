@@ -509,7 +509,6 @@ function bacaEventKomentar(clicked_id) {
 }
 
 function komentariEventPost(clicked_id) {
-	myApp.showPreloader('Mengambil data...');
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var id_post = "";
@@ -559,7 +558,6 @@ function komentariEventPost(clicked_id) {
 					//mainView.router.loadPage('lomba.html');
 					getAllEventPostVar(id_post);
 					//myApp.alert('Komentar dibuat', 'Berhasil!');
-					myApp.closeModal();
 				}).fail(function(x){
 					myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi (line 1945)', 'Perhatian!');
 				});
@@ -817,7 +815,7 @@ function hapusEventData(clicked_id)
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			getAllPost();
+			getAllEventPost();
 			$("#status").val("");
 			$("#file_home").val("");
 			myApp.closeModal();
@@ -966,6 +964,8 @@ function editKomentarKuEvent(id_event,clicked_id)
 				contentType: false,
 				processData: false
 			}).done(function(z){
+				
+				myApp.closeModal();
 				if(z.length>0)
 				{
 					for(var i=0;i<z.length;i++)
@@ -991,7 +991,6 @@ function editKomentarKuEvent(id_event,clicked_id)
 						}
 					}
 				}
-				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf update komentar gaga, coba lagi!', 'Perhatian!');
 			});

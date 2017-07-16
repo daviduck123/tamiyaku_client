@@ -354,7 +354,6 @@ function getAllPost(id_post) {
 
 function statusPost() {
 	myApp.showPreloader('Mengambil data...');
-	myApp.closeModal();
 	//ON PROGRESS
 	var id_user = getData("active_user_id");
 	var status = document.getElementById("status").value;
@@ -566,7 +565,6 @@ function tutupModal() {
 
 function editKomentarKu(id_post,clicked_id)
 {
-	myApp.showPreloader('Mengambil data...');
 	var id_user = getData("active_user_id");
 	var id_komentar = clicked_id;
 	
@@ -604,7 +602,6 @@ function editKomentarKu(id_post,clicked_id)
 						}
 					}
 				}
-				myApp.closeModal();
 			}).fail(function(x){
 				myApp.alert('Maaf tidak dapat mengomentari status, silahkan coba lagi', 'Perhatian!');
 			});
