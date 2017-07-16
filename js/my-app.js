@@ -155,6 +155,18 @@ $$('.panel-left').on('panel:opened', function () {
 	$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 	
 	document.getElementById("masukProfileKu").setAttribute("onclick", "gotoProfilTeman("+idUser+");");
+	
+	//ubah kelas=========================
+		$(".select-list-kelas").empty();
+		$.each(globalListKelas, function (id, text) {
+			var key = Object.keys(text);
+			var value = Object.values(text);
+			$(".select-list-kelas").append($('<option>', { 
+				value: key[0],
+				text : value[0]
+			}));
+		});
+	//==============================================
 });
 
 $$('.panel-right').on('panel:opened', function () {

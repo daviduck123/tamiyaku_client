@@ -152,6 +152,7 @@ function cekLoginAktif() {
 	}
 	else
 	{
+		myApp.closeModal();
 		mainView.router.loadPage('login.html');
 		eraseData("active_user_id");
 		eraseData("expires");
