@@ -208,7 +208,7 @@ function registerPost() {
 		{
 			kelas.push(3);
 		}
-		
+		myApp.showPreloader('Proses Data...');
 		var formData = globalCookie["formData"];
 		formData.append("id_kelas",kelas);
 		var link=urlnya+'/api/user/registerNewUser';
@@ -220,6 +220,7 @@ function registerPost() {
 		    processData: false,
 		    contentType: false
 		}).done(function(z){
+			myApp.closeModal();
 			mainView.router.loadPage('login.html');
 			myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
 			
@@ -232,7 +233,9 @@ function registerPost() {
 			eraseData("kelas1");
 			eraseData("kelas2");
 			eraseData("kelas3");
+
 		}).fail(function(x){
+			myApp.closeModal();
 			myApp.alert(x.message+" "+x.error, 'Perhatian!');
 			
 			eraseData("username");
