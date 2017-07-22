@@ -91,11 +91,13 @@ function loginPost() {
 						}
 						myApp.closeModal();
 					}).fail(function(x){
+						
+						myApp.closeModal();
 						myApp.alert('Maaf terdapat kesalahan dalam pengisian data, silahkan coba lagi', 'Perhatian!');
-						console.log(formData);
-						/*for (var pair of formData.entries()) {
-							console.log(pair[0]+ ', ' + pair[1]); 
-						}*/
+						console.log(x);
+						//for (var pair of formData.entries()) {
+						//	console.log(pair[0]+ ', ' + pair[1]); 
+						//}
 					});
 				}
 			}

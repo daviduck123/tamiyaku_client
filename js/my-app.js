@@ -139,6 +139,10 @@ myApp.onPageInit('buatJualBarang', function (page) {
 	        text : value[0]
 	    }));
 	});
+	$(".active_user_email").empty();
+	$email=getData("active_user_email");
+	$data='<input id="email_buatJualBarang" type="text" value="'+$email+'" disabled>';
+	$(".active_user_email").append($data);
 });
 
 myApp.onPageInit('lapakSaya', function (page) {

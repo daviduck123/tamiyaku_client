@@ -36,6 +36,7 @@ function buatJualBarangPost() {
 	var id_user=getData("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
 	var emailJualBarang = document.getElementById("email_buatJualBarang").value;
+	var kategori = $('#kategori_buatJualBarang').find(":selected").val();
 	var kelas = $('#kelas_buatJualBarang').find(":selected").val();
 	var harga = document.getElementById("harga_buatJualBarang").value;
 	var kota = $('#kota_buatJualBarang').find(":selected").val();
@@ -48,62 +49,70 @@ function buatJualBarangPost() {
 	}
 	else
 	{
-		if(harga=="" || harga==0 || harga=="0")
+		if(kategori=="" || kategori==0 || kategori=="0")
 		{
-			myApp.alert('Silahkan isi harga barang', 'Perhatian!');
+			myApp.alert('Silahkan pilih kategori anda', 'Perhatian!');
 		}
 		else
 		{
-			if(kota=="" || kota==0 || kota=="0")
+			if(harga=="" || harga==0 || harga=="0")
 			{
-				myApp.alert('Silahkan pilih kota', 'Perhatian!');
+				myApp.alert('Silahkan isi harga barang', 'Perhatian!');
 			}
 			else
 			{
-				if(deskripsi=="")
+				if(kota=="" || kota==0 || kota=="0")
 				{
-					myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
+					myApp.alert('Silahkan pilih kota', 'Perhatian!');
 				}
 				else
 				{
-					var cekEmail=validateEmail(emailJualBarang);
-					if(cekEmail==false)
+					if(deskripsi=="")
 					{
-						myApp.alert('Format E-Mail anda tidak benar', 'Perhatian!');
-					}else{
-						if(fileinput=="")
-					{
-						myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
+						myApp.alert('Silahkan isi deskripsi barang anda', 'Perhatian!');
 					}
 					else
 					{
-						var blob=$("#file_buatJualBarang")[0].files[0];
-						var formData = new FormData();
-						formData.append("nama", namaJualBarang);
-						formData.append("email", emailJualBarang);
-						formData.append("harga", harga);
-						formData.append("deskripsi", deskripsi);
-						formData.append("id_user", id_user);
-						formData.append("id_kota", kota);
-						formData.append("id_kelas", kelas);
-						formData.append("file", blob);
-											
-						var link=urlnya+'/api/jualBeli/createJualBeli';
-						$.ajax({ 
-							url: link,
-							data: formData,
-							type: 'POST',
-							contentType: false,
-							processData: false
-						}).done(function(z){
-							//mainView.router.loadPage('home.html');
-							myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
-							viewRouterBack();
-							getAllJualBeliPost();
-						}).fail(function(x){
-							myApp.alert(x.message+" "+x.error, 'Perhatian!');
-						});
-					}
+						var cekEmail=validateEmail(emailJualBarang);
+						if(cekEmail==false)
+						{
+							myApp.alert('Format E-Mail anda tidak benar', 'Perhatian!');
+						}else{
+							if(fileinput=="")
+						{
+							myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
+						}
+						else
+						{
+							var blob=$("#file_buatJualBarang")[0].files[0];
+							var formData = new FormData();
+							formData.append("nama", namaJualBarang);
+							formData.append("kategori", kategori);
+							//formData.append("email", emailJualBarang);
+							formData.append("harga", harga);
+							formData.append("deskripsi", deskripsi);
+							formData.append("id_user", id_user);
+							formData.append("id_kota", kota);
+							formData.append("id_kelas", kelas);
+							formData.append("file", blob);
+												
+							var link=urlnya+'/api/jualBeli/createJualBeli';
+							$.ajax({ 
+								url: link,
+								data: formData,
+								type: 'POST',
+								contentType: false,
+								processData: false
+							}).done(function(z){
+								//mainView.router.loadPage('home.html');
+								myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
+								viewRouterBack();
+								getAllJualBeliPost();
+							}).fail(function(x){
+								myApp.alert(x.message+" "+x.error, 'Perhatian!');
+							});
+						}
+						}
 					}
 				}
 			}
@@ -203,7 +212,7 @@ function getAllJualBeliPost() {
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">'+z[i]['email']+'</td>';
+					html +=					'<td colspan="2"><a href="mailto:'+z[i]['email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['email']+'</a></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
@@ -315,7 +324,7 @@ function getAllJualBeliPostVar(id_post) {
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">'+z[i]['email']+'</td>';
+					html +=					'<td colspan="2"><a href="mailto:'+z[i]['email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['email']+'</a></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
