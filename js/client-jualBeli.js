@@ -1,7 +1,6 @@
 function gotoBuatJualBarang(){
 	mainView.router.loadPage('buatJualBarang.html');
 	myApp.closePanel();
-
 }
 
 function gotoJualBeli(){
@@ -35,7 +34,6 @@ function buatJualBarangPost() {
 	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
 	var namaJualBarang = document.getElementById("nama_buatJualBarang").value;
-	var emailJualBarang = document.getElementById("email_buatJualBarang").value;
 	var kategori = $('#kategori_buatJualBarang').find(":selected").val();
 	var kelas = $('#kelas_buatJualBarang').find(":selected").val();
 	var harga = document.getElementById("harga_buatJualBarang").value;
@@ -73,12 +71,7 @@ function buatJualBarangPost() {
 					}
 					else
 					{
-						var cekEmail=validateEmail(emailJualBarang);
-						if(cekEmail==false)
-						{
-							myApp.alert('Format E-Mail anda tidak benar', 'Perhatian!');
-						}else{
-							if(fileinput=="")
+						if(fileinput=="")
 						{
 							myApp.alert('Silahkan pilih foto barang anda', 'Perhatian!');
 						}
@@ -87,8 +80,7 @@ function buatJualBarangPost() {
 							var blob=$("#file_buatJualBarang")[0].files[0];
 							var formData = new FormData();
 							formData.append("nama", namaJualBarang);
-							formData.append("kategori", kategori);
-							//formData.append("email", emailJualBarang);
+							formData.append("id_kategori", kategori);
 							formData.append("harga", harga);
 							formData.append("deskripsi", deskripsi);
 							formData.append("id_user", id_user);
@@ -104,14 +96,13 @@ function buatJualBarangPost() {
 								contentType: false,
 								processData: false
 							}).done(function(z){
-								//mainView.router.loadPage('home.html');
 								myApp.alert('Jual Barang berhasil dibuat', 'Berhasil!');
 								viewRouterBack();
 								getAllJualBeliPost();
 							}).fail(function(x){
+								myApp.closeModal();
 								myApp.alert(x.message+" "+x.error, 'Perhatian!');
 							});
-						}
 						}
 					}
 				}
@@ -145,7 +136,7 @@ function getAllJualBeliPost() {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			
+			myApp.closeModal();
 			var coba="";
 			var dataLength=0;
 			for (var ii = 0 ; ii < z.length; ii++) {
@@ -212,7 +203,7 @@ function getAllJualBeliPost() {
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2"><a href="mailto:'+z[i]['email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['email']+'</a></td>';
+					html +=					'<td colspan="2"><a href="mailto:'+z[i]['email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['user_email']+'</a></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
@@ -230,6 +221,7 @@ function getAllJualBeliPost() {
 			}
 			myApp.closeModal();
 		}).fail(function(x){
+			myApp.closeModal();
 			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
 }
@@ -259,6 +251,7 @@ function getAllJualBeliPostVar(id_post) {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
+			myApp.closeModal();
 			var coba="";
 			var dataLength=0;
 			for (var ii = 0 ; ii < z.length; ii++) {
@@ -324,7 +317,7 @@ function getAllJualBeliPostVar(id_post) {
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Email</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2"><a href="mailto:'+z[i]['email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['email']+'</a></td>';
+					html +=					'<td colspan="2"><a href="mailto:'+z[i]['user_email']+'?Subject='+z[i]['nama']+'" class="external">'+z[i]['user_email']+'</a></td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html += 				'<td colspan="5" class="q" >';
@@ -342,6 +335,7 @@ function getAllJualBeliPostVar(id_post) {
 			}
 			bacaJualBeliKomentar(id_post);
 		}).fail(function(x){
+			myApp.closeModal();
 			myApp.alert("Pengambilan postingan Jual Beli barang gagal", 'Perhatian!');
 		}); 
 }

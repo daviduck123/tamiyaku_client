@@ -168,6 +168,7 @@ function getAllEventPost() {
 				contentType: false,
 				processData: false
 			}).done(function(z){
+				myApp.closeModal();
 				var coba="";
 				var dataLength=0;
 				for (var ii = 0 ; ii < z.length ; ii++) {
@@ -281,10 +282,12 @@ function getAllEventPost() {
 				}
 				
 			}).fail(function(x){
+				myApp.closeModal();
 				myApp.alert("Pengambilan postingan Event gagal", 'Perhatian!');
 			});
 			
 		}).fail(function(x){
+			myApp.closeModal();
 			myApp.alert("Pengambilan data kota gagal (line 170)", 'Perhatian!');
 		});
 }

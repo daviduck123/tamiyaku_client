@@ -139,10 +139,24 @@ myApp.onPageInit('buatJualBarang', function (page) {
 	        text : value[0]
 	    }));
 	});
-	$(".active_user_email").empty();
-	$email=getData("active_user_email");
-	$data='<input id="email_buatJualBarang" type="text" value="'+$email+'" disabled>';
-	$(".active_user_email").append($data);
+	
+	var link=urlnya+'/api/kategori/';
+	$.ajax({ dataType: "jsonp",
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(dataKategori){
+		var myOptions = dataKategori;
+		$.each(myOptions, function(i, el) 
+		{ 
+		   $('#kategori_buatJualBarang').append( new Option(el.nama,el.id) );
+		});
+		mainView.router.loadPage('buatJualBarang.html');
+		myApp.closePanel();
+	}).fail(function(x){
+			myApp.alert("Pengambilan data kota gagal (line 28)", 'Perhatian!');
+	}); 
 });
 
 myApp.onPageInit('lapakSaya', function (page) {
