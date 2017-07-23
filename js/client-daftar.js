@@ -155,7 +155,7 @@ function setCookie2(){
 			}
 			else if(i==1)
 			{
-				saveData( "kelas3",kelas[i].value);
+				saveData( "kelas2",kelas[i].value);
 			}
 			else if(i==2)
 			{
