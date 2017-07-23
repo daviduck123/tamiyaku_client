@@ -74,6 +74,129 @@ myApp.onPageInit('buatGrup', function (page) {
 	});
 });
 
+myApp.onPageInit('editGrup', function (page) {
+	var id_grup = document.getElementById("temp_id_grup").value;
+	var nama = document.getElementById("temp_nama_grup").value;
+	var id_kelas = document.getElementById("temp_kelas_grup").value;
+	var id_kota = document.getElementById("temp_kota_grup").value;
+	var alamat = document.getElementById("temp_alamat_grup").value;
+	var foto = document.getElementById("temp_foto_grup").value;
+	var lat = document.getElementById("temp_lat_grup").value;
+	var lng = document.getElementById("temp_lng_grup").value;
+	
+	$('#id_editGrup').val(id_grup);
+	$('#nama_editGrup').val(nama);
+	$("#kelas_editGrup").empty();
+	$.each(globalListKelas, function (id, text) {
+		var key = Object.keys(text);
+		var value = Object.values(text);
+		if(id_kelas==key)
+		{
+			$("#kelas_editGrup").append($('<option>', { 
+				selected:true,
+				value: key[0],
+				text : value[0]
+			}));
+		}
+		else
+		{
+			$("#kelas_editGrup").append($('<option>', { 
+				value: key[0],
+				text : value[0]
+			}));
+		}
+	});
+	
+	var arrKota=[];
+	var link=urlnya+'/api/kota/';
+	$.ajax({ dataType: "jsonp",
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(zz){
+		arrKota=zz;	
+		$("#kota_editGrup").empty();
+		$("#kota_editGrup").append('<option value="0">Pilih Kota</option>');
+		
+		for(var i=0;i<arrKota.length;i++)
+		{
+			var tempIdKota=1+i;
+			if(arrKota[i]["id"]==id_kota)
+			{
+				$("#kota_editGrup").append('<option value="'+tempIdKota+'" selected>'+arrKota[i]["nama"]+'</option>');
+			}
+			else
+			{
+				$("#kota_editGrup").append('<option value="'+tempIdKota+'">'+arrKota[i]["nama"]+'</option>');
+			}
+		}
+		
+		$('#lokasi_editGrup').val(alamat);
+		
+		var html =	"<div id='isi_latlng_editGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+		html	+=		"<input type='hidden' id='lat_editGrup' value='"+lat+"'>";
+		html	+=		"<input type='hidden' id='lng_editGrup' value='"+lng+"'>";
+		html	+=	"</div>"
+		$("#isi_latlng_editGrup").remove();
+		$("#latlng_editGrup").append(html);
+		
+		$("#isi_foto_editGrup").remove();
+		$('#foto_editGrup').append('<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:240px; height:120px;">');
+		
+	}).fail(function(x){
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+	}); 
+});
+
+myApp.onPageInit('editProfile', function (page) {
+	var nama = getData("active_user_nama");
+	var id_kota =  getData("active_user_kota");
+	var foto =getImage('profilePic')
+	var gender = getData("active_user_jenis_kelamin");
+	$('#nama_editProfile').val(nama);
+	var arrKota=[];
+	var link=urlnya+'/api/kota/';
+	$.ajax({ dataType: "jsonp",
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(zz){
+		arrKota=zz;	
+		$("#kota_editProfile").empty();
+		$("#kota_editProfile").append('<option value="0">Pilih Kota</option>');
+		
+		for(var i=0;i<arrKota.length;i++)
+		{
+			var tempIdKota=1+i;
+			if(arrKota[i]["id"]==id_kota)
+			{
+				$("#kota_editProfile").append('<option value="'+tempIdKota+'" selected>'+arrKota[i]["nama"]+'</option>');
+			}
+			else
+			{
+				$("#kota_editProfile").append('<option value="'+tempIdKota+'">'+arrKota[i]["nama"]+'</option>');
+			}
+		}
+		
+		$("#isi_foto_editProfile").remove();
+		$('#foto_editProfile').append('<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:240px; height:120px;">');
+		
+		if(gender=="Laki-laki")
+		{
+			$("#laki_editProfile").attr('checked', 'checked');
+		}
+		else
+		{
+			$("#perempuan_editProfile").attr('checked', 'checked');
+		}
+		
+	}).fail(function(x){
+		myApp.alert("Pengambilan data kota gagal", 'Perhatian!(line 1323)');
+	}); 
+});
+
 myApp.onPageInit('buatEvent', function (page) {
 	getKotaBuatEvent();
 	$(".select-list-kelas").empty();
@@ -199,6 +322,8 @@ $$('.panel-left').on('panel:opened', function () {
 	var idUser=getData("active_user_id");
 	$("#index_name").html("");
 	$("#index_name").append(username);
+	
+	
 	
 	$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 	

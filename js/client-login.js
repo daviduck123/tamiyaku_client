@@ -55,6 +55,7 @@ function loginPost() {
 							saveData( "active_user_id",z.user.id);
 							saveData( "active_user_email",z.user.email);
 							saveData( "active_user_nama",z.user.nama);
+							saveData( "active_user_kota",z.user.id_kota);
 							saveData( "active_user_jenis_kelamin",z.user.jenis_kelamin);
 							saveData( "expires",expires);
 

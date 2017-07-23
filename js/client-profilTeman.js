@@ -400,8 +400,8 @@ function getProfilTeman(clickedId, statusTeman){
 							html +=	'<center>';
 							html +=	'<table id="infoProfile" style="margin-top:20px;">';
 							html += 		'<tr>';
-							html += 			'<td rowspan="3">';
-							html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px;">';
+							html += 			'<td rowspan="4">';
+							html += 				'<img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:80px; height:80px; margin-right:10px;">';
 							html += 			'</td>';
 							html +=				'<td style="font-weight:bold;"><center>'+banyakPost+'</center></td>';
 							html +=				'<td style="font-weight:bold;"><center>'+banyakTeman+'</center></td>';
@@ -413,9 +413,10 @@ function getProfilTeman(clickedId, statusTeman){
 							html += 		'<tr>';
 							html += 			'<td colspan="4"><a href="#" ><i class="icon fa fa-envelope-o"></i><span style="margin:10px;">'+email+'</span></a></td>';
 							html += 		'</tr>';
+							html += 		'<tr>';
+							html += 			'<td colspan="4" align="right"><a href="editProfile.html" class ="badge" >Edit Profile</a></td>';
+							html += 		'</tr>';
 							html += 	'</table>';
-							html +='						<br>';
-							html +='						<br>';
 							
 							html +='						</div> ';
 							html +='						</center> ';

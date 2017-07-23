@@ -1,0 +1,84 @@
+
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="editProfile" class="page">
+            <!-- Scrollable page content-->
+			<div class="navbar">
+          <div class="navbar-inner">
+          <div class="left">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" onclick="viewRouterBack();" class="link icon-only" style="color:black;"> <i class="icon fa fa-arrow-left"></i></a>
+            </div>
+            <!-- We have home navbar without left link-->
+            <div class="center sliding" style="font-weight:bold;">Edit Profile</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" data-panel="right" class="link icon-only open-panel" style="color:black;"> <i class="icon fa fa-bell-o"></i></a>
+            </div>
+          </div>
+        </div>
+            <div class="page-content">
+             <form action="/action_page.php">
+            <center>
+			<br>
+            <div id="foto_editProfile">
+				<div id="isi_foto_editProfile">
+					<img class="lazy" src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
+				</div>
+			</div>
+            </center>
+            <br>
+            <br>
+            <center>
+            <table style="margin-top:-30px;">
+                <tr>
+                    <td><p>Nama</p></td>
+                    <td><input id="nama_editProfile" type="text" required></td>
+                </tr>
+                <tr>
+                    <td><p>Kota</p></td>
+					<td>
+					<select id="kota_editProfile">
+					  <option value="0">Pilih Kota</option>
+					</select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Password</p></td>
+                    <td><input id="password_editProfile" type="password" required></td>
+                </tr>
+				<tr>
+                    <td><p>Konfirmasi Password</p></td>
+                    <td><input id="con_password_editProfile" type="password" required></td>
+                </tr>
+                <tr>
+                    <td><p>Foto Profile</p></td>
+                    <div style="height:0px;overflow:hidden">
+                        <input type="file" id="file_editProfile" accept="image/*"/>
+                        </div>
+                    <td><p><a href="#" class="button"  onclick="chooseFile_editProfile();" style="width:150px;">Pilih Gambar..</a></p></td>
+                </tr>
+                <tr>
+                    <td><p>Jenis Kelamin</p></td>
+                    <td>
+						<input type="radio" id="laki_editProfile" name="gender_editProfile" value="Laki-laki"> Laki-laki
+					</td>
+                </tr>
+                 <tr>
+                    <td rowspan="2"></td>
+                    <td><input  type="radio" id="perempuan_editProfile" name="gender_editProfile" value="Perempuan"> Perempuan</td>
+                </tr>
+            </table>
+			<p><a href="#" class="button" onclick="editProfileSimpan();" style="width:250px;">Simpan...</a></p>
+            </center>
+              </div>
+              </form>
+              <div class="content-block-title">Side panels</div>
+              <div class="content-block">
+                <div class="row">
+                  <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
+                  <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+	

@@ -11,6 +11,7 @@ function logout() {
 	eraseData("active_user_id");
 	eraseData("active_user_nama");
 	eraseData("active_user_email");
+	eraseData("active_user_kota");
 	eraseData("active_user_jenis_kelamin");
 	eraseData("expires");
 }

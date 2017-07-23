@@ -19,7 +19,11 @@
             <div class="page-content">
              <form action="/action_page.php">
             <center>
-            <img class="lazy" src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
+			<div id="foto_editGrup">
+				<div id="isi_foto_editGrup">
+					<img class="lazy" src="img/i-f7-material.png" style="width:120px; height:120px;"></img> 
+				</div>
+			</div>
             </center>
             <br>
             <br>
@@ -27,6 +31,7 @@
             <center>
             <table style="margin-top:-30px;">
                 <tr>
+					<input id="id_editGrup" type="hidden" required>
                     <td><p>Nama Grup</p></td>
                     <td><input id="nama_editGrup" type="text" required></td>
                 </tr>
@@ -37,7 +42,7 @@
 				<tr>
                     <td><p>Kelas</p></td>
 					<td>
-					<select name="kelas_editGrup" id="kelas_editGrup"  class="select-list-kelas">
+					<select name="kelas_editGrup" id="kelas_editGrup" >
 					  <option value="0">Pilih Kelas</option>
 					  <option value="1">STB</option>
 					  <option value="2">STO</option>
@@ -59,7 +64,7 @@
                 </tr>
                 <tr>
                     <td><p>Lokasi Peta</p></td>
-					<td><p><a href="#" class="button"  onclick="gotoGoogleMap();" style="width:150px;">Pilih Lokasi..</a></p></td>
+					<td><p><a href="#" class="button"  onclick="gotoGoogleMapEdit();" style="width:150px;">Pilih Lokasi..</a></p></td>
                 </tr>
 				<tr>
 					<td></td>

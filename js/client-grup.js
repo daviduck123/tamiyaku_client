@@ -471,12 +471,11 @@ function showButtonLeaveGrup(id){
 		var active_user_id = getData("active_user_id");
 		if(active_user_id==z[0]["id_user"])
 		{
-			console.log("masuk if");
 			$("#isi_leaveGrup").remove();
 			$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
 					
 			var html =	'<a href="#" id="hapusGrup" class ="badge" onclick="pilihanHapusGrup('+id+');" type="submit">Hapus Grup</a><br><br>';
-			html +=	'<a href="#" id="editProfileGrup" class ="badge" onclick="editProfileGrup('+id+');" type="submit">Edit Grup</a>';
+			html +=	'<a href="#" id="gotoEditProfileGrup" class ="badge" onclick="gotoEditProfileGrup();" type="submit">Edit Grup</a>';
 			
 			//jika sudah ada tidak perlu bikin lagi
 			//if($("#keluarGrup").length == 0) {
@@ -499,6 +498,10 @@ function showButtonLeaveGrup(id){
 	}).fail(function(x){
 		myApp.alert("Pengambilan data grup gagal", 'Perhatian!');
 	}); 
+}
+
+function gotoEditProfileGrup(){
+	mainView.router.loadPage('editGrup.html');
 }
 
 function pilihanHapusGrup(id_grup){
@@ -914,6 +917,7 @@ function getInfoGrup(clickedId){
 				var lat=z[i]['lat'];
 				var lng=z[i]['lng'];
 				var lokasi=z[i]['lokasi'];
+				var kelas=z[i]['id_kelas'];
 				var id_kota=z[i]['id_kota'];
 				id_kota-=1;
 				
@@ -930,17 +934,25 @@ function getInfoGrup(clickedId){
 						var html=	'<input type="hidden" id="id_grup_temp" value="'+id_grup+'">';
 						html +=	'<table id="detil_grup" style="margin-top:20px;">';
 						html += 		'<tr>';
+						html += 			'<input id="temp_id_grup" type="hidden" value="'+id_grup+'">';
 						html += 			'<td rowspan="4"><img class="lazy" src="data:image/jpeg;base64,'+foto+'" style="width:90px; height:90px;  margin-right:10px"></td>';
-						html += 			'<td style="font-weight:bold;"><a id="nama_grup">'+nama+'</a></td>';
+						html += 			'<input id="temp_foto_grup" type="hidden" value="'+foto+'">';
+						html += 			'<td style="font-weight:bold;"><b id="nama_grup">'+nama+'</b></td>';
+						html += 			'<input id="temp_nama_grup" type="hidden" value="'+nama+'">';
 						html += 		'</tr>';
 						html += 		'<tr>';
-						html += 			'<td style="font-weight:bold;"><a id="kota_grup">'+zz[id_kota]['nama']+'</a></td>';
+						html += 			'<td style="font-weight:bold;"><b id="kota_grup">'+zz[id_kota]['nama']+'</b></td>';
+						html += 			'<input id="temp_kota_grup" type="hidden" value="'+zz[id_kota]['id']+'">';
+						html += 			'<input id="temp_kelas_grup" type="hidden" value="'+kelas+'">';
 						html += 		'</tr>';
 						html += 		'<tr>';
-						html += 			' <td colspan="2"><a id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></a></td>';
+						html += 			' <td colspan="2"><b id="alamat_grup"><i class="icon fa fa-map-marker"></i><span style="margin:10px;">'+lokasi+'</span></b></td>';
+						html += 			'<input id="temp_alamat_grup" type="hidden" value="'+lokasi+'">';
 						html += 		'</tr>';
 						html += 		'<tr>';
 						html += 			'<td colspan="2"><a href="#" onclick="gotoPetaGrup('+lat+','+lng+');"><i class="icon fa fa-map"></i><span style="margin:10px;">Tap disini untuk melihat peta</span></a></td>';
+						html += 			'<input id="temp_lat_grup" type="hidden" value="'+lat+'">';
+						html += 			'<input id="temp_lng_grup" type="hidden" value="'+lng+'">';
 						html += 		'</tr>';
 						html += 	'</table';
 						
@@ -1213,81 +1225,6 @@ function simpanKomentarGrup(id_grup, clicked_id)
 	}).fail(function(x){
 		myApp.alert('Maaf terjadi kesalahan, silahkan coba lagi', 'Perhatian!');
 	});
-}
-
-function editGrupPost(clicked_id, id_grup)
-{
-	myApp.showPreloader('Mengambil data...');
-	var id_user = getData("active_user_id");
-	var id_grup=id_grup;
-	
-	var link=urlnya+'/api/post/getAllPostByGrup?id_grup='+id_grup;
-
-	$.ajax({
-	    url: link,
-	    type: 'GET',
-	    contentType: false,
-	    processData: false
-	}).done(function(z){
-		myApp.closeModal();
-		var coba="";
-		var dataLength=0;
-		for (var ii = 0 ; ii < z.length ; ii++) {
-			coba+=z[ii]['id']+"|"; 
-			dataLength++;
-		}
-		for(var i=0;i<dataLength;i++)
-		{
-			if(clicked_id==z[i]['id'])
-			{
-				if(z[i]['foto']!="")
-				{
-					myApp.popup('.popup-editPostGrup');
-					var popupHTML=	'<div class="popup">'+
-								'<div class="content-block">'+
-								'<p>Edit Kiriman</p>'+
-											'<div class="page-content">'+
-											'<center><textarea id="statusGrupEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
-											'placeholder="Tulis Kiriman Anda..">'+z[i]['deskripsi']+'</textarea>'+
-											"<img class='lazy' src='data:image/jpeg;base64,"+z[i]['foto']+"' style='width:100%; height:100%;'>"+
-											'</center>'+
-										'<div style="height:0px;overflow:hidden">'+
-										'<input type="file" id="file_editGrup" accept="image/*"/>'+
-										'</div>'+
-										'<p><a href="#" class="button active" onclick="simpanEditPost(this.id,'+id_grup+');" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
-										'<p><a href="#" class="button"  onclick="chooseFile_editGrup();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
-							   ' </div>'+
-							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
-						'</div>'+
-					'</div>';
-					myApp.popup(popupHTML);
-				}
-				else
-				{
-					myApp.popup('.popup-editPostGrup');
-					var popupHTML=	'<div class="popup">'+
-								'<div class="content-block">'+
-								'<p>Edit Kiriman</p>'+
-											'<div class="page-content">'+
-											'<center><textarea id="statusGrupEdit" style="resize:none; margin-top:10px; width:90%; height:60px;" '+
-											'placeholder="Tulis Kiriman Anda..">'+z[i]['deskripsi']+'</textarea>'+
-											'</center>'+
-										'<div style="height:0px;overflow:hidden">'+
-										'<input type="file" id="file_editGrup" accept="image/*"/>'+
-										'</div>'+
-										'<p><a href="#" class="button active" onclick="simpanEditPost(this.id,'+id_grup+');" id='+clicked_id+' type="submit" style="width:70px; float:right; margin-right:5%;">Update</a></p>'+
-										'<p><a href="#" class="button"  onclick="chooseFile_editGrup();" style=" float:right; margin-right:10px; width:85px;">Gambar..</a></p>'+
-							   ' </div>'+
-							   '<p><a href="#" onclick="tutupModal()" class="close-popup">Kembali</a></p>'+
-						'</div>'+
-					'</div>';
-					myApp.popup(popupHTML);
-				}
-			}
-		}
-	}).fail(function(x){
-		myApp.alert("Pengambilan data kiriman grup gagal", 'Perhatian!');
-	});  
 }
 
 function simpanEditPost(clicked_id, id_grup) {
