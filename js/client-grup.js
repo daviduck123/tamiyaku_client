@@ -460,15 +460,114 @@ function showButtonJoinGrup(id){
 }
 
 function showButtonLeaveGrup(id){
-	$("#isi_leaveGrup").remove();
-	$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
+	var link=urlnya+'/api/grup/getGrupInfo?id_grup='+id;
+		
+	$.ajax({ dataType: "jsonp",
+	    url: link,
+	    type: 'GET',
+	    contentType: false,
+	    processData: false
+	}).done(function(z){
+		var active_user_id = getData("active_user_id");
+		if(active_user_id==z[0]["id_user"])
+		{
+			console.log("masuk if");
+			$("#isi_leaveGrup").remove();
+			$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
+					
+			var html =	'<a href="#" id="hapusGrup" class ="badge" onclick="pilihanHapusGrup('+id+');" type="submit">Hapus Grup</a><br><br>';
+			html +=	'<a href="#" id="editProfileGrup" class ="badge" onclick="editProfileGrup('+id+');" type="submit">Edit Grup</a>';
 			
-	var html =	'<a href="#" id="keluarGrup" class ="badge" onclick="leaveThisGrup('+id+');" type="submit">Keluar grup</a>';
+			//jika sudah ada tidak perlu bikin lagi
+			//if($("#keluarGrup").length == 0) {
+				$("#isi_leaveGrup").append(html);
+			//}
+		}
+		else
+		{
+			$("#isi_leaveGrup").remove();
+			$("#leaveGrup").append('<div id="isi_leaveGrup"></div>');
+					
+			var html =	'<a href="#" id="keluarGrup" class ="badge" onclick="pilihanKeluarGrup('+id+');" type="submit">Keluar grup</a>';
+			
+			//jika sudah ada tidak perlu bikin lagi
+			//if($("#keluarGrup").length == 0) {
+				$("#isi_leaveGrup").append(html);
+			//}
+		}
 	
-	//jika sudah ada tidak perlu bikin lagi
-	//if($("#keluarGrup").length == 0) {
-		$("#isi_leaveGrup").append(html);
-	//}
+	}).fail(function(x){
+		myApp.alert("Pengambilan data grup gagal", 'Perhatian!');
+	}); 
+}
+
+function pilihanHapusGrup(id_grup){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin menghapus grup ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			hapusGrupTrue(id_grup);
+        }
+      },
+    ]
+  })
+}
+
+function hapusGrupTrue(clickedId){
+	myApp.showPreloader('Mengambil data...');
+	var id_grup=clickedId;
+	var id_user = getData("active_user_id");
+	
+	var link=urlnya+'/api/grup/deleteGrup?id_grup='+id_grup;
+
+		$.ajax({ dataType: "jsonp",
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			myApp.closeModal();
+			console.log(z.status);
+			if(z.status==true)
+			{
+				$("#isi_leaveGrup").remove();
+				$("#isi_postingan_grup").remove();
+				mainView.router.loadPage('home.html');
+				myApp.alert("Anda telah menghapus grup dari grup", 'Perhatian!');
+			}
+		}).fail(function(x){
+			myApp.alert("Pengambilan postingan grup gagal", 'Perhatian!');
+		}); 
+}
+
+function pilihanKeluarGrup(id_grup){
+  myApp.modal({
+    title:  'Pilihan',
+    text: 'Apakah anda ingin kelaur grup ini?',
+    buttons: [
+      {
+        text: 'Tidak',
+        onClick: function() {
+        }
+      },
+      {
+        text: 'Ya',
+		bold: true,
+        onClick: function() {
+			leaveThisGrup(clicked_id, id_komentar);
+        }
+      },
+    ]
+  })
 }
 
 function leaveThisGrup(clickedId){
