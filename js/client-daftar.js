@@ -221,8 +221,12 @@ function registerPost() {
 		    contentType: false
 		}).done(function(z){
 			myApp.closeModal();
-			mainView.router.loadPage('login.html');
-			myApp.alert('Data anda berhasil dibuat, silahkan login', 'Berhasil!');
+			//mainView.router.loadPage('login.html');
+			myApp.alert('Data anda berhasil dibuat, silahkan cek email untuk kode aktivasi', 'Berhasil!');
+			
+			saveData( "temp_active_email",email);
+			saveData( "temp_active_password",password);
+			
 			
 			eraseData("username");
 			eraseData("kota");
@@ -233,6 +237,8 @@ function registerPost() {
 			eraseData("kelas1");
 			eraseData("kelas2");
 			eraseData("kelas3");
+			
+			loginBySavedData();
 
 		}).fail(function(x){
 			myApp.closeModal();
