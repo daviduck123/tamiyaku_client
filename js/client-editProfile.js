@@ -59,6 +59,11 @@ function editProfileSimpan()
 						var formData = new FormData();
 						formData.append("nama", nama);
 						formData.append("jenis_kelamin", gender);
+						if(password.length>0)
+						{
+							console.log(password);
+							formData.append("password", password);
+						}
 						formData.append("id_kota", id_kota);
 						formData.append("id_user", id_user);
 						formData.append("file", blob);
