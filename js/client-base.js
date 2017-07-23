@@ -3,7 +3,7 @@ var urlnya="http://server.neoalitcahya.com";
 //var urlnya = "http://10.0.2.2/tamiyaku-server"
 var globalListKelas = [];
 var globalCookie = [];
-
+var globalLapak = [];
 
 function logout() {
 	myApp.closePanel();

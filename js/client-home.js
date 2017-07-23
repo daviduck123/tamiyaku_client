@@ -410,6 +410,8 @@ function editPost(clicked_id)
 	    contentType: false,
 	    processData: false
 	}).done(function(z){
+		
+		myApp.closeModal();
 		var coba="";
 		var dataLength=0;
 		for (var ii = 0 ; ii < z.length ; ii++) {
@@ -465,7 +467,6 @@ function editPost(clicked_id)
 				}
 			}
 		}
-		myApp.closeModal();
 	}).fail(function(x){
 		myApp.alert("Pengambilan status user gagal", 'Perhatian!');
 	}); 
@@ -545,8 +546,9 @@ function statusEditPost(clicked_id) {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			getAllPost();
 			myApp.closeModal();
+			$(".modal-overlay-visible").remove();
+			getAllPost();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";

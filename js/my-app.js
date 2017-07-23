@@ -128,6 +128,27 @@ myApp.onPageInit('searchTemanGrup', function (page) {
 	myApp.closePanel();
 });
 
+myApp.onPageInit('jualBeli', function (page) {
+	
+	var link=urlnya+'/api/kategori/';
+	$.ajax({ dataType: "jsonp",
+		url: link,
+		type: 'GET',
+		contentType: false,
+		processData: false
+	}).done(function(dataKategori){
+		console.log("masuk");
+		var dataLengthKategori=0;
+		for (var aaa = 0 ; aaa < dataKategori.length ; aaa++) {
+			 $('#show_kategori_jualBeli').append('<option value="'+aaa+'">'+dataKategori[aaa]["nama"]+'</option>');
+		}
+	}).fail(function(x){
+		myApp.closePanel();
+		myApp.alert("Pengambilan data kategori gagal", 'Perhatian!');
+	});	
+	
+});
+
 myApp.onPageInit('buatJualBarang', function (page) {
 	getKotaBuatJualBarang();
 	$(".select-list-kelas").empty();
@@ -139,6 +160,10 @@ myApp.onPageInit('buatJualBarang', function (page) {
 	        text : value[0]
 	    }));
 	});
+	$(".active_user_email").empty();
+	$email=getData("active_user_email");
+	$data='<input id="email_buatJualBarang" type="text" value="'+$email+'" disabled>';
+	$(".active_user_email").append($data);
 	
 	var link=urlnya+'/api/kategori/';
 	$.ajax({ dataType: "jsonp",
@@ -148,6 +173,10 @@ myApp.onPageInit('buatJualBarang', function (page) {
 		processData: false
 	}).done(function(dataKategori){
 		var myOptions = dataKategori;
+		//var lengthKategori=0;
+		//for (var dataI = 0 ; dataI < arrKategori.length; dataI++) {
+		//	lengthKategori++;
+		//}
 		$.each(myOptions, function(i, el) 
 		{ 
 		   $('#kategori_buatJualBarang').append( new Option(el.nama,el.id) );
