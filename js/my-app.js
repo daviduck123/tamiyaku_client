@@ -203,8 +203,10 @@ $$('.panel-left').on('panel:opened', function () {
 	$(".profilePicture").attr('src','data:image/jpeg;base64,'+getImage('profilePic'));
 	
 	document.getElementById("masukProfileKu").setAttribute("onclick", "gotoProfilTeman("+idUser+");");
-	
-	//ubah kelas=========================
+	var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
+	if(kelas_dipilih==""||kelas_dipilih==null)
+	{
+		//ubah kelas=========================
 		$(".select-list-kelas").empty();
 		$.each(globalListKelas, function (id, text) {
 			var key = Object.keys(text);
@@ -215,6 +217,7 @@ $$('.panel-left').on('panel:opened', function () {
 			}));
 		});
 	//==============================================
+	}
 });
 
 $$('.panel-right').on('panel:opened', function () {
