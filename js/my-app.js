@@ -140,7 +140,8 @@ myApp.onPageInit('jualBeli', function (page) {
 		console.log("masuk");
 		var dataLengthKategori=0;
 		for (var aaa = 0 ; aaa < dataKategori.length ; aaa++) {
-			 $('#show_kategori_jualBeli').append('<option value="'+aaa+'">'+dataKategori[aaa]["nama"]+'</option>');
+			var tempA=aaa+1;
+			 $('#show_kategori_jualBeli').append('<option value="'+tempA+'">'+dataKategori[aaa]["nama"]+'</option>');
 		}
 	}).fail(function(x){
 		myApp.closePanel();
@@ -259,5 +260,5 @@ function setPullRefreshProfilTeman(){
 }
 
 function viewRouterBack(){
-mainView.router.back();
+	mainView.router.back();
 }
