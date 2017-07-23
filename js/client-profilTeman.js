@@ -60,6 +60,7 @@ function getAllTemanPost(clickedId) {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
+			myApp.closeModal();
 			var coba="";
 			var dataLength=0;
 			for (var ii = 0 ; ii < z.length; ii++) {
@@ -333,6 +334,7 @@ function getProfilTeman(clickedId, statusTeman){
 					contentType: false,
 					processData: false
 				}).done(function(z){
+					myApp.closeModal();
 					var coba="";
 					var banyakTeman=0;
 					for (var iii = 0 ; iii < z.length ; iii++) {
@@ -620,14 +622,13 @@ function addFriend(clickedId){
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
-			console.log(z.status);
+			myApp.closeModal();
 			if(z.status==true)
 			{
 				myApp.alert("Tambah teman berhasil", 'Perhatian!');
 				getAllTemanPost(id_teman);
 				getProfilTeman(id_teman,1);
 			}
-			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Tambah teman gagal", 'Perhatian!');
 		}); 

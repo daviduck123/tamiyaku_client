@@ -114,7 +114,8 @@ function buatJualBarangPost() {
 function getAllJualBeliPost() {
 	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
-	
+	var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
+
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
 	$.ajax({ dataType: "jsonp",
@@ -157,8 +158,10 @@ function getAllJualBeliPost() {
 					//munculkan semua post
 					for(var i=0;i<dataLength;i++)
 					{
-						var tempIdKota=z[i]['id_kota'];
-						tempIdKota -=1;
+						if(kelas_dipilih==z[i]['id_kelas'])
+						{
+							var tempIdKota=z[i]['id_kota'];
+							tempIdKota -=1;
 							var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 							html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 							html += 			"<tr>";
@@ -197,11 +200,11 @@ function getAllJualBeliPost() {
 							html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 							html +=					'<td>: </td>';
 							if(z[i]['id_kelas']==1)
-								html +=					'<td colspan="1" value="1">STB</td>';
+								html +=					'<td colspan="2" value="1">STB</td>';
 							else if(z[i]['id_kelas']==2)
-								html +=					'<td colspan="2" value="1">STO</td>';
+								html +=					'<td colspan="2" value="2">STO</td>';
 							else if(z[i]['id_kelas']==3)
-								html +=					'<td colspan="3" value="1">SPEED</td>';
+								html +=					'<td colspan="2" value="3">SPEED</td>';
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
@@ -230,6 +233,7 @@ function getAllJualBeliPost() {
 							html += 	"</div>";
 							
 							$("#isi_container_jualBeli").append(html);
+						}
 					}
 					myApp.closeModal();
 				}).fail(function(x){
@@ -249,6 +253,7 @@ function getAllJualBeliPostVar(id_post) {
 	myApp.showPreloader('Mengambil data...');
 	var id_kategori = $('#show_kategori_jualBeli').find(":selected").val();
 	var id_user=getData("active_user_id");
+	var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -295,8 +300,10 @@ function getAllJualBeliPostVar(id_post) {
 					//munculkan semua post
 					for(var i=0;i<dataLength;i++)
 					{
-						var tempIdKota=z[i]['id_kota'];
-						tempIdKota -=1;
+						if(kelas_dipilih==z[i]['id_kelas'])
+						{
+							var tempIdKota=z[i]['id_kota'];
+							tempIdKota -=1;
 							var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 							html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 							html += 			"<tr>";
@@ -337,11 +344,11 @@ function getAllJualBeliPostVar(id_post) {
 							html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 							html +=					'<td>: </td>';
 							if(z[i]['id_kelas']==1)
-								html +=					'<td colspan="1" value="1">STB</td>';
+								html +=					'<td colspan="2" value="1">STB</td>';
 							else if(z[i]['id_kelas']==2)
-								html +=					'<td colspan="2" value="1">STO</td>';
+								html +=					'<td colspan="2" value="2">STO</td>';
 							else if(z[i]['id_kelas']==3)
-								html +=					'<td colspan="3" value="1">SPEED</td>';
+								html +=					'<td colspan="2" value="3">SPEED</td>';
 							html += 			"</tr>";
 							html += 			"<tr>";
 							html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
@@ -370,6 +377,7 @@ function getAllJualBeliPostVar(id_post) {
 							html += 	"</div>";
 							
 							$("#isi_container_jualBeli").append(html);
+						}
 					}
 					bacaJualBeliKomentar(id_post);
 				}
@@ -378,10 +386,12 @@ function getAllJualBeliPostVar(id_post) {
 					//munculkan semua post
 					for(var i=0;i<dataLength;i++)
 					{
-						if(id_kategori==dataKategori[z[i]['id_kategori']-1]["id"])
+						if(kelas_dipilih==z[i]['id_kelas'])
 						{
-							var tempIdKota=z[i]['id_kota'];
-							tempIdKota -=1;
+							if(id_kategori==dataKategori[z[i]['id_kategori']-1]["id"])
+							{
+								var tempIdKota=z[i]['id_kota'];
+								tempIdKota -=1;
 								var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 								html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 								html += 			"<tr>";
@@ -422,11 +432,11 @@ function getAllJualBeliPostVar(id_post) {
 								html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 								html +=					'<td>: </td>';
 								if(z[i]['id_kelas']==1)
-									html +=					'<td colspan="1" value="1">STB</td>';
+									html +=					'<td colspan="2" value="1">STB</td>';
 								else if(z[i]['id_kelas']==2)
-									html +=					'<td colspan="2" value="1">STO</td>';
+									html +=					'<td colspan="2" value="3">STO</td>';
 								else if(z[i]['id_kelas']==3)
-									html +=					'<td colspan="3" value="1">SPEED</td>';
+									html +=					'<td colspan="2" value="4">SPEED</td>';
 								html += 			"</tr>";
 								html += 			"<tr>";
 								html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
@@ -455,6 +465,7 @@ function getAllJualBeliPostVar(id_post) {
 								html += 	"</div>";
 								
 								$("#isi_container_jualBeli").append(html);
+							}
 						}
 					}
 					bacaJualBeliKomentar(id_post);
@@ -1013,6 +1024,7 @@ function ubahView()
 function getAllJualBeliPostByKategori(id_kategori) {
 	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
+	var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
 	
 	var arrKota=[];
 	var link=urlnya+'/api/kota/';
@@ -1053,14 +1065,15 @@ function getAllJualBeliPostByKategori(id_kategori) {
 					}
 					
 					$("#isi_container_jualBeli").html("");
-					
 					if(id_kategori==0)
 					{
 						//munculkan semua post
 						for(var i=0;i<dataLength;i++)
 						{
-							var tempIdKota=z[i]['id_kota'];
-							tempIdKota -=1;
+							if(kelas_dipilih==z[i]['id_kelas'])
+							{
+								var tempIdKota=z[i]['id_kota'];
+								tempIdKota -=1;
 								var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 								html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 								html += 			"<tr>";
@@ -1099,11 +1112,11 @@ function getAllJualBeliPostByKategori(id_kategori) {
 								html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 								html +=					'<td>: </td>';
 								if(z[i]['id_kelas']==1)
-									html +=					'<td colspan="1" value="1">STB</td>';
+									html +=					'<td colspan="2" value="1">STB</td>';
 								else if(z[i]['id_kelas']==2)
-									html +=					'<td colspan="2" value="1">STO</td>';
+									html +=					'<td colspan="2" value="2">STO</td>';
 								else if(z[i]['id_kelas']==3)
-									html +=					'<td colspan="3" value="1">SPEED</td>';
+									html +=					'<td colspan="2" value="3">SPEED</td>';
 								html += 			"</tr>";
 								html += 			"<tr>";
 								html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
@@ -1132,6 +1145,7 @@ function getAllJualBeliPostByKategori(id_kategori) {
 								html += 	"</div>";
 								
 								$("#isi_container_jualBeli").append(html);
+							}
 						}
 						myApp.closeModal();
 					}
@@ -1140,10 +1154,12 @@ function getAllJualBeliPostByKategori(id_kategori) {
 						//munculkan semua post
 						for(var i=0;i<dataLength;i++)
 						{
-							if(id_kategori==dataKategori[z[i]['id_kategori']-1]["id"])
+							if(kelas_dipilih==z[i]['id_kelas'])
 							{
-								var tempIdKota=z[i]['id_kota'];
-								tempIdKota -=1;
+								if(id_kategori==dataKategori[z[i]['id_kategori']-1]["id"])
+								{
+									var tempIdKota=z[i]['id_kota'];
+									tempIdKota -=1;
 									var html=	"<div id='posting_jualBeli_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 									html += 		"<table id='table_jualBeli_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 									html += 			"<tr>";
@@ -1182,11 +1198,11 @@ function getAllJualBeliPostByKategori(id_kategori) {
 									html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 									html +=					'<td>: </td>';
 									if(z[i]['id_kelas']==1)
-										html +=					'<td colspan="1" value="1">STB</td>';
+										html +=					'<td colspan="2" value="1">STB</td>';
 									else if(z[i]['id_kelas']==2)
-										html +=					'<td colspan="2" value="1">STO</td>';
+										html +=					'<td colspan="2" value="2">STO</td>';
 									else if(z[i]['id_kelas']==3)
-										html +=					'<td colspan="3" value="1">SPEED</td>';
+										html +=					'<td colspan="2" value="3">SPEED</td>';
 									html += 			"</tr>";
 									html += 			"<tr>";
 									html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';
@@ -1215,9 +1231,10 @@ function getAllJualBeliPostByKategori(id_kategori) {
 									html += 	"</div>";
 									
 									$("#isi_container_jualBeli").append(html);
+								}
 							}
+							myApp.closeModal();
 						}
-						myApp.closeModal();
 						myApp.closeModal();
 					}
 				}).fail(function(x){

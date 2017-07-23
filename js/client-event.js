@@ -151,6 +151,7 @@ function buatEventPost() {
 function getAllEventPost() {
 	myApp.showPreloader('Mengambil data...');
 	var id_user=getData("active_user_id");
+	var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
 	
 	var link=urlnya+'/api/kota/';
 		$.ajax({ dataType: "jsonp",
@@ -180,6 +181,8 @@ function getAllEventPost() {
 				//munculkan semua post
 				for(var i=0;i<dataLength;i++)
 				{
+					if(kelas_dipilih==z[i]["id_kelas"])
+					{
 						var html=	"<div id='posting_event_"+z[i]['id']+"' style='margin-bottom:50px;'>";
 						html += 		"<table id='table_event_"+z[i]['id']+"' style='background-color:white;'  width='100%;'>";
 						html += 			"<tr>";
@@ -262,7 +265,12 @@ function getAllEventPost() {
 						html += 			"<tr>";
 						html +=					'<td colspan="2" height="30px;" style="font-weight:bold;"><div style="width:100px;">Kelas Lomba</div></td>';
 						html +=					'<td>: </td>';
-						html +=					'<td colspan="2" style="font-weight:bold;">Speed '+z[i]['hadiah3']+'</td>';
+						if(z[i]['id_kelas']==1)
+							html +=					'<td colspan="2" style="font-weight:bold;">STB</td>';
+						else if(z[i]['id_kelas']==2)
+							html +=					'<td colspan="2" style="font-weight:bold;">STO</td>';
+						else if(z[i]['id_kelas']==3)
+							html +=					'<td colspan="2" style="font-weight:bold;">SPEED</td>';
 						html += 			"</tr>";
 						html += 			"<tr>";
 						html += 				'<td colspan="5" class="q" >';
@@ -278,7 +286,8 @@ function getAllEventPost() {
 						
 						
 						$("#isi_container_event").append(html);
-					myApp.closeModal();
+						myApp.closeModal();
+					}
 				}
 				
 			}).fail(function(x){

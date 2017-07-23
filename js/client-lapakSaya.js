@@ -172,11 +172,11 @@ function getAllLapakSayaPost() {
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';
 					html +=					'<td>: </td>';
 					if(z[i]['id_kelas']==1)
-						html +=					'<td colspan="1" value="1">STB</td>';
+						html +=					'<td colspan="2" value="1">STB</td>';
 					else if(z[i]['id_kelas']==2)
-						html +=					'<td colspan="2" value="1">STO</td>';
+						html +=					'<td colspan="2" value="2">STO</td>';
 					else if(z[i]['id_kelas']==3)
-						html +=					'<td colspan="3" value="1">SPEED</td>';
+						html +=					'<td colspan="2" value="3">SPEED</td>';
 					html += 			"</tr>";
 					html += 			"<tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kota</div></td>';

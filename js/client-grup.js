@@ -307,6 +307,7 @@ function getKotaBuatGrup() {
 		    contentType: false,
 		    processData: false
 		}).done(function(z){
+			myApp.closeModal();
 			var myOptions = z;
 
 			$.each(myOptions, function(i, el) 
