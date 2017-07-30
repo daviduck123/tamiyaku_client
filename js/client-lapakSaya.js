@@ -166,7 +166,7 @@ function getAllLapakSayaPost() {
 					html += 			"<tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kategori</div></td>';
 					html +=					'<td>: </td>';
-					html +=					'<td colspan="2">'+z[i]['id_kategori']+'</td>';
+					html +=					'<td colspan="2">'+z[i]['kategori_name']+'</td>';
 					html += 			"</tr>";
 					html += 			"</tr>";
 					html +=					'<td colspan="2" height="30px;"><div style="width:100px;">Kelas</div></td>';

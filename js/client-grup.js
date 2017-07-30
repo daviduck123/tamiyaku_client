@@ -2,7 +2,6 @@
 var list_id_kelas=getData("list_id_kelas");
 function getNearbyGrup(){
 	myApp.showPreloader('Mengambil data...');
-	var id_user = getData("active_user_id");
 
 	if ( navigator.geolocation )
 	{
@@ -16,6 +15,7 @@ function getNearbyGrup(){
 }
 	
 function showPosition(position) {
+	var id_user = getData("active_user_id");
 	var latKuSekarang = position.coords.latitude;
 	var lngKuSekarang = position.coords.longitude;
 	
