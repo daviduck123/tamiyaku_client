@@ -1,5 +1,7 @@
 //-----------------------------------------------------------------------------------------------------------------------------------------------------GRUP
 var list_id_kelas=getData("list_id_kelas");
+var currentLat = 0;
+var currentLng = 0;
 function getNearbyGrup(){
 	myApp.showPreloader('Mengambil data...');
 
@@ -12,51 +14,52 @@ function getNearbyGrup(){
 		//tidak bisa ambil lat lng
 		myApp.alert('Posisi anda tidak dapat diakses', 'Perhatian!');
 	}
-}
 	
-function showPosition(position) {
-	var id_user = getData("active_user_id");
-	var latKuSekarang = position.coords.latitude;
-	var lngKuSekarang = position.coords.longitude;
-	
-	var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang;
-	$.ajax({ dataType: "jsonp",
-	    url: link,
-	    type: 'GET',
-	    contentType: false,
-	    processData: false
-	}).done(function(z){
-		var dataLength=0;
-		for (var ii = 0 ; ii < z.length ; ii++) {
-			dataLength++;
-		}
+	function showPosition(position) {
+		var id_user = getData("active_user_id");
+		var latKuSekarang = position.coords.latitude;
+		var lngKuSekarang = position.coords.longitude;
+		var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
 		
-		$("#isi_list_grup_disekitar").remove();
-		$("#list_grup_disekitar").append('<div id="isi_list_grup_disekitar"></div>');
-		
-		for(var i=0;i<dataLength;i++)
-		{
-			var jarak=parseFloat(z[i]['distance']);
-			jarak = jarak.toFixed(1);
-				var html =			'<li>';
-				html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
-				html += 					'<div class="item-content">';
-				html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
-				html += 						'<div class="item-inner">';
-				html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
-				html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
-				html += 						'</div>';
-				html += 					'</div>';
-				html += 				'</a>';
-				html += 			'</li>';
-				
-				$("#isi_list_grup_disekitar").append(html);
-		}
-		myApp.closeModal();
-		
-	}).fail(function(x){
-		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
-	});
+		var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang+'&id_kelas='+kelas_dipilih;
+		$.ajax({ dataType: "jsonp",
+		    url: link,
+		    type: 'GET',
+		    contentType: false,
+		    processData: false
+		}).done(function(z){
+			var dataLength=0;
+			for (var ii = 0 ; ii < z.length ; ii++) {
+				dataLength++;
+			}
+			
+			$("#isi_list_grup_disekitar").remove();
+			$("#list_grup_disekitar").append('<div id="isi_list_grup_disekitar"></div>');
+			
+			for(var i=0;i<dataLength;i++)
+			{
+				var jarak=parseFloat(z[i]['distance']);
+				jarak = jarak.toFixed(1);
+					var html =			'<li>';
+					html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
+					html += 					'<div class="item-content">';
+					html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
+					html += 						'<div class="item-inner">';
+					html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
+					html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
+					html += 						'</div>';
+					html += 					'</div>';
+					html += 				'</a>';
+					html += 			'</li>';
+					
+					$("#isi_list_grup_disekitar").append(html);
+			}
+			myApp.closeModal();
+			
+		}).fail(function(x){
+			myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+		});
+	}
 }
 
 function gotoNearbyGrup(){
@@ -65,6 +68,9 @@ function gotoNearbyGrup(){
 }
 
 function gotoCreateGroup(){
+	currentLat = 0;
+	currentLng = 0;
+	$("#isi_latlng_buatGrup").html("Lokasi belum ditentukan..");
 	mainView.router.loadPage('buatGrup.html');
 	myApp.closePanel();
 }
@@ -111,7 +117,7 @@ function gotoGroup(clickedId){
 }
 
 function gotoPetaGrup(latData, lngData){
-	myApp.popup('.popup-grup');
+	//myApp.popup('.popup-grup');
 	var popupHTML = '<div class="popup">'+
                     '<div class="content-block">'+
                       '<p>Letak lokasi grup.</p>'+
@@ -142,6 +148,7 @@ function gotoPetaGrup(latData, lngData){
 			  content: '<p>Tidak bisa menghitung jarak dikarenakan posisi anda sekarang tidak dapat diambil</p>'
 			}
 		});
+		google.maps.event.trigger(map, 'resize');
 	}
 	
 	function showPosition(position) {
@@ -158,6 +165,7 @@ function gotoPetaGrup(latData, lngData){
 			  content: '<p>Posisi anda sekarang ke lokasi grup '+ dist.toFixed(2)+' km'
 			}
 		});
+		google.maps.event.trigger(map, 'resize');
 	}
 
     // Convert Degress to Radians
@@ -187,7 +195,7 @@ function gotoPetaGrup(latData, lngData){
 }
 
 function gotoGoogleMap(){
-	myApp.popup('.popup-about');
+	//myApp.popup('.popup-about');
 	var popupHTML = '<div class="popup">'+
                     '<div class="content-block">'+
                       '<p>Silahkan pilih peta letak lokasi grup.</p>'+
@@ -200,48 +208,54 @@ function gotoGoogleMap(){
 	var map;
 	function showPosition(position) {
 		//console.log("lat:"+position.coords.latitude+"\nlng:"+position.coords.longitude);
+		if(currentLat == 0 && currentLng == 0){
+			currentLat = position.coords.latitude;
+			currentLng = position.coords.longitude;
+		}
 		map = new GMaps({
-				div: '#petaku',
-				lat: position.coords.latitude,
-				lng: position.coords.longitude,
-				click: function(e) {
-				  },
-			});
+			div: '#petaku',
+			lat: currentLat,
+			lng: currentLng,
+			click: function(e) {
+			  },
+		});
 			
-			var lat = position.coords.latitude;
-			var lng = position.coords.longitude;
-			
-			if(lat != null && lng != null)
-			{
-				var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
-				html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
-				html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
-				html	+=	"</div>"
-				$("#isi_latlng_buatGrup").remove();
-				$("#latlng_buatGrup").append(html);
-			}
-			
-			map.addMarker({
+		var lat = currentLat;
+		var lng = currentLng;
+		
+		if(lat != null && lng != null)
+		{
+			var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+			html	+=	"</div>"
+			$("#isi_latlng_buatGrup").remove();
+			$("#lat_buatGrup").val(lat);
+			$("#lng_buatGrup").val(lng);
+			$("#latlng_buatGrup").append(html);
+		}
+		
+		map.addMarker({
 
-				lat: position.coords.latitude,
-				lng: position.coords.longitude,
-				draggable: true,
-				dragend: function(event) {
-					var lat = event.latLng.lat();
-					var lng = event.latLng.lng();
-					//myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
-					
-					if(lat != null && lng != null)
-					{
-						var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
-						html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
-						html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
-						html	+=	"</div>"
-						$("#isi_latlng_buatGrup").remove();
-						$("#latlng_buatGrup").append(html);
-					}
+			lat: currentLat,
+			lng: currentLng,
+			draggable: true,
+			dragend: function(event) {
+				var lat = event.latLng.lat();
+				var lng = event.latLng.lng();
+				//myApp.alert('Latitude = '+lat+"\nLongitude = "+lng, 'Lokasi');
+				currentLat = lat;
+				currentLng = lng;
+				if(lat != null && lng != null)
+				{
+					var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
+					html	+=	"</div>"
+					$("#isi_latlng_buatGrup").remove();
+					$("#lat_buatGrup").val(lat);
+					$("#lng_buatGrup").val(lng);
+					$("#latlng_buatGrup").append(html);
 				}
-			});
+			}
+		});
+		google.maps.event.trigger(map, 'resize');
 	}
     
 	$(document).ready(function(){
@@ -257,10 +271,10 @@ function gotoGoogleMap(){
 			if(lat != null && lng != null)
 			{
 				var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
-				html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
-				html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 				html	+=	"</div>"
 				$("#isi_latlng_buatGrup").remove();
+				$("#lat_buatGrup").val(lat);
+				$("#lng_buatGrup").val(lng);
 				$("#latlng_buatGrup").append(html);
 			}
 			
@@ -286,14 +300,15 @@ function gotoGoogleMap(){
 					if(lat != null && lng != null)
 					{
 						var html =	"<div id='isi_latlng_buatGrup'>Latitude = "+lat+"<br>Longitude = "+lng;
-						html	+=		"<input type='hidden' id='lat_buatGrup' value='"+lat+"'>";
-						html	+=		"<input type='hidden' id='lng_buatGrup' value='"+lng+"'>";
 						html	+=	"</div>"
 						$("#isi_latlng_buatGrup").remove();
+						$("#lat_buatGrup").val(lat);
+						$("#lng_buatGrup").val(lng);
 						$("#latlng_buatGrup").append(html);
 					}
 				}
 			});
+			google.maps.event.trigger(map, 'resize');
 		}
 	});	
 }
@@ -312,8 +327,10 @@ function getKotaBuatGrup() {
 
 			$.each(myOptions, function(i, el) 
 			{ 
-			   $('#kota_buatGrup').append( new Option(el.nama,el.id) );
+			   $('#kota_buatGrup').append(new Option(el.nama,el.id) );
 			});
+			var id_kota = getData("active_user_kota");
+			$("#kota_buatGrup").val(id_kota);
 			
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal", 'Perhatian!');
@@ -354,7 +371,7 @@ function buatGrupPost() {
 				}
 				else
 				{
-					if(lat == null || lng == null)
+					if(lat == "" || lng == "")
 					{
 						myApp.alert('Silahkan pilih lokasi peta grup', 'Perhatian!');
 					}
@@ -1169,7 +1186,7 @@ function editKomentarGrup(id_grup,clicked_id)
 					{
 						if(clicked_id==z[i]['id'])
 						{
-							myApp.popup('.popup-editKomentarGrup');
+							//myApp.popup('.popup-editKomentarGrup');
 								var popupHTML=	'<div class="popup">'+
 											'<div class="content-block">'+
 											'<p>Edit Kiriman</p>'+

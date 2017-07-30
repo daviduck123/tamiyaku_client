@@ -27,6 +27,8 @@ function getKotaBuatEvent() {
 			{ 
 			   $('#kota_buatEvent').append( new Option(el.nama,el.id) );
 			});
+			var id_kota = getData("active_user_kota");
+			$("#kota_buatEvent").val(id_kota);
 			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 1626)", 'Perhatian!');

@@ -24,7 +24,9 @@ function getKotaBuatJualBarang() {
 			{ 
 			   $('#kota_buatJualBarang').append( new Option(el.nama,el.id) );
 			});
-		myApp.closeModal();
+			var id_kota = getData("active_user_kota");
+			$("#kota_buatJualBarang").val(id_kota);
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert("Pengambilan data kota gagal (line 28)", 'Perhatian!');
 		}); 
