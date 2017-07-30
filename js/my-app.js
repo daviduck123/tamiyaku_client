@@ -16,7 +16,9 @@ myApp.onPageInit('index', function (page) {
 });
 
 myApp.onPageInit('grup', function (page) {
-	
+	$("textarea[id^=deskripsi_]").each(function(e){
+		$(this).remove();
+	});
 	var id_user = getData("active_user_id");
 	var id_grup = getData("id_grup");
 	
@@ -198,6 +200,9 @@ myApp.onPageInit('editProfile', function (page) {
 });
 
 myApp.onPageInit('buatEvent', function (page) {
+	$("textarea[id^=deskripsi_]").each(function(e){
+		$(this).remove();
+	});
 	getKotaBuatEvent();
 	$(".select-list-kelas").empty();
 	$.each(globalListKelas, function (id, text) {
@@ -211,6 +216,9 @@ myApp.onPageInit('buatEvent', function (page) {
 });
 
 myApp.onPageInit('home', function (page) {
+	$("textarea[id^=deskripsi_]").each(function(e){
+		$(this).remove();
+	});
 	getAllPost();
     setPullRefreshHome();
     $(".select-list-kelas").empty();
@@ -252,7 +260,9 @@ myApp.onPageInit('searchTemanGrup', function (page) {
 });
 
 myApp.onPageInit('jualBeli', function (page) {
-	
+	$("textarea[id^=deskripsi_]").each(function(e){
+		$(this).remove();
+	});
 	var link=urlnya+'/api/kategori/';
 	$.ajax({ dataType: "jsonp",
 		url: link,

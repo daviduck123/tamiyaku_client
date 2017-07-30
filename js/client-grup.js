@@ -1023,12 +1023,14 @@ function statusGrupPost() {
 			$("#file_grup").val("");
 			getAllGrupPost(id_grup);
 			$("#status_grup").val("");
+			myApp.closeModal();
 		}).fail(function(x){
 			myApp.alert('Maaf tidak dapat menambah status, silahkan coba lagi', 'Perhatian!');
 			var coba="";
 			for (var ii = 0 ; ii < formData.entries().length; ii++) {
 							coba+=formData.entries()[ii][0]+ ', ' + formData.entries()[ii][1]; 
 			}
+			myApp.closeModal();
 			console.log(coba);
 		});
 		
@@ -1119,13 +1121,16 @@ function komentariGrupPost(clicked_id) {
 		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
-				
-				$("#btn_komentari_grup_"+id_post).html("");
-				
-				var html = 			"<p><a href='#' class='button' onclick='komentariGrupPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
-				
-				$("#btn_komentari_grup_"+id_post).append(html);
+			$("textarea[id^=deskripsi_]").each(function(e){
+				$(this).remove();
+			});
+			$("#kolom_komentar_grup_"+id_post).after(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+			
+			$("#btn_komentari_grup_"+id_post).html("");
+			
+			var html = 			"<p><a href='#' class='button' onclick='komentariGrupPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+			
+			$("#btn_komentari_grup_"+id_post).append(html);
 		} 
 		else 
 		{

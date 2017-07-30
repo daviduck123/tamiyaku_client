@@ -18,13 +18,16 @@ function komentariPost(clicked_id) {
 		var table = document.getElementById(vartable).value;
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
-				
-				$("#btn_komentari_"+id_post).html("");
-				
-				var html = 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
-				
-				$("#btn_komentari_"+id_post).append(html);
+			$("textarea[id^=deskripsi_]").each(function(e){
+				$(this).remove();
+			});
+			$("#kolom_komentar_"+id_post).after(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+			
+			$("#btn_komentari_"+id_post).html("");
+			
+			var html = 			"<p><a href='#' class='button' onclick='komentariPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+			
+			$("#btn_komentari_"+id_post).append(html);
 		} 
 		else 
 		{
@@ -132,6 +135,9 @@ function bacaKomentar(clicked_id) {
 
 function getAllPost() {
 	myApp.showPreloader('Mengambil data...');
+	$("textarea[id^=deskripsi_]").each(function(e){
+		$(this).remove();
+	});
 	var id_user = getData("active_user_id");
 	var formData=JSON.stringify({
 						id_user:id_user,

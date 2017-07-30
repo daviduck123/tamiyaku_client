@@ -537,13 +537,16 @@ function komentariEventPost(clicked_id) {
 		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-				$("#"+vartable).find('tbody').append(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
-				
-				$("#btn_komentari_event_"+id_post).html("");
-				
-				var html = 			"<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
-				
-				$("#btn_komentari_event_"+id_post).append(html);
+			$("textarea[id^=deskripsi_]").each(function(e){
+				$(this).remove();
+			});
+			$("#kolom_komentar_event_"+id_post).after(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
+			
+			$("#btn_komentari_event_"+id_post).html("");
+			
+			var html = "<p><a href='#' class='button' onclick='komentariEventPost(this.id);' id='"+id_post+"' style='margin-right:5%; margin-top:-10px; float:right; width:100px;'>Send</a></p>";
+			
+			$("#btn_komentari_event_"+id_post).append(html);
 		} 
 		else 
 		{
