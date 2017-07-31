@@ -54,15 +54,48 @@ function bindDraggableTrack(){
     ctx;
     $('.draggableItem').draggable({ helper: "clone" });
 
+/*
+    var canvas = new fabric.Canvas('myCanvas', { selection: false });
+    var grid = 50 ;
+
+    // create grid
+
+    for (var i = 0; i < (300 / grid); i++) {
+      canvas.add(new fabric.Line([ i * grid, 0, i * grid, 300], { stroke: '#ccc', selectable: false }));
+      canvas.add(new fabric.Line([ 0, i * grid, 300, i * grid], { stroke: '#ccc', selectable: false }))
+    }
+
+    // snap to grid
+
+    canvas.on('object:moving', function(options) { 
+      options.target.set({
+        left: Math.round(options.target.left / grid) * grid,
+        top: Math.round(options.target.top / grid) * grid
+      });
+    });
+*/
+
     $('#myCanvas').droppable({
         drop: function( event, ui ) {
+            //300x300
+            //30x30
             var $canvas = $('#myCanvas') ;
             ctx = $canvas.get(0).getContext('2d') ;
             var $img = $(ui.helper) ;
+            
             var imgpos = $img.offset() ;
             var cpos = $canvas.offset() ;
-            ctx.drawImage($img.get(0),imgpos.left-cpos.left,
-                          imgpos.top-cpos.top, $img.width(), $img.height()) ;
+
+            var left = imgpos.left-cpos.left;
+            var top = imgpos.top-cpos.top;
+
+/*
+            var posisiLeft = (300 / 50) + left;
+            var posisiTop = (300 / 50) + top;
+*/
+            ctx.drawImage($img.get(0),
+                left,
+                top, $img.width(), $img.height()) ;
             cPush();
         }
     });
