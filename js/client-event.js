@@ -47,7 +47,7 @@ function buatEventPost() {
 	var ticket = document.getElementById("ticket_buatEvent").value;
 	var kota = $('#kota_buatEvent').find(":selected").val();
 	var lokasi = document.getElementById("lokasi_buatEvent").value;
-	var deskripsi = document.getElementById("deskripsi_buatEvent").value;
+	var deskripsi = document.getElementById("deskripsiBuatEvent").value;
 	var fileinput = document.getElementById("file_buatEvent").value;
 	
 	if(namaEvent=="")
@@ -537,7 +537,7 @@ function komentariEventPost(clicked_id) {
 		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-			$("textarea[id^=deskripsi_]").each(function(e){
+			$("textarea[id^=deskripsi_event_]").each(function(e){
 				$(this).remove();
 			});
 			$("#kolom_komentar_event_"+id_post).after(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
@@ -769,7 +769,7 @@ function editEventPost(clicked_id)
 									'</tr>'+
 									'<tr>'+
 										'<td><p>Deskripsi</p></td>'+
-										'<td><textarea id="deskripsi_buatEventEdit" style="resize:none; margin-top:10px; height:60px;">'+z[i]['deskripsi']+'</textarea></td>'+
+										'<td><textarea id="deskripsiBuatEventEdit" style="resize:none; margin-top:10px; height:60px;">'+z[i]['deskripsi']+'</textarea></td>'+
 									'</tr>'+
 									
 								'</table><center><td><p><a href="#" class="button"  onclick="saveEventEditPost('+z[i]['id']+');" style="width:250px;">Update</a></p></td></center>'+
@@ -860,7 +860,7 @@ function saveEventEditPost(clicked_id) {
 	var ticket = document.getElementById("ticket_buatEventEdit").value;
 	var kota = $('#kota_buatEventEdit').find(":selected").val();
 	var lokasi = document.getElementById("lokasi_buatEventEdit").value;
-	var deskripsi = document.getElementById("deskripsi_buatEventEdit").value;
+	var deskripsi = document.getElementById("deskripsiBuatEventEdit").value;
 	var fileinput = document.getElementById("file_buatEventEdit").value;
 	
 	if(namaEvent=="")

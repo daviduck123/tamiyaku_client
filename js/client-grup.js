@@ -1121,7 +1121,7 @@ function komentariGrupPost(clicked_id) {
 		//console.log(vartable);
 		
 		if($("#" + vardeksripsi).length == 0) {
-			$("textarea[id^=deskripsi_]").each(function(e){
+			$("textarea[id^=deskripsi_grup_]").each(function(e){
 				$(this).remove();
 			});
 			$("#kolom_komentar_grup_"+id_post).after(" <tr> <td colspan='5'><textarea id='"+vardeksripsi+"' style='resize:none; margin-top:10px; margin-left:10px; width:90%; height:60px;' placeholder='Tulis Komentar Anda..'></textarea> </td></tr>.");
