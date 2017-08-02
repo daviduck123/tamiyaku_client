@@ -19,7 +19,7 @@ myApp.onPageInit('grup', function (page) {
 	$("textarea[id^=deskripsi_]").each(function(e){
 		$(this).remove();
 	});
-	var id_user = getData("active_user_id");
+	/*var id_user = getData("active_user_id");
 	var id_grup = getData("id_grup");
 	
 	var link=urlnya+'/api/grup/checkJoinedGrup?id_user='+id_user+'&id_grup='+id_grup;
@@ -49,7 +49,7 @@ myApp.onPageInit('grup', function (page) {
 		}
 	}).fail(function(x){
 		myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
-	});
+	});*/
 	
 });
 
