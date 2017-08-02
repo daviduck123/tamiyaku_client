@@ -4,14 +4,15 @@ var currentLat = 0;
 var currentLng = 0;
 function getNearbyGrup(){
 	myApp.showPreloader('Mengambil data...');
-
+	myApp.closeModal();
 	if ( navigator.geolocation )
 	{
-		//
+		alert("ga masuk sINI");
 		navigator.geolocation.getCurrentPosition(showPosition);
 	}
 	else
 	{
+		alert("masuk sINI");
 		//tidak bisa ambil lat lng
 		myApp.alert('Posisi anda tidak dapat diakses', 'Perhatian!');
 	}
@@ -21,7 +22,7 @@ function getNearbyGrup(){
 		var latKuSekarang = position.coords.latitude;
 		var lngKuSekarang = position.coords.longitude;
 		var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
-		myApp.closeModal();
+		
 		alert("Masuk ?" + latKuSekarang+" -- "+lngKuSekarang+" -- "+kelas_dipilih);
 		
 		var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang+'&id_kelas='+kelas_dipilih;
