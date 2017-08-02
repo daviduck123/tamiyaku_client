@@ -5,78 +5,75 @@ $(document).ready(function(){
 	var currentLng = 0;
 	function getNearbyGrup(){
 		myApp.showPreloader('Mengambil data...');
-		
-		
-			if ( navigator.geolocation )
-			{
-				alert("ga masuk sINI");
-				navigator.geolocation.getCurrentPosition(showPosition, onError, {timeout: 10000, enableHighAccuracy: true});
-			}
-			else
-			{
-				myApp.closeModal();
-				alert("masuk sINI");
-				//tidak bisa ambil lat lng
-				myApp.alert('Posisi anda tidak dapat diakses', 'Perhatian!');
-			}
+		if ( navigator.geolocation )
+		{
+			alert("ga masuk sINI");
+			navigator.geolocation.getCurrentPosition(showPosition, onError, {timeout: 10000, enableHighAccuracy: true});
+		}
+		else
+		{
+			myApp.closeModal();
+			alert("masuk sINI");
+			//tidak bisa ambil lat lng
+			myApp.alert('Posisi anda tidak dapat diakses', 'Perhatian!');
+		}
 
-			function onError(error) {
-				myApp.closeModal();
-		        alert('code: '    + error.code    + '\n' +
-		                'message: ' + error.message + '\n');
-		    }
+		function onError(error) {
+			myApp.closeModal();
+	        alert('code: '    + error.code    + '\n' +
+	                'message: ' + error.message + '\n');
+	    }
+		
+		function showPosition(position) {
+			var id_user = getData("active_user_id");
+			var latKuSekarang = position.coords.latitude;
+			var lngKuSekarang = position.coords.longitude;
+			var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
 			
-			function showPosition(position) {
-				var id_user = getData("active_user_id");
-				var latKuSekarang = position.coords.latitude;
-				var lngKuSekarang = position.coords.longitude;
-				var kelas_dipilih = $('#kelas_dipilih').find(":selected").val();
+			alert("Masuk ?" + latKuSekarang+" -- "+lngKuSekarang+" -- "+kelas_dipilih);
+			
+			var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang+'&id_kelas='+kelas_dipilih;
+			$.ajax({ dataType: "jsonp",
+			    url: link,
+			    type: 'GET',
+			    contentType: false,
+			    processData: false
+			}).done(function(z){
+				alert("Masuk2 ?");
+				var dataLength=0;
+				for (var ii = 0 ; ii < z.length ; ii++) {
+					dataLength++;
+				}
 				
-				alert("Masuk ?" + latKuSekarang+" -- "+lngKuSekarang+" -- "+kelas_dipilih);
+				$("#isi_list_grup_disekitar").remove();
+				$("#list_grup_disekitar").append('<div id="isi_list_grup_disekitar"></div>');
 				
-				var link=urlnya+'/api/grup/getGrupNearBy?id_user='+id_user+'&lat='+latKuSekarang+'&lng='+lngKuSekarang+'&id_kelas='+kelas_dipilih;
-				$.ajax({ dataType: "jsonp",
-				    url: link,
-				    type: 'GET',
-				    contentType: false,
-				    processData: false
-				}).done(function(z){
-					alert("Masuk2 ?");
-					var dataLength=0;
-					for (var ii = 0 ; ii < z.length ; ii++) {
-						dataLength++;
-					}
-					
-					$("#isi_list_grup_disekitar").remove();
-					$("#list_grup_disekitar").append('<div id="isi_list_grup_disekitar"></div>');
-					
-					for(var i=0;i<dataLength;i++)
-					{
-						var jarak=parseFloat(z[i]['distance']);
-						jarak = jarak.toFixed(1);
-							var html =			'<li>';
-							html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
-							html += 					'<div class="item-content">';
-							html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
-							html += 						'<div class="item-inner">';
-							html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
-							html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
-							html += 						'</div>';
-							html += 					'</div>';
-							html += 				'</a>';
-							html += 			'</li>';
-							
-							$("#isi_list_grup_disekitar").append(html);
-					}
-					myApp.closeModal();
-					
-				}).fail(function(x){
-					alert("Masuk3 ?");
-					myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
-					myApp.closeModal();
-				});
-			}
-		});
+				for(var i=0;i<dataLength;i++)
+				{
+					var jarak=parseFloat(z[i]['distance']);
+					jarak = jarak.toFixed(1);
+						var html =			'<li>';
+						html += 				'<a href="#" onclick="gotoGroup('+z[i]['id']+');" id="grup_'+z[i]['id']+'" class="item-link">';
+						html += 					'<div class="item-content">';
+						html += 						'<div class="item-media"><img class="lazy" src="data:image/jpeg;base64,'+z[i]['foto']+'" style="width:35px; height:35px;"></div>';
+						html += 						'<div class="item-inner">';
+						html += 							'<div class="item-title">'+z[i]['nama']+'</div>';
+						html += 							'<div class="item-after">'+z[i]['lokasi']+' <span class="badge">'+jarak+'km</span></div>';
+						html += 						'</div>';
+						html += 					'</div>';
+						html += 				'</a>';
+						html += 			'</li>';
+						
+						$("#isi_list_grup_disekitar").append(html);
+				}
+				myApp.closeModal();
+				
+			}).fail(function(x){
+				alert("Masuk3 ?");
+				myApp.alert("Pengambilan data grup disekitar gagal", 'Perhatian!');
+				myApp.closeModal();
+			});
+		}
 	}
 
 	function gotoNearbyGrup(){
@@ -1356,7 +1353,7 @@ $(document).ready(function(){
 	        }
 	      },
 	    ]
-	  })
+	  });
 	}
 
 	function hapusKomentarGrupTrue(clicked_id, id_komentar)
@@ -1375,4 +1372,4 @@ $(document).ready(function(){
 				console.log(x);
 			});
 	}
-}
+});
